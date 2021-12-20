@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="6395" height="1156" viewBox="0 0 6395 1156">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_73" data-name="Rectangle 73" width="6395" height="1156" transform="translate(-5391)" fill="#fff"/>
+    </clipPath>
+    <linearGradient id="linear-gradient" x1="0.602" y1="0.5" x2="0.96" y2="0.877" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#d89d62"/>
+      <stop offset="1" stop-color="#ef6923"/>
+    </linearGradient>
+  </defs>
+  <g id="bg-login-page" transform="translate(5391)" clip-path="url(#clip-path)">
+    <g id="Group_118" data-name="Group 118" transform="translate(-5367.729 -24.367)">
+      <path id="Union_6" data-name="Union 6" d="M-2631.1,1158.621v-1.714H-8230.9V.024h5599.8V0h759.7s-187.845,211.469-91.626,523.558c49.167,159.474,96.309,274.489,104.683,387.833,7.979,108.014-57.98,216.035-168.644,272.343-65.858,33.512-170.28,41.109-248.756,41.11C-2466.93,1224.841-2631.1,1158.621-2631.1,1158.621Z" transform="translate(8230.9)" fill="url(#linear-gradient)"/>
+    </g>
+  </g>
+</svg>
