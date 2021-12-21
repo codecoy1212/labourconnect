@@ -37,7 +37,7 @@
                                     <option value="audi">Audi</option>
                                 </select>
                             <div class="intro-x mt-5 xl:mt-2 xl:text-left">
-                                <button class="text-white bg-theme-123 p-1 pl-2 pr-2" style="font-size: 85%;">Add Worker</button>
+                                <button class="text-white bg-theme-123 p-1 pl-2 pr-2 btn_zoo_h" style="font-size: 85%;">Add Worker</button>
                             </div>
                         </form>
                         <form class="mt-6 my-auto mx-auto bg-white xl:bg-transparent sm:px-8 xl:p-0 rounded-md xl:shadow-none w-full sm:w-3/4 lg:w-2/4 xl:w-auto" action="" method="post">
@@ -49,7 +49,7 @@
                             </select>
                             <input type="text" name="username" class="p-2 border-theme-123 border-2 block" style="width: 70%; height:30px; font-size:85%;" placeholder="Job Location">
                             <div class="intro-x mt-5 xl:mt-2 xl:text-left">
-                                <button class="text-white bg-theme-123 p-1 pl-2 pr-2" style="font-size: 85%;">Save Job</button>
+                                <button class="text-white bg-theme-123 p-1 pl-2 pr-2 btn_zoo_h" style="font-size: 85%;">Save Job</button>
                             </div>
                         </form>
                     </div>
@@ -58,18 +58,18 @@
                         <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
                                 <div class="box border-3" style="text-align: left; font-size: 0.9rem; line-height: 2.0; height: 350px;">
 
-                                    <div class="flex border-2 border-theme-123 m-2" style="height: 30px;">
+                                    <a class="flex border-2 border-theme-123 m-2 btn_zoo_g" style="height: 30px;" href="">
                                         <div class="ml-2 mr-auto" style="display:inline">Waqas | Web Developer </div>
                                         <div class="mr-2"> x </div>
-                                    </div>
-                                    <div class="flex border-2 border-theme-123 m-2" style="height: 30px;">
+                                    </a>
+                                    <a class="flex border-2 border-theme-123 m-2 btn_zoo_g" style="height: 30px;" href="">
                                         <div class="ml-2 mr-auto" style="display:inline">Waqas | Web Developer </div>
                                         <div class="mr-2"> x </div>
-                                    </div>
-                                    <div class="flex border-2 border-theme-123 m-2" style="height: 30px;">
+                                    </a>
+                                    <a class="flex border-2 border-theme-123 m-2 btn_zoo_g" style="height: 30px;" href="">
                                         <div class="ml-2 mr-auto" style="display:inline">Waqas | Web Developer </div>
                                         <div class="mr-2"> x </div>
-                                    </div>
+                                    </a>
                                 </div>
                             </div>
                     </div>

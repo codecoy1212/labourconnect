@@ -30,7 +30,7 @@
                                         <form class="my-auto mx-auto bg-white xl:bg-transparent sm:px-8 xl:p-0 rounded-md xl:shadow-none w-full sm:w-3/4 lg:w-2/4 xl:w-auto" action="" method="post">
                                             <input type="text" name="username" class="p-2 border-theme-123 border-2 block mb-2" style="width: 82%; height:30px; font-size:85%;" placeholder="Company Name">
                                             <div class="intro-x mt-2 mr-12" style="text-align: left">
-                                                <button class="text-white bg-theme-123 p-0 pl-2 pr-2" style="font-size: 85%;">Add User</button>
+                                                <button class="text-white bg-theme-123 p-0 pl-2 pr-2 btn_zoo_h" style="font-size: 85%;">Add User</button>
                                             </div>
                                         </form>
                                     </div>
@@ -54,18 +54,18 @@
                                     <div class="flex mb-0" style="min-height: 2px; background-color:black;">
                                     </div>
 
-                                    <div class="flex m-2" style="height: 30px;font-size:0.9rem; color:black;">
-                                        <div class="ml-2 mr-auto" style="display:inline">Traffic Controller </div>
+                                    <a  class="flex border-2 border-theme-123 m-2 btn_zoo_g" style="height: 30px;font-size:0.9rem; " href="">
+                                        <div class="ml-2 mr-auto" style="display:inline">Traffic Controller</div>
                                         <div class="mr-2"> x </div>
-                                    </div>
-                                    <div class="flex m-2" style="height: 30px;font-size:0.9rem; color:black;">
+                                    </a>
+                                    <a  class="flex border-2 border-theme-123 m-2 btn_zoo_g" style="height: 30px;font-size:0.9rem; " href="">
                                         <div class="ml-2 mr-auto" style="display:inline">Labourer</div>
                                         <div class="mr-2"> x </div>
-                                    </div>
-                                    <div class="flex m-2" style="height: 30px;font-size:0.9rem; color:black;">
+                                    </a>
+                                    <a  class="flex border-2 border-theme-123 m-2 btn_zoo_g" style="height: 30px;font-size:0.9rem; " href="">
                                         <div class="ml-2 mr-auto" style="display:inline">Chef</div>
                                         <div class="mr-2"> x </div>
-                                    </div>
+                                    </a>
                                 </div>
                             </div>
                     </div>

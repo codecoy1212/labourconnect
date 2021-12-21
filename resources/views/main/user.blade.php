@@ -40,7 +40,7 @@
                                                     <option value="audi">Audi</option>
                                                 </select>
                                             <div class="intro-x mt-2 mr-12">
-                                                <button class="text-white bg-theme-123 p-0 pl-2 pr-2" style="font-size: 85%;">Add User</button>
+                                                <button class="text-white bg-theme-123 p-0 pl-2 pr-2 btn_zoo_h" style="font-size: 85%;">Add User</button>
                                             </div>
                                         </form>
                                     </div>
@@ -63,14 +63,18 @@
                                     </div>
                                     <div class="flex mb-0" style="min-height: 2px; background-color:black;">
                                     </div>
-                                    <div class="flex border-2 border-theme-123 m-2" style="height: 30px;font-size:0.9rem; color:black;">
+                                    <a  class="flex border-2 border-theme-123 m-2 btn_zoo_g" style="height: 30px;font-size:0.9rem;" href="">
                                         <div class="ml-2 mr-auto" style="display:inline">Waqas</div>
                                         <div class="mr-2"> x </div>
-                                    </div>
-                                    <div class="flex border-2 border-theme-123 m-2" style="height: 30px;font-size:0.9rem; color:black;">
+                                    </a>
+                                    <a  class="flex border-2 border-theme-123 m-2 btn_zoo_g" style="height: 30px;font-size:0.9rem;" href="">
                                         <div class="ml-2 mr-auto" style="display:inline">Aleem</div>
                                         <div class="mr-2"> x </div>
-                                    </div>
+                                    </a>
+                                    <a  class="flex border-2 border-theme-123 m-2 btn_zoo_g" style="height: 30px;font-size:0.9rem;" href="">
+                                        <div class="ml-2 mr-auto" style="display:inline">Azeem</div>
+                                        <div class="mr-2"> x </div>
+                                    </a>
                                 </div>
                             </div>
                     </div>

@@ -7,7 +7,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>Labour Connect - @yield('up_title')</title>
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <link rel="icon" type="image/x-icon" href="{{asset('dist/logof.ico')}}">
+        <link rel="icon" type="image/x-icon" href="{{asset('dist/favicon.png')}}">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="Midone admin is super flexible, powerful, clean & modern responsive tailwind admin template with unlimited possibilities.">
         <meta name="keywords" content="admin template, Midone admin template, dashboard template, flat admin template, responsive admin template, web app">
@@ -27,7 +27,7 @@
         <div class="mobile-menu md:hidden">
             <div class="mobile-menu-bar">
                 <a href="{{ route('dash')}}" class="flex mr-auto">
-                    <div style="color: white; font-weight:bold; font-size:20px;" >Labour Connect</div>
+                    <div style="" > <img src="{{asset('dist/images/icon.png')}}" width="100px" alt=""></div>
                 </a>
                 <a href="javascript:;" id="mobile-menu-toggler"> <i data-feather="bar-chart-2" class="w-8 h-8 text-white transform -rotate-90"></i> </a>
             </div>
@@ -88,7 +88,7 @@
             <!-- BEGIN: Side Menu -->
             <nav class="side-nav">
                 <a href="{{ route('dash')}}" class="intro-x flex items-center pl-5 pt-4">
-                    <div style="color: white; font-weight:bold; font-size:20px;" >Labour Connect</div>
+                    <div style="color: white; font-weight:bold; font-size:20px;" > <img src="{{asset('dist/images/icon.png')}}" width="170px" alt=""></div>
                 </a>
                 <div class="side-nav__devider my-6"></div>
                 <ul>

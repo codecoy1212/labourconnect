@@ -29,14 +29,14 @@
                             <input type="text" name="username" class="p-2 border-theme-123 border-2 block mb-2" style="width: 85%; height:30px; font-size:85%;" placeholder="Config 1:">
                             <input type="text" name="username" class="p-2 border-theme-123 border-2 block mb-2" style="width: 85%; height:30px; font-size:85%;" placeholder="Config 2:">
                             <div class="intro-x mt-5 xl:mt-2 xl:text-left mb-2">
-                                <button class="text-white bg-theme-123 p-1 pl-2 pr-2" style="font-size: 85%; width: 85%; ">Generate Report</button>
+                                <button class="text-white bg-theme-123 p-1 pl-2 pr-2 btn_zoo_h" style="font-size: 85%; width: 85%; ">Generate Report</button>
                             </div>
                             <div class="intro-x mt-5 xl:mt-2 xl:text-left mb-2">
-                                <button class="text-white bg-theme-123 p-1 pl-2 pr-2" style="font-size: 85%;">Export Report</button>
+                                <button class="text-white bg-theme-123 p-1 pl-2 pr-2 btn_zoo_h" style="font-size: 85%;">Export Report</button>
                             </div>
                             <input type="text" name="username" class="p-2 border-theme-123 border-2 block mb-2" style="width: 85%; height:30px; font-size:85%;" placeholder="Email:">
                             <div class="intro-x mt-5 xl:mt-2 xl:text-left mb-2">
-                                <button class="text-white bg-theme-123 p-1 pl-2 pr-2" style="font-size: 85%; ">Export Report</button>
+                                <button class="text-white bg-theme-123 p-1 pl-2 pr-2 btn_zoo_h" style="font-size: 85%; ">Export Report</button>
                             </div>
                         </form>
                     </div>
@@ -47,14 +47,14 @@
                             <input type="text" name="username" class="p-2 border-theme-123 border-2 block mb-2" style="width: 85%; height:30px; font-size:85%;" placeholder="Config 1:">
                             <input type="text" name="username" class="p-2 border-theme-123 border-2 block mb-2" style="width: 85%; height:30px; font-size:85%;" placeholder="Config 2:">
                             <div class="intro-x mt-5 xl:mt-2 xl:text-left mb-2">
-                                <button class="text-white bg-theme-123 p-1 pl-2 pr-2" style="font-size: 85%; width: 85%;">Generate Report</button>
+                                <button class="text-white bg-theme-123 p-1 pl-2 pr-2 btn_zoo_h" style="font-size: 85%; width: 85%;">Generate Report</button>
                             </div>
                             <div class="intro-x mt-5 xl:mt-2 xl:text-left  mb-2">
-                                <button class="text-white bg-theme-123 p-1 pl-2 pr-2" style="font-size: 85%; ">Export Report</button>
+                                <button class="text-white bg-theme-123 p-1 pl-2 pr-2 btn_zoo_h" style="font-size: 85%; ">Export Report</button>
                             </div>
                             <input type="text" name="username" class="p-2 border-theme-123 border-2 block mb-2" style="width: 85%; height:30px; font-size:85%;" placeholder="Email:">
                             <div class="intro-x mt-5 xl:mt-2 xl:text-left  mb-2">
-                                <button class="text-white bg-theme-123 p-1 pl-2 pr-2" style="font-size: 85%; ">Export Report</button>
+                                <button class="text-white bg-theme-123 p-1 pl-2 pr-2 btn_zoo_h" style="font-size: 85%; ">Export Report</button>
                             </div>
                         </form>
                     </div>

@@ -32,7 +32,7 @@
                                         <input type="text" name="username" class="p-2 border-theme-123 border-2 block mb-2" style="width: 86%; height:30px; font-size:85%;" placeholder="Contact Name">
                                         <input type="text" name="username" class="p-2 border-theme-123 border-2 block mb-2" style="width: 86%; height:30px; font-size:85%;" placeholder="Phone Number">
                                         <div class="intro-x mt-2 mr-12" style="text-align:left">
-                                            <button class="text-white bg-theme-123 p-0 pl-2 pr-2" style="font-size: 85%; ">Add Company</button>
+                                            <button class="text-white bg-theme-123 p-0 pl-2 pr-2 btn_zoo_h" style="font-size: 85%; ">Add Company</button>
                                         </div>
                                     </form>
                                 </div>
@@ -55,14 +55,14 @@
                                     </div>
                                     <div class="flex mb-0" style="min-height: 2px; background-color:black;">
                                     </div>
-                                    <div class="flex m-2" style="height: 30px;font-size:0.9rem; color:black;">
+                                    <a  class="flex border-2 border-theme-123 m-2 btn_zoo_g" style="height: 30px;font-size:0.9rem;" href="">
                                         <div class="ml-2 mr-auto" style="display:inline">Mr Scaffold</div>
                                         <div class="mr-2"> x </div>
-                                    </div>
-                                    <div class="flex m-2" style="height: 30px;font-size:0.9rem; color:black;">
+                                    </a>
+                                    <a  class="flex border-2 border-theme-123 m-2 btn_zoo_g" style="height: 30px;font-size:0.9rem;" href="">
                                         <div class="ml-2 mr-auto" style="display:inline">Inc Digital</div>
                                         <div class="mr-2"> x </div>
-                                    </div>
+                                    </a>
                                 </div>
                             </div>
                     </div>

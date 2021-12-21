@@ -15,7 +15,7 @@
             <!-- BEGIN: General Report -->
             <div class="text-center col-span-12 mt-4">
                 <div class="grid grid-cols-12 gap-6 mt-0 xl:ml-12 xl:mg-20">
-                    <a class="col-span-12 sm:col-span-6 xl:col-span-2 intro-y" href="">
+                    <a class="col-span-12 sm:col-span-6 xl:col-span-2 intro-y" href="{{route('jobs')}}">
                         <div class="zoom-in">
                             <div class="box border-3">
                                 <div class="flex">
@@ -26,7 +26,7 @@
                             </div>
                         </div>
                     </a>
-                    <a class="col-span-12 sm:col-span-6 xl:col-span-2 intro-y" href="jobs/new_job">
+                    <a class="col-span-12 sm:col-span-6 xl:col-span-2 intro-y" href="{{route('njob')}}">
                         <div class="zoom-in">
                             <div class="box border-3">
                                 <div class="flex">
