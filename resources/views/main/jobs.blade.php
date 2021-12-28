@@ -21,7 +21,7 @@
                                 <div class="flex">
                                     {{-- <i style="width:43px; height:43px;" data-feather="user" class="report-box__icon text-theme-1 m-auto"></i> --}}
                                 </div>
-                                <div class="text-3xl font-bold leading-8 mt-5">15</div>
+                                <div class="text-3xl font-bold leading-8 mt-5">{{count($jobs)}}</div>
                                 <div class="text-3xl leading-8 mb-5">Active Jobs</div>
                             </div>
                         </div>
@@ -42,150 +42,26 @@
                     <h5 style="font-size: 0.975rem; font-weight: bold;" class="ml-3">Active Jobs</h5>
                 </div>
                 <div class="grid grid-cols-12 gap-6 xl:col-span-2 intro-y xl:ml-12 xl:mr-12">
-                    <a class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y" href="">
-                        <div class="zoom-in">
-                            <div class="box border-3" style="text-align: left; font-size: 0.9rem; line-height: 2.0;" >
-                                <div class="flex" style="background-color: black; min-height: 30px">
-                                </div>
-                                <div class="m-2">
-                                <div><b>Client:</b> Mr Scaffold</div>
-                                <div><b>Location:</b> 254 canterbarry Road, Belmore NSW 2192</div>
-                                <div><b>Active Workers:</b> 15</div>
-                                </div>
-                                <div class="flex mt-2 mb-0" style="min-height: 2px; background-color:black;">
-                                </div>
-                                <div class="flex ml-2">
-                                    <b>#2445</b>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y" href="">
-                        <div class="zoom-in">
-                            <div class="box border-3" style="text-align: left; font-size: 0.9rem; line-height: 2.0;" >
-                                <div class="flex" style="background-color: black; min-height: 30px">
-                                </div>
-                                <div class="m-2">
-                                <div><b>Client:</b> Mr Scaffold</div>
-                                <div><b>Location:</b> 254 canterbarry Road, Belmore NSW 2192</div>
-                                <div><b>Active Workers:</b> 15</div>
-                                </div>
-                                <div class="flex mt-2 mb-0" style="min-height: 2px; background-color:black;">
-                                </div>
-                                <div class="flex ml-2">
-                                    <b>#2445</b>
+                    @foreach ($jobs as $item)
+                        <a class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y" href="">
+                            <div class="zoom-in">
+                                <div class="box border-3" style="text-align: left; font-size: 0.9rem; line-height: 2.0;" >
+                                    <div class="flex" style="background-color: black; min-height: 30px">
+                                    </div>
+                                    <div class="m-2">
+                                    <div><b>Client: </b>{{$item->c_contact}}</div>
+                                    <div><b>Location: </b> {{$item->j_location}}</div>
+                                    <div><b>Active Workers: </b> {{$item->workers_count}}</div>
+                                    </div>
+                                    <div class="flex mt-2 mb-0" style="min-height: 2px; background-color:black;">
+                                    </div>
+                                    <div class="flex ml-2">
+                                        <b>#{{$item->id}}</b>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </a>
-                    <a class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y" href="">
-                        <div class="zoom-in">
-                            <div class="box border-3" style="text-align: left; font-size: 0.9rem; line-height: 2.0;" >
-                                <div class="flex" style="background-color: black; min-height: 30px">
-                                </div>
-                                <div class="m-2">
-                                <div><b>Client:</b> Mr Scaffold</div>
-                                <div><b>Location:</b> 254 canterbarry Road, Belmore NSW 2192</div>
-                                <div><b>Active Workers:</b> 15</div>
-                                </div>
-                                <div class="flex mt-2 mb-0" style="min-height: 2px; background-color:black;">
-                                </div>
-                                <div class="flex ml-2">
-                                    <b>#2445</b>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y" href="">
-                        <div class="zoom-in">
-                            <div class="box border-3" style="text-align: left; font-size: 0.9rem; line-height: 2.0;" >
-                                <div class="flex" style="background-color: black; min-height: 30px">
-                                </div>
-                                <div class="m-2">
-                                <div><b>Client:</b> Mr Scaffold</div>
-                                <div><b>Location:</b> 254 canterbarry Road, Belmore NSW 2192</div>
-                                <div><b>Active Workers:</b> 15</div>
-                                </div>
-                                <div class="flex mt-2 mb-0" style="min-height: 2px; background-color:black;">
-                                </div>
-                                <div class="flex ml-2">
-                                    <b>#2445</b>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y" href="">
-                        <div class="zoom-in">
-                            <div class="box border-3" style="text-align: left; font-size: 0.9rem; line-height: 2.0;" >
-                                <div class="flex" style="background-color: black; min-height: 30px">
-                                </div>
-                                <div class="m-2">
-                                <div><b>Client:</b> Mr Scaffold</div>
-                                <div><b>Location:</b> 254 canterbarry Road, Belmore NSW 2192</div>
-                                <div><b>Active Workers:</b> 15</div>
-                                </div>
-                                <div class="flex mt-2 mb-0" style="min-height: 2px; background-color:black;">
-                                </div>
-                                <div class="flex ml-2">
-                                    <b>#2445</b>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y" href="">
-                        <div class="zoom-in">
-                            <div class="box border-3" style="text-align: left; font-size: 0.9rem; line-height: 2.0;" >
-                                <div class="flex" style="background-color: black; min-height: 30px">
-                                </div>
-                                <div class="m-2">
-                                <div><b>Client:</b> Mr Scaffold</div>
-                                <div><b>Location:</b> 254 canterbarry Road, Belmore NSW 2192</div>
-                                <div><b>Active Workers:</b> 15</div>
-                                </div>
-                                <div class="flex mt-2 mb-0" style="min-height: 2px; background-color:black;">
-                                </div>
-                                <div class="flex ml-2">
-                                    <b>#2445</b>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y" href="">
-                        <div class="zoom-in">
-                            <div class="box border-3" style="text-align: left; font-size: 0.9rem; line-height: 2.0;" >
-                                <div class="flex" style="background-color: black; min-height: 30px">
-                                </div>
-                                <div class="m-2">
-                                <div><b>Client:</b> Mr Scaffold</div>
-                                <div><b>Location:</b> 254 canterbarry Road, Belmore NSW 2192</div>
-                                <div><b>Active Workers:</b> 15</div>
-                                </div>
-                                <div class="flex mt-2 mb-0" style="min-height: 2px; background-color:black;">
-                                </div>
-                                <div class="flex ml-2">
-                                    <b>#2445</b>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y" href="">
-                        <div class="zoom-in">
-                            <div class="box border-3" style="text-align: left; font-size: 0.9rem; line-height: 2.0;" >
-                                <div class="flex" style="background-color: black; min-height: 30px">
-                                </div>
-                                <div class="m-2">
-                                <div><b>Client:</b> Mr Scaffold</div>
-                                <div><b>Location:</b> 254 canterbarry Road, Belmore NSW 2192</div>
-                                <div><b>Active Workers:</b> 15</div>
-                                </div>
-                                <div class="flex mt-2 mb-0" style="min-height: 2px; background-color:black;">
-                                </div>
-                                <div class="flex ml-2">
-                                    <b>#2445</b>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
+                        </a>
+                    @endforeach
                 </div>
             </div>
         </div>

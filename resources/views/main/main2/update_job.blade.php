@@ -1,15 +1,15 @@
 @extends('scripts')
 
-@section('up_title', 'New Jobs')
+@section('up_title', 'Update Job')
 @section('first_ref', 'Jobs')
-@section('second_ref', 'New Job')
+@section('second_ref', 'Update Job')
 @section('pg_act_2', 'breadcrumb--active')
 @section('pg_act_jo', 'side-menu--active')
 
 <?php $add = route('jobs');?>
 @section('first_add',$add)
 
-<?php $add2 = route('njob');?>
+<?php $add2 = route('ujob',['id' => 1]);?>
 @section('second_add',$add2)
 
 @section('main_content')
@@ -19,7 +19,7 @@
             <!-- BEGIN: General Report -->
             <div class="col-span-12 mt-4">
                 <div class="intro-y flex items-center h-8 xl:ml-12 xl:mr-12" style="background-color: #edeef0">
-                    <h5 style="font-size: 0.975rem; font-weight: bold;" class="ml-3">Create New Job</h5>
+                    <h5 style="font-size: 0.975rem; font-weight: bold;" class="ml-3">Update Job</h5>
                 </div>
                 <div class="grid grid-cols-12 gap-6 mt-0 xl:ml-12 xl:mr-12" style="font-weight: bold">
                     <div class="col-span-12 sm:col-span-6 xl:col-span-6 intro-y mt-2">
@@ -45,9 +45,9 @@
                         <form id="new_job_form" class="my-auto mx-auto bg-white xl:bg-transparent sm:px-8 xl:p-0 rounded-md xl:shadow-none w-full sm:w-3/4 lg:w-2/4 xl:w-auto" action="" method="post">
                             <div class="mb-1">Select Company</div>
                             <select id="add_job_company_id" name="company_id" form="new_job_form" class="intro-x input--lg border-theme-123 border-2 block mb-2" style="width: 90%; font-size:85%; height:30px; background-color:white;">
-                                @foreach ($vbl as $item)
+                                {{-- @foreach ($vbl as $item)
                                 <option value="{{$item->id}}">{{$item->c_name}}</option>
-                                @endforeach
+                                @endforeach --}}
                             </select>
                             <input type="text" id="add_job_location_id" name="j_location" form="new_job_form" class="p-2 border-theme-123 border-2 block" style="width: 90%; height:30px; font-size:85%;" placeholder="Job Location">
                             <div class="intro-x mt-5 xl:mt-2 xl:text-left">

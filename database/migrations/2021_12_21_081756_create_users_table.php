@@ -17,10 +17,11 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('u_name');
             $table->string('u_uname')->unique();
-            $table->string('u_email')->nullable();
+            $table->string('u_email')->unique();
             $table->string('u_pass');
             $table->string('u_dob');
             $table->unsignedBigInteger('u_phone');
+            $table->foreignId('role_id')->constrained();
             $table->timestamps();
         });
     }
