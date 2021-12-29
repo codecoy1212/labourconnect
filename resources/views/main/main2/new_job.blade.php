@@ -23,7 +23,7 @@
                 </div>
                 <div class="grid grid-cols-12 gap-6 mt-0 xl:ml-12 xl:mr-12" style="font-weight: bold">
                     <div class="col-span-12 sm:col-span-6 xl:col-span-6 intro-y mt-2">
-                        Job Number: # 4453
+                        Job Number: #{{$vbl2}}
                     </div>
                 </div>
                 <div class="grid grid-cols-12 gap-6 mt-0 xl:ml-12 xl:mr-12" style="font-weight: bold">
@@ -385,7 +385,7 @@
             var id1 = $("#add_job_company_id").val();
             var id2 = $("#add_job_location_id").val();
 
-            console.log(id1,id2);
+            // console.log(id1,id2);
             $.ajax({
                 type:"POST",
                 url:"add",

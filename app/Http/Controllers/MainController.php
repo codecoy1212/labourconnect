@@ -40,7 +40,11 @@ class MainController extends Controller
     {
         $vbl = Company::all();
 
-        return view('main.main2.new_job',compact('vbl'));
+        $vbl2 = DB::table('jobs')->orderBy('id', 'desc')
+        ->first();
+
+        $vbl2 = $vbl2->id+1;
+        return view('main.main2.new_job',compact('vbl','vbl2'));
     }
 
     public function users()

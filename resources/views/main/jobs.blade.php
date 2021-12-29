@@ -43,7 +43,7 @@
                 </div>
                 <div class="grid grid-cols-12 gap-6 xl:col-span-2 intro-y xl:ml-12 xl:mr-12">
                     @foreach ($jobs as $item)
-                        <a class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y" href="">
+                        <a class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y" href="{{route('ujob',['id' => $item->id])}}">
                             <div class="zoom-in">
                                 <div class="box border-3" style="text-align: left; font-size: 0.9rem; line-height: 2.0;" >
                                     <div class="flex" style="background-color: black; min-height: 30px">

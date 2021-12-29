@@ -49,7 +49,8 @@ Route::delete('/users/delete',[UserController::class,'del_user']);
 Route::get('/users/search',[UserController::class,'search_user']);
 
 Route::post('/jobs/add',[JobController::class,'add_job']);
-Route::get('/jobs/show/specific/{id}',[JobController::class,'show_job'])->name('ujob');;
+Route::get('/jobs/show/{id}',[JobController::class,'show_job'])->name('ujob');
+Route::get('/jobs/show/specific/detail',[JobController::class,'show_job_det']);
 Route::put('/jobs/edit',[JobController::class,'edit_job']);
 Route::delete('/jobs/delete',[JobController::class,'del_job']);
 Route::get('/jobs/search',[JobController::class,'search_user']);

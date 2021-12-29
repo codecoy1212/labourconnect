@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
 use App\Models\Job;
 use App\Models\Job_User;
 use Illuminate\Http\Request;
@@ -26,29 +27,72 @@ class JobController extends Controller
         }
     }
 
-    public function show_job(Request $request)
+    public function show_job_det(Request $request)
     {
-        $vbl = Job::find($request->id);
+        // return "hello";
+
+        $job = array();
+
+        $vbl = DB::table('jobs')
+        ->where('jobs.id',$request->id)
+        ->join('companies','companies.id','=','jobs.company_id')
+        ->select('jobs.id','jobs.j_location','companies.c_name','jobs.company_id')
+        ->first();
+        array_push($job,$vbl);
         // return $vbl;
-        return view('main.main2.update_job',compact('vbl'));
+
+
+        $vbl2 = DB::table('job__users')
+        ->where('job_id','=',$vbl->id)
+        ->join('users','users.id','=','job__users.user_id')
+        ->select('users.id','users.u_name')
+        ->get();
+        array_push($job,$vbl2);
+
+        return $job;
     }
 
-    // public function edit_job(Request $request)
-    // {
-    //     // return $request;
+    public function show_job(Request $request)
+    {
+        $vbl10 = Company::all();
 
-    //     $vbl = Job::find($request->id);
-    //     $vbl->c_name = $request->c_name;
-    //     $vbl->c_contact = $request->c_contact;
-    //     $vbl->c_phone = $request->c_phone;
-    //     $vbl->update();
-    // }
+        $vbl9 = Job::where('id',$request->id)->first();
 
-    // public function del_job(Request $request)
-    // {
-    //     $vbl = Job::find($request->id);
-    //     $vbl->delete();
-    // }
+        return view('main.main2.update_job',compact('vbl10','vbl9'));
+    }
+
+    public function edit_job(Request $request)
+    {
+        // return $request;
+
+        $vbl = Job::find($request->job_id);
+        $vbl->j_location = $request->j_location;
+        $vbl->company_id = $request->company_id;
+        $vbl->update();
+
+        $vbl2 = Job_User::where('job_id',$request->job_id)->get();
+        foreach ($vbl2 as $key ) {
+            $key->delete();
+        }
+
+        foreach ($request->job_users as $key ) {
+            $vbl1 = new Job_User;
+            $vbl1->job_id = $vbl->id;
+            $vbl1->user_id = $key;
+            $vbl1->save();
+        }
+    }
+
+    public function del_job(Request $request)
+    {
+        $vbl2 = Job_User::where('job_id',$request->id)->get();
+        foreach ($vbl2 as $key ) {
+            $key->delete();
+        }
+
+        $vbl1 = Job::find($request->id);
+        $vbl1->delete();
+    }
 
     public function search_user(Request $request)
     {
