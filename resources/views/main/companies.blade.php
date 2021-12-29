@@ -31,7 +31,7 @@
                                         @csrf
                                         <input type="text" name="c_name" id="add_c_name_id" class="p-2 border-theme-123 border-2 block mb-2" style="width: 86%; height:30px; font-size:85%;" placeholder="Company Name">
                                         <input type="text" name="c_contact" id="add_c_contact_id" class="p-2 border-theme-123 border-2 block mb-2" style="width: 86%; height:30px; font-size:85%;" placeholder="Contact Name">
-                                        <input type="number" name="c_phone" id="add_c_phone_id" class="p-2 border-theme-123 border-2 block mb-2" style="width: 86%; height:30px; font-size:85%;" placeholder="Phone Number">
+                                        <input type="text" name="c_phone" id="add_c_phone_id" class="p-2 border-theme-123 border-2 block mb-2" style="width: 86%; height:30px; font-size:85%;" placeholder="Phone Number">
                                         <div class="intro-x mt-2 mr-12" style="text-align:left">
                                             <button class="text-white bg-theme-123 p-0 pl-2 pr-2 btn_zoo_h" style="font-size: 85%; ">Add Company</button>
                                         </div>

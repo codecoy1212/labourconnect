@@ -75,7 +75,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="" class="menu">
+                        <a href="{{ route('logo')}}" class="menu">
                             <div class="menu__icon"> <i data-feather="log-out"></i> </div>
                             <div class="menu__title"> Log Out </div>
                         </a>
@@ -136,7 +136,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="" class="side-menu @yield('pg_act_ex')">
+                        <a href="{{ route('logo')}}" class="side-menu @yield('pg_act_ex')">
                             <div class="side-menu__icon"> <i data-feather="log-out"></i> </div>
                             <div class="side-menu__title"> Log Out </div>
                         </a>

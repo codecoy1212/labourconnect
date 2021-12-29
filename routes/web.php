@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\JobController;
+use App\Http\Controllers\LoginOutController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -54,3 +55,7 @@ Route::get('/jobs/show/specific/detail',[JobController::class,'show_job_det']);
 Route::put('/jobs/edit',[JobController::class,'edit_job']);
 Route::delete('/jobs/delete',[JobController::class,'del_job']);
 Route::get('/jobs/search',[JobController::class,'search_user']);
+
+Route::get('/login',[LoginOutController::class,'index']);
+Route::post('/login',[LoginOutController::class,'loggingIn'])->name('log');
+Route::get('/logout',[LoginOutController::class,'logged_out'])->name('logo');

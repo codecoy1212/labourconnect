@@ -11,61 +11,100 @@ class MainController extends Controller
 {
     public function index()
     {
-        return view('main.dashboard');
+        if(session()->get('s_uname'))
+        {
+            return view('main.dashboard');
+        }
+        else
+            return redirect('login');
+
     }
 
     public function jobs()
     {
-        $jobs = array();
+        if(session()->get('s_uname'))
+        {
+            $jobs = array();
 
-        $vbl = DB::table('jobs')
-        ->join('companies','companies.id','=','jobs.company_id')
-        ->select('jobs.id','jobs.j_location','companies.c_contact')
-        ->get();
-        // return $vbl;
-
-        foreach ($vbl as $key) {
-            $vbl2 =  DB::table('job__users')
-            ->where('job_id','=',$key->id)
-            ->select('job__users.*')
+            $vbl = DB::table('jobs')
+            ->join('companies','companies.id','=','jobs.company_id')
+            ->select('jobs.id','jobs.j_location','companies.c_contact')
             ->get();
-            $key->workers_count = count($vbl2);
-            array_push($jobs,$key);
-        }
+            // return $vbl;
 
-        return view('main.jobs', compact('jobs'));
+            foreach ($vbl as $key) {
+                $vbl2 =  DB::table('job__users')
+                ->where('job_id','=',$key->id)
+                ->select('job__users.*')
+                ->get();
+                $key->workers_count = count($vbl2);
+                array_push($jobs,$key);
+            }
+
+            return view('main.jobs', compact('jobs'));
+        }
+        else
+            return redirect('login');
+
     }
 
     public function new_job()
     {
-        $vbl = Company::all();
+        if(session()->get('s_uname'))
+        {
+            $vbl = Company::all();
 
-        $vbl2 = DB::table('jobs')->orderBy('id', 'desc')
-        ->first();
+            $vbl2 = DB::table('jobs')->orderBy('id', 'desc')
+            ->first();
 
-        $vbl2 = $vbl2->id+1;
-        return view('main.main2.new_job',compact('vbl','vbl2'));
+            $vbl2 = $vbl2->id+1;
+            return view('main.main2.new_job',compact('vbl','vbl2'));
+        }
+        else
+            return redirect('login');
     }
 
     public function users()
     {
-        $vbl = Role::all();
+        if(session()->get('s_uname'))
+        {
+            $vbl = Role::all();
 
-        return view('main.user',compact('vbl'));
+            return view('main.user',compact('vbl'));
+        }
+        else
+            return redirect('login');
     }
 
     public function companies()
     {
-        return view('main.companies');
+        if(session()->get('s_uname'))
+        {
+            return view('main.companies');
+        }
+        else
+            return redirect('login');
     }
 
     public function roles()
     {
-        return view('main.roles');
+        if(session()->get('s_uname'))
+        {
+            return view('main.roles');
+        }
+        else
+            return redirect('login');
+
     }
 
     public function reports()
     {
-        return view('main.reports');
+        if(session()->get('s_uname'))
+        {
+            return view('main.reports');
+        }
+        else
+            return redirect('login');
+
     }
 }

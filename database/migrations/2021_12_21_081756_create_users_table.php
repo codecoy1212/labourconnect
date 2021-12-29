@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('u_email')->unique();
             $table->string('u_pass');
             $table->string('u_dob');
-            $table->unsignedBigInteger('u_phone');
+            $table->string('u_phone');
             $table->foreignId('role_id')->constrained();
             $table->timestamps();
         });
