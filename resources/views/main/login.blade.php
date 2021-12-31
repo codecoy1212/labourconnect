@@ -8,7 +8,7 @@
         <meta name="description" content="Midone admin is super flexible, powerful, clean & modern responsive tailwind admin template with unlimited possibilities.">
         <meta name="keywords" content="admin template, Midone admin template, dashboard template, flat admin template, responsive admin template, web app">
         <meta name="author" content="LEFT4CODE">
-        <title>Mamburao - Login</title>
+        <title>Labour Connect - Login</title>
         <link rel="icon" type="image/x-icon" href="{{asset('dist/logof.ico')}}">
         <!-- BEGIN: CSS Assets-->
         <link rel="stylesheet" href="{{asset('dist/css/app.css')}}" />
