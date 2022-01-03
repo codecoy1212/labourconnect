@@ -19,6 +19,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', function(){
+    return redirect('login');
+});
+
 Route::get('/dashboard',[MainController::class,'index'])->name('dash');
 Route::get('/jobs',[MainController::class,'jobs'])->name('jobs');
 Route::get('/jobs/new_job',[MainController::class,'new_job'])->name('njob');
