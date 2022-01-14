@@ -59,6 +59,12 @@ Route::get('/jobs/show/specific/detail',[JobController::class,'show_job_det']);
 Route::put('/jobs/edit',[JobController::class,'edit_job']);
 Route::delete('/jobs/delete',[JobController::class,'del_job']);
 Route::get('/jobs/search',[JobController::class,'search_user']);
+Route::get('/jobs/show/user/role',[JobController::class,'show_user_role']);
+Route::get('/jobs/collection/show',[JobController::class,'fetch_jobs']);
+Route::get('/jobs/collection/show/completed',[JobController::class,'fetch_jobs_completed']);
+Route::put('/jobs/collection/show',[JobController::class,'mark_complete']);
+Route::get('/jobs/completed',[JobController::class,'completed'])->name('cjob');
+Route::get('/jobs/completed/show/{id}',[JobController::class,'completed_show'])->name('sjob');
 
 Route::get('/login',[LoginOutController::class,'index']);
 Route::post('/login',[LoginOutController::class,'loggingIn'])->name('log');

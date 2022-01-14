@@ -21,7 +21,6 @@ class CreateUsersTable extends Migration
             $table->string('u_pass');
             $table->string('u_dob');
             $table->string('u_phone');
-            $table->foreignId('role_id')->constrained();
             $table->timestamps();
         });
     }

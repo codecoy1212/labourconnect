@@ -20,7 +20,7 @@
                 <div class="grid grid-cols-12 gap-6 mt-0 xl:ml-12 xl:mr-12" style="font-weight: bold">
                     <div class="col-span-12 sm:col-span-6 xl:col-span-5 intro-y mb-2">
                         <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-                                <div class="box border-3" style="text-align: center; line-height: 2.0; height: 400px;">
+                                <div class="box border-3" style="text-align: center; line-height: 2.0; height: 360px;">
                                     <div class="" style="height: 40px;">
                                         <div class="ml-2">Add New User </div>
                                     </div>
@@ -34,11 +34,6 @@
                                             <input type="text" id="add_u_name_id" name="u_name" class="p-2 border-theme-123 border-2 block mb-2" style="width: 87%; height:30px; font-size:85%;" placeholder="Enter Full Name">
                                             <input type="date" id="add_u_dob_id" name="u_dob" class="border-theme-123 border-2 block mb-2" style="width: 87%; height:30px; font-size:85%;" placeholder="Date of Birth">
                                             <input type="number" id="add_u_phone_id" name="u_phone" class="p-2 border-theme-123 border-2 block mb-2" style="width: 87%; height:30px; font-size:85%;" placeholder="Mobile Number">
-                                            <select id="add_role_id" name="role_id" class="intro-x input--lg border-theme-123 border-2 block" style="width: 87%; font-size:85%; height:30px; background-color:white;">
-                                                @foreach ($vbl as $item)
-                                                    <option value="{{$item->id}}">{{$item->r_name}}</option>
-                                                @endforeach
-                                            </select>
                                             <div class="intro-x mt-1 mr-12">
                                                 <button class="text-white bg-theme-123 p-0 pl-2 pr-2 btn_zoo_h" style="font-size: 85%;">Add User</button>
                                             </div>
@@ -119,15 +114,6 @@
                             <div class="mb-2">Phone Number</div>
                             <input type="number" name="u_phone" id="edit_u_phone_id" class="input w-full border flex-1">
                         </div>
-                        <div class="intro-y col-span-12 px-2">
-                            <div class="mb-2">Select Role</div>
-                            <select id="edit_role_id" name="role_id" class="input w-full border flex-1">
-                                @foreach ($vbl as $item)
-                                    <option value="{{$item->id}}">{{$item->r_name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
                     </div><br>
                 </div>
                 <div class="px-5 pb-8 text-right">
@@ -179,7 +165,7 @@
                     for (let i = 0; i < data.data.length; i++) {
                         $("#check2").append(`
                             <div  class="flex border-2 border-theme-123 m-2 btn_zoo_g " style="height: 30px;font-size:0.9rem; ">
-                                <button value="`+data.data[i].id+`" class="ml-2 mr-auto update_user" id="special_id" style="display:inline">`+data.data[i].u_name+` | `+data.data[i].r_name+`</button>
+                                <button value="`+data.data[i].id+`" class="ml-2 mr-auto update_user" id="special_id" style="display:inline">`+data.data[i].u_name+`</button>
                                 <button value="`+data.data[i].id+`" class="mr-2 delete_user"> x </button>
                             </div>
                         `);
@@ -309,7 +295,7 @@
             for (let i = 0; i < data.data.length; i++) {
                 $("#check2").append(`
                     <div  class="flex border-2 border-theme-123 m-2 btn_zoo_g " style="height: 30px;font-size:0.9rem; ">
-                        <button value="`+data.data[i].id+`" class="ml-2 mr-auto update_user" id="special_id" style="display:inline">`+data.data[i].u_name+` | `+data.data[i].r_name+`</button>
+                        <button value="`+data.data[i].id+`" class="ml-2 mr-auto update_user" id="special_id" style="display:inline">`+data.data[i].u_name+`</button>
                         <button value="`+data.data[i].id+`" class="mr-2 delete_user"> x </button>
                     </div>
                 `);
@@ -401,7 +387,7 @@
             {
                 $("#check2").append(`
                     <div  class="flex border-2 border-theme-123 m-2 btn_zoo_g " style="height: 30px;font-size:0.9rem; ">
-                        <button value="`+data.data[i].id+`"  class="ml-2 mr-auto update_user" id="special_id" style="display:inline">`+data.data[i].u_name+` | `+data.data[i].r_name+`</button>
+                        <button value="`+data.data[i].id+`"  class="ml-2 mr-auto update_user" id="special_id" style="display:inline">`+data.data[i].u_name+`</button>
                         <button value="`+data.data[i].id+`" class="mr-2 delete_user"> x </button>
                     </div>
                 `);
@@ -513,7 +499,7 @@
             {
                 $("#check2").append(`
                     <div  class="flex border-2 border-theme-123 m-2 btn_zoo_g " style="height: 30px;font-size:0.9rem; ">
-                        <button value="`+data.data[i].id+`"  class="ml-2 mr-auto update_user" id="special_id" style="display:inline">`+data.data[i].u_name+` | `+data.data[i].r_name+`</button>
+                        <button value="`+data.data[i].id+`"  class="ml-2 mr-auto update_user" id="special_id" style="display:inline">`+data.data[i].u_name+`</button>
                         <button value="`+data.data[i].id+`" class="mr-2 delete_user"> x </button>
                     </div>
                 `);
@@ -618,7 +604,6 @@
             $("#edit_u_name_id").val(data.u_name);
             $("#edit_u_email_id").val(data.u_email);
             $("#edit_u_pass_id").val(data.u_pass);
-            $("#edit_role_id").val(data.role_id);
             $("#edit_u_dob_id").val(data.u_dob);
             $("#edit_u_phone_id").val(data.u_phone);
             $("#update_val_id").val(id2);

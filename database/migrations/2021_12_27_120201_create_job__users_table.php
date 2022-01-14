@@ -17,6 +17,7 @@ class CreateJobUsersTable extends Migration
             $table->id();
             $table->foreignId('job_id')->constrained();
             $table->foreignId('user_id')->constrained();
+            $table->foreignId('role_id')->constrained();
             $table->timestamps();
         });
     }

@@ -24,7 +24,6 @@
                 <div class="grid grid-cols-12 gap-6 mt-0 xl:ml-12 xl:mr-12" style="font-weight: bold">
                     <div class="col-span-12 sm:col-span-6 xl:col-span-6 intro-y mt-2">
                         Job Number: #{{$vbl9->id}}
-                        <Button class="delete_job text-white bg-theme-123 p-2 pt-1 pb-1 btn_zoo_h" style="margin-left:20px">Delete Job</Button>
                     </div>
                 </div>
                 <div class="grid grid-cols-12 gap-6 mt-0 xl:ml-12 xl:mr-12" style="font-weight: bold">
@@ -43,10 +42,16 @@
                         </form>
                             <div id="check2"></div>
                             <div id="check"></div>
+                                <select id="edit_user_role_id" name="role_id" form="update_job_form" class="select_role intro-x input--lg border-theme-123 border-2 block mb-2" style="width: 90%; font-size:85%; height:33px; background-color:white;" disabled>
+                                    <option value="jfiuh4893hfubjehgw3d3" class="">Select User Role</option>
+                                    @foreach ($vbl3 as $item)
+                                    <option value="{{$item->id}}" class="">{{$item->r_name}}</option>
+                                    @endforeach
+                                </select>
                         <form id="update_job_form" class="my-auto mx-auto bg-white xl:bg-transparent sm:px-8 xl:p-0 rounded-md xl:shadow-none w-full sm:w-3/4 lg:w-2/4 xl:w-auto" action="" method="post">
                             <div class="mb-1">Select Company</div>
                             <select id="edit_job_company_id" name="company_id" form="update_job_form" class="intro-x input--lg border-theme-123 border-2 block mb-2" style="width: 90%; font-size:85%; height:30px; background-color:white;">
-                                @foreach ($vbl10 as $item)
+                                @foreach ($vbl as $item)
                                 <option value="{{$item->id}}">{{$item->c_name}}</option>
                                 @endforeach
                             </select>
@@ -80,14 +85,16 @@
 
     $(document).ready(function(){
 
+        var glb_vbl = "";
+        var glb_arr = [];
+        var glb_arr_2 = [];
+
         $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
         });
 
-        var glb_vbl = "";
-        var glb_arr = [];
 
         var get_data = "<?php echo $vbl9->id; ?>";
         // console.log(get_data);
@@ -105,27 +112,28 @@
                 for (let i = 0; i < data[1].length; i++) {
 
                     glb_arr.push(data[1][i].id);
+                    glb_arr_2.push(data[1][i].role_id);
                     // console.log(glb_arr);
 
                     $("#check3").append(`
-                    <button id="edit_job_user_btn`+data[1][i].id+`" value="`+data[1][i].id+`"class="remove_btn flex border-2 border-theme-123 btn_zoo_g m-2" style="height: 30px; width:96%; font-size:0.9rem;">
+                    <button id="edit_job_user_btn`+data[1][i].id+`" value="`+data[1][i].id+`&`+data[1][i].role_id+`"class="remove_btn flex border-2 border-theme-123 btn_zoo_g m-2" style="height: 30px; width:96%; font-size:0.9rem;">
                     <input type="hidden" id="edit_job_user_id`+data[1][i].id+`" form="update_job_form" value="`+data[1][i].id+`" name="id`+data[1][i].id+`">
                     <div class="mr-auto ml-2">
-                        `+data[1][i].u_name+`
+                        `+data[1][i].u_name+` | `+data[1][i].r_name+`
                     </div>
                     <div class="mr-2"><b> x </b></div>
                     </button>
                     `);
 
                 }
+                // console.log(glb_arr);
+                // console.log(glb_arr_2);
 
             },
             error: function(error){
                 // console.log(error);
             },
         });
-
-
 
         $(document).on("submit","#search_form", function(event){
             event.preventDefault();
@@ -229,6 +237,8 @@
             $("#check2").empty();
             $("#check").empty();
             $("#search_id").val("");
+            $('#edit_user_role_id').prop('disabled', true);
+            $('#edit_user_role_id').val("jfiuh4893hfubjehgw3d3");
 
         });
 
@@ -265,7 +275,7 @@
                 `);
             }
 
-            var trs = `<div class="mt-2" style="height:30px; width:90%; font-size:0.9rem; ">
+            var trs = `<div class="mt-2 mb-4" style="height:30px; width:90%; font-size:0.9rem; ">
                         <nav role="navigation" aria-label="Pagination Navigation" class="flex items-center justify-between">
                             <div>
                                 <p class="text-sm text-gray-700 leading-5">
@@ -351,6 +361,48 @@
             });
         }
 
+        var user_id_to_add = 0;
+
+        $(document).on("change",".select_role",function(e){
+            var id2 = $(this).val();
+            // console.log(id2);
+            // console.log(user_id_to_add);
+
+            $.ajax({
+                type:"GET",
+                url:'../../jobs/show/user/role/',
+                data: { id: user_id_to_add, role_id: id2},
+            }).done(function(data){
+                // console.log(data)
+
+                // console.log(glb_arr);
+                glb_arr.push(data[0].id);
+                var xtreme = Number(id2)
+                glb_arr_2.push(xtreme);
+                // console.log(glb_arr);
+
+
+
+                $("#check3").append(`
+                <button id="edit_job_user_btn`+data[0].id+`" value="`+data[0].id+`&`+id2+`"class="remove_btn flex border-2 border-theme-123 btn_zoo_g m-2" style="height: 30px; width:96%; font-size:0.9rem;">
+                <input type="hidden" id="edit_job_user_id`+data[0].id+`" form="update_job_form" value="`+data[0].id+`" name="id`+data[0].id+`">
+                <div class="mr-auto ml-2">
+                    `+data[0].u_name+` | `+data[1].r_name+`
+                </div>
+                <div class="mr-2"><b> x </b></div>
+                </button>
+                `);
+
+                $('#edit_user_role_id').prop('disabled', true);
+                $('#search_id').val("");
+                toastr.success("User Added to Que.");
+                $('#edit_user_role_id').val("jfiuh4893hfubjehgw3d3");
+                // console.log(glb_arr);
+                // console.log(glb_arr_2);
+            });
+
+        });
+
         $(document).on("click",".allocated_add",function(e){
             e.preventDefault();
             var id2 = $(this).val();
@@ -371,29 +423,18 @@
 
             // console.log(('#add_job_user_id'+data.id+''));
 
-            if ($('#edit_job_user_id'+id2+'').length) {              //to check if a div exists
-                // console.log(('#edit_job_user_id'+data.id+''));
-                toastr.error("Worker Already Added");
-            }
-            else
-            {
-                // console.log(glb_arr);
-                glb_arr.push(data.id);
-                // console.log(glb_arr);
-
-                $("#check3").append(`
-                <button id="edit_job_user_btn`+data.id+`" value="`+data.id+`"class="remove_btn flex border-2 border-theme-123 btn_zoo_g m-2" style="height: 30px; width:96%; font-size:0.9rem;">
-                <input type="hidden" id="edit_job_user_id`+data.id+`" form="update_job_form" value="`+data.id+`" name="id`+data.id+`">
-                <div class="mr-auto ml-2">
-                    `+data.u_name+`
-                </div>
-                <div class="mr-2"><b> x </b></div>
-                </button>
-                `);
-            }
-
-
-
+                if ($('#edit_job_user_id'+id2+'').length) {              //to check if a div exists
+                    // console.log(('#add_job_user_id'+data.id+''));
+                    toastr.error("Worker Already Added");
+                }
+                else
+                {
+                    $("#search_id").val(data.u_name);
+                    // console.log("");
+                    toastr.info("Now Select Role for the user...");
+                    $("#edit_user_role_id").removeAttr("disabled");
+                    user_id_to_add = data.id;
+                }
             });
         });
 
@@ -402,20 +443,40 @@
             e.preventDefault();
             var id2 = $(this).val();
             // console.log(id2);
+            const myArray = id2.split("&");
+
+            // $.each(myArray,function(key,value) {
+            //     console.log(value);
+            // });
+
+            // console.log(myArray[0]);
+            // console.log(myArray[1]);
 
             if(confirm("Do you want to remove this worker ?")){
-                $('#edit_job_user_btn'+id2+'').remove();
+                $('#edit_job_user_btn'+myArray[0]+'').remove();
 
                 // console.log(id2);
                 for (let i = 0; i < glb_arr.length; i++) {
-                    if(glb_arr[i] == id2)
+                    if(glb_arr[i] == myArray[0])
                     {
                         glb_arr.splice(i, 1);
                         break;
                     }
                 }
+
+                for (let i = 0; i < glb_arr_2.length; i++) {
+                    if(glb_arr_2[i] == myArray[1])
+                    {
+                        glb_arr_2.splice(i, 1);
+                        break;
+                    }
+                }
                 // console.log(glb_arr);
+                // console.log(glb_arr_2);
+                // console.log(glb_arr);
+                toastr.success("User Removed from Que.");
             }
+
         });
 
 
@@ -428,10 +489,10 @@
             $.ajax({
                 type:"PUT",
                 url:"../edit",
-                data: { job_id: get_data, j_location: id2, company_id: id1, job_users: glb_arr },
+                data: {job_id: get_data, j_location: id2, company_id: id1, job_users: glb_arr, users_role: glb_arr_2},
                 success: function(response){
                     // console.log(response);
-                    toastr.success("Job Updated");
+                    toastr.success("Job Added");
                     window.location.replace("../../jobs");
                 },
                 error: function(error){
@@ -441,22 +502,8 @@
                     });
                     // $("#add_subject_errors").append(`<li>`+value[0]+`</li>`);
                     // console.log(error);
-                },
+                }
             });
-        });
-
-        $(document).on("click", ".delete_job", function(e){
-        if(confirm("Do you want to delete this Job ?")){
-        $.ajax({
-            type: 'DELETE',
-            url : '../delete',
-            data: { id: get_data,},
-        }).done(function(data){
-            console.log(data);
-            toastr.success("Job Deleted");
-            window.location.replace("../../jobs");
-        });
-        }
         });
 
     });

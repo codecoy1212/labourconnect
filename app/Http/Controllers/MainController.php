@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
+use App\Models\Job;
 use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -24,24 +25,10 @@ class MainController extends Controller
     {
         if(session()->get('s_uname'))
         {
-            $jobs = array();
+            $vbl4 = Job::where('j_status',"INACTIVE")->get();
+            $vbl4 = count($vbl4);
 
-            $vbl = DB::table('jobs')
-            ->join('companies','companies.id','=','jobs.company_id')
-            ->select('jobs.id','jobs.j_location','companies.c_contact')
-            ->get();
-            // return $vbl;
-
-            foreach ($vbl as $key) {
-                $vbl2 =  DB::table('job__users')
-                ->where('job_id','=',$key->id)
-                ->select('job__users.*')
-                ->get();
-                $key->workers_count = count($vbl2);
-                array_push($jobs,$key);
-            }
-
-            return view('main.jobs', compact('jobs'));
+            return view('main.jobs',compact('vbl4'));
         }
         else
             return redirect('login');
@@ -54,11 +41,16 @@ class MainController extends Controller
         {
             $vbl = Company::all();
 
+            $vbl3 = Role::all();
+
             $vbl2 = DB::table('jobs')->orderBy('id', 'desc')
             ->first();
 
+            if(empty($vbl2))
+            $vbl2 = 1;
+            else
             $vbl2 = $vbl2->id+1;
-            return view('main.main2.new_job',compact('vbl','vbl2'));
+            return view('main.main2.new_job',compact('vbl','vbl2','vbl3'));
         }
         else
             return redirect('login');

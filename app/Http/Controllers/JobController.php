@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Company;
 use App\Models\Job;
 use App\Models\Job_User;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -13,6 +14,8 @@ class JobController extends Controller
 {
     public function add_job(Request $request)
     {
+        // return $request;
+
         if(session()->get('s_uname'))
         {
             // return $request;
@@ -34,15 +37,19 @@ class JobController extends Controller
                 $vbl = new Job;
                 $vbl->j_location = $request->j_location;
                 $vbl->company_id = $request->company_id;
+                $vbl->j_status = "ACTIVE";
                 $vbl->save();
 
                 if($request->job_users == null || empty($request->job_users)){}
                 else
                 {
+                    $i = 0;
                     foreach ($request->job_users as $key ) {
                         $vbl1 = new Job_User;
                         $vbl1->job_id = $vbl->id;
                         $vbl1->user_id = $key;
+                        $vbl1->role_id = $request->users_role[$i];
+                        $i++;
                         $vbl1->save();
                     }
                 }
@@ -72,7 +79,8 @@ class JobController extends Controller
             $vbl2 = DB::table('job__users')
             ->where('job_id','=',$vbl->id)
             ->join('users','users.id','=','job__users.user_id')
-            ->select('users.id','users.u_name')
+            ->join('roles','roles.id','=','job__users.role_id')
+            ->select('users.id','users.u_name','roles.id as role_id','roles.r_name')
             ->get();
             array_push($job,$vbl2);
             return $job;
@@ -86,11 +94,13 @@ class JobController extends Controller
     {
         if(session()->get('s_uname'))
         {
-            $vbl10 = Company::all();
+            $vbl = Company::all();
+
+            $vbl3 = Role::all();
 
             $vbl9 = Job::where('id',$request->id)->first();
 
-            return view('main.main2.update_job',compact('vbl10','vbl9'));
+            return view('main.main2.update_job',compact('vbl','vbl9','vbl3'));
         }
         else
             return redirect('login');
@@ -120,7 +130,8 @@ class JobController extends Controller
                 $vbl = Job::find($request->job_id);
                 $vbl->j_location = $request->j_location;
                 $vbl->company_id = $request->company_id;
-                $vbl->update();
+                $vbl->j_status = "ACTIVE";
+                $vbl->save();
 
                 $vbl2 = Job_User::where('job_id',$request->job_id)->get();
                 foreach ($vbl2 as $key ) {
@@ -130,10 +141,13 @@ class JobController extends Controller
                 if($request->job_users == null || empty($request->job_users)){}
                 else
                 {
+                    $i = 0;
                     foreach ($request->job_users as $key ) {
                         $vbl1 = new Job_User;
                         $vbl1->job_id = $vbl->id;
                         $vbl1->user_id = $key;
+                        $vbl1->role_id = $request->users_role[$i];
+                        $i++;
                         $vbl1->save();
                     }
                 }
@@ -165,9 +179,6 @@ class JobController extends Controller
         if(session()->get('s_uname'))
         {
             $vbl = DB::table('users')
-            ->join('roles','roles.id','=','users.role_id')
-            ->select('users.*','roles.r_name')
-            ->where('r_name', 'like',"%".$request->search."%")
             ->orWhere('u_name', 'like',"%".$request->search."%")
             ->orWhere('u_uname', 'like',"%".$request->search."%")
             ->orWhere('u_email', 'like',"%".$request->search."%")
@@ -180,5 +191,102 @@ class JobController extends Controller
         else
             return redirect('login');
 
+    }
+
+    public function show_user_role(Request $request)
+    {
+        if(session()->get('s_uname'))
+        {
+            $vbl2 = Role::where('id',$request->role_id)->first();
+
+            $vbl = DB::table('users')
+            ->where('users.id',$request->id)
+            ->select('users.*')
+            ->first();
+            return array($vbl,$vbl2);
+        }
+        else
+            return redirect('login');
+    }
+
+    public function fetch_jobs()
+    {
+        $jobs = array();
+
+        $vbl = DB::table('jobs')
+        ->where('j_status','=','ACTIVE')
+        ->join('companies','companies.id','=','jobs.company_id')
+        ->select('jobs.id','jobs.j_location','companies.c_contact')
+        ->get();
+        // return $vbl;
+
+        foreach ($vbl as $key) {
+            $vbl2 =  DB::table('job__users')
+            ->where('job_id','=',$key->id)
+            ->select('job__users.*')
+            ->get();
+            $key->workers_count = count($vbl2);
+            array_push($jobs,$key);
+        }
+        return $jobs;
+    }
+
+    public function fetch_jobs_completed()
+    {
+        $jobs = array();
+
+        $vbl = DB::table('jobs')
+        ->where('j_status','=','INACTIVE')
+        ->join('companies','companies.id','=','jobs.company_id')
+        ->select('jobs.id','jobs.j_location','companies.c_contact')
+        ->get();
+        // return $vbl;
+
+        foreach ($vbl as $key) {
+            $vbl2 =  DB::table('job__users')
+            ->where('job_id','=',$key->id)
+            ->select('job__users.*')
+            ->get();
+            $key->workers_count = count($vbl2);
+            array_push($jobs,$key);
+        }
+        return $jobs;
+    }
+
+    public function mark_complete(Request $request)
+    {
+        // return $request;
+
+        $vbl = Job::find($request->id);
+        $vbl->j_status = "INACTIVE";
+        $vbl->update();
+        // return $vbl;
+    }
+
+    public function completed()
+    {
+        if(session()->get('s_uname'))
+        {
+            $vbl4 = Job::where('j_status',"ACTIVE")->get();
+            $vbl4 = count($vbl4);
+
+            return view('main.c_jobs',compact('vbl4'));
+        }
+        else
+            return redirect('login');
+    }
+
+    public function completed_show(Request $request)
+    {
+        if(session()->get('s_uname'))
+        {
+            $vbl9 = Job::where('id',$request->id)->first();
+
+            $vbl = Company::find($vbl9->id);
+
+            return view('main.main2.com_specific',compact('vbl','vbl9'));
+        }
+        else
+            return redirect('login');
     }
 }
