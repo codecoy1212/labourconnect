@@ -24,6 +24,11 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     #main
     Route::post('mobile/logout',[MobileController::class,'logout']);
     Route::get('mobile/profile/show',[MobileController::class,'profile']);
+    Route::post('mobile/work/submit',[MobileController::class,'submit_work']);
+    Route::get('mobile/work/time_sheet/current',[MobileController::class,'get_curr']);
+    Route::get('mobile/work/time_sheet/previous',[MobileController::class,'get_prev']);
+    Route::get('mobile/work/get_today_jobs',[MobileController::class,'today_jobs']);
+    Route::get('mobile/work/job/details',[MobileController::class,'job_details']);
 });
 
 #default

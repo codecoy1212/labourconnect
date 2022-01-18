@@ -6,7 +6,10 @@ use App\Models\Company;
 use App\Models\Job;
 use App\Models\Job_User;
 use App\Models\Role;
+use Carbon\Carbon;
+use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
@@ -22,11 +25,14 @@ class JobController extends Controller
             $validator = Validator::make($request->all(),[
                 'j_location'=> 'required|min:5',
                 'company_id'=> 'required|numeric',
+                'j_date'=> 'required|date',
             ],[
                 'j_location.required' => 'Location is required.',
                 'j_location.min' => 'Location must be of 5 characters.',
                 'company_id.required' => 'Company ID is required.',
                 'company_id.numeric' => 'Company ID should be numeric.',
+                'j_date.required' => 'Date is required for Job to be submitted.',
+                'j_date.date' => 'Job date format Incorrect.',
             ]);
             if ($validator->fails())
             {
@@ -34,9 +40,15 @@ class JobController extends Controller
             }
             else
             {
+                // $vbl1 = date('d/m/Y h:i:s A');
+                // $vbl1 = $request->date;
+                // $time = date('d/m/Y',strtotime($vbl1));
+                // return $time;
+
                 $vbl = new Job;
                 $vbl->j_location = $request->j_location;
                 $vbl->company_id = $request->company_id;
+                $vbl->j_date = $request->j_date;
                 $vbl->j_status = "ACTIVE";
                 $vbl->save();
 
@@ -70,7 +82,7 @@ class JobController extends Controller
             $vbl = DB::table('jobs')
             ->where('jobs.id',$request->id)
             ->join('companies','companies.id','=','jobs.company_id')
-            ->select('jobs.id','jobs.j_location','companies.c_name','jobs.company_id')
+            ->select('jobs.id','jobs.j_location','companies.c_name','jobs.company_id','jobs.j_date')
             ->first();
             array_push($job,$vbl);
             // return $vbl;
@@ -115,11 +127,14 @@ class JobController extends Controller
             $validator = Validator::make($request->all(),[
                 'j_location'=> 'required|min:5',
                 'company_id'=> 'required|numeric',
+                'j_date'=> 'required|date',
             ],[
                 'j_location.required' => 'Location is required.',
                 'j_location.min' => 'Location must be of 5 characters.',
                 'company_id.required' => 'Company ID is required.',
                 'company_id.numeric' => 'Company ID should be numeric.',
+                'j_date.required' => 'Date is required for Job to be submitted.',
+                'j_date.date' => 'Job date format Incorrect.',
             ]);
             if ($validator->fails())
             {
@@ -130,6 +145,7 @@ class JobController extends Controller
                 $vbl = Job::find($request->job_id);
                 $vbl->j_location = $request->j_location;
                 $vbl->company_id = $request->company_id;
+                $vbl->j_date = $request->j_date;
                 $vbl->j_status = "ACTIVE";
                 $vbl->save();
 

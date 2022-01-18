@@ -56,6 +56,8 @@
                                 @endforeach
                             </select>
                             <input type="text" id="edit_job_location_id" name="j_location" form="update_job_form" class="p-2 border-theme-123 border-2 block" style="width: 90%; height:30px; font-size:85%;" placeholder="Job Location">
+                            <div class="mb-1 mt-2">Select Date</div>
+                            <input type="date" id="edit_job_date_id" name="j_date" form="update_job_form" class="border-theme-123 border-2 block" style="width: 90%; height:30px; font-size:85%;" placeholder="Job Date">
                             <div class="intro-x mt-5 xl:mt-2 xl:text-left">
                                 <button class="text-white bg-theme-123 p-1 pl-2 pr-2 btn_zoo_h" style="font-size: 85%;">Update Job</button>
                             </div>
@@ -104,10 +106,11 @@
             url:'specific/detail',
             data: {id: get_data},
             success: function(data){
-                // console.log(data);
+                console.log(data);
 
                 $("#edit_job_location_id").val(data[0].j_location);
                 $("#edit_job_company_id").val(data[0].company_id);
+                $("#edit_job_date_id").val(data[0].j_date);
 
                 for (let i = 0; i < data[1].length; i++) {
 
@@ -484,15 +487,16 @@
             event.preventDefault();
             var id1 = $("#edit_job_company_id").val();
             var id2 = $("#edit_job_location_id").val();
+            var id3 = $("#edit_job_date_id").val();
 
             // console.log(id1,id2);
             $.ajax({
                 type:"PUT",
                 url:"../edit",
-                data: {job_id: get_data, j_location: id2, company_id: id1, job_users: glb_arr, users_role: glb_arr_2},
+                data: {job_id: get_data, j_location: id2, company_id: id1,  j_date: id3, job_users: glb_arr, users_role: glb_arr_2},
                 success: function(response){
                     // console.log(response);
-                    toastr.success("Job Added");
+                    toastr.success("Job Updated");
                     window.location.replace("../../jobs");
                 },
                 error: function(error){
