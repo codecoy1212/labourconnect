@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Job_User;
 use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -94,6 +95,8 @@ class RoleController extends Controller
     {
         if(session()->get('s_uname'))
         {
+            Job_User::where('role_id',$request->id)->delete();
+
             $vbl = Role::find($request->id);
             $vbl->delete();
         }

@@ -29,6 +29,7 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     Route::get('mobile/work/time_sheet/previous',[MobileController::class,'get_prev']);
     Route::get('mobile/work/get_today_jobs',[MobileController::class,'today_jobs']);
     Route::get('mobile/work/job/details',[MobileController::class,'job_details']);
+    Route::get('mobile/work/job/done/details',[MobileController::class,'job_done_details']);
 });
 
 #default

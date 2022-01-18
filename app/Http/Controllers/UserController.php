@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DoneJob;
+use App\Models\Job_User;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -146,6 +148,9 @@ class UserController extends Controller
     {
         if(session()->get('s_uname'))
         {
+            DoneJob::where('user_id',$request->id)->delete();
+            Job_User::where('user_id',$request->id)->delete();
+
             $vbl = User::find($request->id);
             $vbl->delete();
         }

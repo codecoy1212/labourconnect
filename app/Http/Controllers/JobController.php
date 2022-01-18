@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
+use App\Models\DoneJob;
 use App\Models\Job;
 use App\Models\Job_User;
 use App\Models\Role;
@@ -181,6 +182,8 @@ class JobController extends Controller
             foreach ($vbl2 as $key ) {
                 $key->delete();
             }
+
+            DoneJob::where('job_id',$request->id)->delete();
 
             $vbl1 = Job::find($request->id);
             $vbl1->delete();

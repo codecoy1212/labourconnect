@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 
 use App\Models\Company;
+use App\Models\DoneJob;
+use App\Models\Job;
+use App\Models\Job_User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -111,6 +114,13 @@ class CompanyController extends Controller
     {
         if(session()->get('s_uname'))
         {
+            $vbl2 = Job::where('company_id',$request->id)->get();
+            foreach ($vbl2 as $value) {
+                Job_User::where('job_id',$value->id)->delete();
+                DoneJob::where('job_id',$value->id)->delete();
+            }
+            Job::where('company_id',$request->id)->delete();
+
             $vbl = Company::find($request->id);
             $vbl->delete();
         }
