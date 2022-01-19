@@ -241,7 +241,7 @@ class MobileController extends Controller
                 ->join('jobs','jobs.id','=','done_jobs.job_id')
                 ->where('done_jobs.user_id','=',$request->user_id)
                 ->where('jobs.j_date','=',$days_dates[$i])
-                ->select('done_jobs.id as done_job_id','jobs.j_date','done_jobs.start','done_jobs.finish')
+                ->select('done_jobs.id as done_job_id','jobs.j_date','done_jobs.start','done_jobs.finish','done_jobs.break')
                 ->first();
 
                 $day = date('D',strtotime($days_dates[$i]));
@@ -249,6 +249,10 @@ class MobileController extends Controller
                 if(empty($vbl))
                 {
                     $vbl2[$day]['j_date']=$days_dates[$i];
+                    $vbl2[$day]['done_job_id']=null;
+                    $vbl2[$day]['start']=null;
+                    $vbl2[$day]['finish']=null;
+                    $vbl2[$day]['break']=null;
                     $vbl2[$day]['submission_status']=false;
                     $vbl2[$day]['working_hours']=0;
 
@@ -349,7 +353,7 @@ class MobileController extends Controller
                 ->join('jobs','jobs.id','=','done_jobs.job_id')
                 ->where('done_jobs.user_id','=',$request->user_id)
                 ->where('jobs.j_date','=',$days_dates[$i])
-                ->select('done_jobs.id as done_job_id','jobs.j_date','done_jobs.start','done_jobs.finish')
+                ->select('done_jobs.id as done_job_id','jobs.j_date','done_jobs.start','done_jobs.finish','done_jobs.break')
                 ->first();
 
                 $day = date('D',strtotime($days_dates[$i]));
@@ -357,6 +361,10 @@ class MobileController extends Controller
                 if(empty($vbl))
                 {
                     $vbl2[$day]['j_date']=$days_dates[$i];
+                    $vbl2[$day]['done_job_id']=null;
+                    $vbl2[$day]['start']=null;
+                    $vbl2[$day]['finish']=null;
+                    $vbl2[$day]['break']=null;
                     $vbl2[$day]['submission_status']=false;
                     $vbl2[$day]['working_hours']=0;
 
