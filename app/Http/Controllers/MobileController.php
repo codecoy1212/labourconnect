@@ -148,19 +148,34 @@ class MobileController extends Controller
         }
         else
         {
-            $vbl = new DoneJob;
-            $vbl->job_id = $request->job_id;
-            $vbl->user_id = $request->user_id;
-            $vbl->start = $request->start;
-            $vbl->finish = $request->finish;
-            $vbl->break = $request->break;
-            $vbl->supervisor = $request->supervisor;
-            $vbl->signature = $request->signature;
-            $vbl->save();
+            $var = $request->break;
+            // return $var;
+            if($var == "00:45" || $var == "01:00" || $var == "01:15" ||
+               $var == "01:30" || $var == "01:45" || $var == "02:00" || $var == "00:30" )
+            {
+                $vbl = new DoneJob;
+                $vbl->job_id = $request->job_id;
+                $vbl->user_id = $request->user_id;
+                $vbl->start = $request->start;
+                $vbl->finish = $request->finish;
+                $vbl->break = $request->break;
+                $vbl->supervisor = $request->supervisor;
+                $vbl->signature = $request->signature;
+                $vbl->save();
 
-            $str['status']=true;
-            $str['message']="USER WORK SUBMITTED";
-            return $str;
+                $str['status']=true;
+                $str['message']="USER WORK SUBMITTED";
+                return $str;
+            }
+            else
+            {
+                $str['status']=false;
+                $str['message']="ONLY GIVEN BREAK TIME ALLOWED";
+                return $str;
+            }
+
+
+
         }
     }
 
@@ -254,7 +269,7 @@ class MobileController extends Controller
                     $vbl2[$day]['finish']=null;
                     $vbl2[$day]['break']=null;
                     $vbl2[$day]['submission_status']=false;
-                    $vbl2[$day]['working_hours']=0;
+                    $vbl2[$day]['working_hours']=null;
 
                 }
                 else
@@ -264,6 +279,23 @@ class MobileController extends Controller
                     $time1 = strtotime($vbl->start);
                     $time2 = strtotime($vbl->finish);
                     $difference = round(abs($time2 - $time1) / 3600,2);
+
+                    $var3 = $vbl->break;
+                    if($var3 == "00:30")
+                    $difference = $difference - 0.50;
+                    if($var3 == "00:45")
+                    $difference = $difference - 0.75;
+                    if($var3 == "01:00")
+                    $difference = $difference - 0.10;
+                    if($var3 == "01:15")
+                    $difference = $difference - 1.25;
+                    if($var3 == "01:30")
+                    $difference = $difference - 1.50;
+                    if($var3 == "01:45")
+                    $difference = $difference - 1.75;
+                    if($var3 == "02:00")
+                    $difference = $difference - 2.00;
+
                     $vbl->working_hours=$difference;
                     $vbl2[$day]=$vbl;
                 }
@@ -366,7 +398,7 @@ class MobileController extends Controller
                     $vbl2[$day]['finish']=null;
                     $vbl2[$day]['break']=null;
                     $vbl2[$day]['submission_status']=false;
-                    $vbl2[$day]['working_hours']=0;
+                    $vbl2[$day]['working_hours']=null;
 
                 }
                 else
@@ -376,6 +408,23 @@ class MobileController extends Controller
                     $time1 = strtotime($vbl->start);
                     $time2 = strtotime($vbl->finish);
                     $difference = round(abs($time2 - $time1) / 3600,2);
+
+                    $var3 = $vbl->break;
+                    if($var3 == "00:30")
+                    $difference = $difference - 0.50;
+                    if($var3 == "00:45")
+                    $difference = $difference - 0.75;
+                    if($var3 == "01:00")
+                    $difference = $difference - 0.10;
+                    if($var3 == "01:15")
+                    $difference = $difference - 1.25;
+                    if($var3 == "01:30")
+                    $difference = $difference - 1.50;
+                    if($var3 == "01:45")
+                    $difference = $difference - 1.75;
+                    if($var3 == "02:00")
+                    $difference = $difference - 2.00;
+
                     $vbl->working_hours=$difference;
                     $vbl2[$day]=$vbl;
                 }
