@@ -524,6 +524,27 @@ class MobileController extends Controller
         }
         else
         {
+            $time1 = strtotime($vbl->start);
+            $time2 = strtotime($vbl->finish);
+            $difference = round(abs($time2 - $time1) / 3600,2);
+
+            $var3 = $vbl->break;
+            if($var3 == "00:30")
+            $difference = $difference - 0.50;
+            if($var3 == "00:45")
+            $difference = $difference - 0.75;
+            if($var3 == "01:00")
+            $difference = $difference - 0.10;
+            if($var3 == "01:15")
+            $difference = $difference - 1.25;
+            if($var3 == "01:30")
+            $difference = $difference - 1.50;
+            if($var3 == "01:45")
+            $difference = $difference - 1.75;
+            if($var3 == "02:00")
+            $difference = $difference - 2.00;
+            $vbl->working_hours=$difference;
+
             $str['status']=true;
             $str['message']="DONE JOB SHOWN FOR THIS ID";
             $str['data']=$vbl;
