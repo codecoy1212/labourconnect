@@ -247,7 +247,7 @@ class MobileController extends Controller
             // $difference = round(abs($time2 - $time1) / 3600,2);
             // return $difference;
 
-            $final_array = array();
+            // $final_array = array();
 
             for ($i=0; $i < count($days_dates); $i++) {
                 // echo $days_dates[$i];
@@ -300,14 +300,14 @@ class MobileController extends Controller
                     $vbl2[$day]=$vbl;
                 }
 
-                array_push($final_array,$vbl2);
+                // array_push($final_array,$vbl2);
 
-                $vbl2 = null;
+                // $vbl2 = null;
             }
 
             $str['status']=true;
             $str['message']="WORK SUBMISSION SHOWN FOR THE CURRENT WEEK";
-            $str['data']=$final_array;
+            $str['data']=$vbl2;
 
             return $str;
         }
@@ -429,14 +429,14 @@ class MobileController extends Controller
                     $vbl2[$day]=$vbl;
                 }
 
-                array_push($final_array,$vbl2);
+                // array_push($final_array,$vbl2);
 
-                $vbl2 = null;
+                // $vbl2 = null;
             }
 
             $str['status']=true;
             $str['message']="WORK SUBMISSION SHOWN FOR THE PREVIOUS WEEK";
-            $str['data']=$final_array;
+            $str['data']=$vbl2;
 
             return $str;
         }
