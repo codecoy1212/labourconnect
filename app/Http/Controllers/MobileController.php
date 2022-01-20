@@ -286,7 +286,7 @@ class MobileController extends Controller
                     if($var3 == "00:45")
                     $difference = $difference - 0.75;
                     if($var3 == "01:00")
-                    $difference = $difference - 0.10;
+                    $difference = $difference - 1.00;
                     if($var3 == "01:15")
                     $difference = $difference - 1.25;
                     if($var3 == "01:30")
@@ -415,7 +415,7 @@ class MobileController extends Controller
                     if($var3 == "00:45")
                     $difference = $difference - 0.75;
                     if($var3 == "01:00")
-                    $difference = $difference - 0.10;
+                    $difference = $difference - 1.00;
                     if($var3 == "01:15")
                     $difference = $difference - 1.25;
                     if($var3 == "01:30")
@@ -534,7 +534,7 @@ class MobileController extends Controller
             if($var3 == "00:45")
             $difference = $difference - 0.75;
             if($var3 == "01:00")
-            $difference = $difference - 0.10;
+            $difference = $difference - 1.00;
             if($var3 == "01:15")
             $difference = $difference - 1.25;
             if($var3 == "01:30")
