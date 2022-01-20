@@ -21,7 +21,7 @@ class CreateDoneJobsTable extends Migration
             $table->string('finish');
             $table->string('break');
             $table->string('supervisor');
-            $table->string('signature');
+            $table->longText('signature');
             $table->timestamps();
         });
     }
