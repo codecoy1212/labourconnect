@@ -249,6 +249,7 @@ class MobileController extends Controller
 
             // $final_array = array();
 
+            $vbl10 = array();
             for ($i=0; $i < count($days_dates); $i++) {
                 // echo $days_dates[$i];
 
@@ -261,19 +262,26 @@ class MobileController extends Controller
 
                 $day = date('D',strtotime($days_dates[$i]));
 
+
                 if(empty($vbl))
                 {
-                    $vbl2[$day]['j_date']=$days_dates[$i];
-                    $vbl2[$day]['done_job_id']=null;
-                    $vbl2[$day]['start']=null;
-                    $vbl2[$day]['finish']=null;
-                    $vbl2[$day]['break']=null;
-                    $vbl2[$day]['submission_status']=false;
-                    $vbl2[$day]['working_hours']=null;
+                    $grt['j_date']=$days_dates[$i];
+                    $grt['done_job_id']=null;
+                    $grt['start']=null;
+                    $grt['finish']=null;
+                    $grt['break']=null;
+                    $grt['submission_status']=false;
+                    $grt['working_day']=$day;
+                    $grt['working_hours']=null;
 
+                    // return $days_dates[$i];
+                    // echo "hello2";
+                    array_push($vbl10,$grt);
                 }
                 else
                 {
+
+
                     $vbl->submission_status=true;
 
                     $time1 = strtotime($vbl->start);
@@ -296,8 +304,11 @@ class MobileController extends Controller
                     if($var3 == "02:00")
                     $difference = $difference - 2.00;
 
+                    $vbl->working_day=$day;
                     $vbl->working_hours=$difference;
-                    $vbl2[$day]=$vbl;
+                    array_push($vbl10,$vbl);
+                    // echo "hello";
+                    // echo $vbl10[0]->done_job_id;
                 }
 
                 // array_push($final_array,$vbl2);
@@ -307,7 +318,7 @@ class MobileController extends Controller
 
             $str['status']=true;
             $str['message']="WORK SUBMISSION SHOWN FOR THE CURRENT WEEK";
-            $str['data']=$vbl2;
+            $str['data']=$vbl10;
 
             return $str;
         }
@@ -376,8 +387,9 @@ class MobileController extends Controller
             }
             // return $days_dates;
 
-            $final_array = array();
+            // $final_array = array();
 
+            $vbl10 = array();
             for ($i=0; $i < count($days_dates); $i++) {
                 // echo $days_dates[$i];
 
@@ -392,14 +404,16 @@ class MobileController extends Controller
 
                 if(empty($vbl))
                 {
-                    $vbl2[$day]['j_date']=$days_dates[$i];
-                    $vbl2[$day]['done_job_id']=null;
-                    $vbl2[$day]['start']=null;
-                    $vbl2[$day]['finish']=null;
-                    $vbl2[$day]['break']=null;
-                    $vbl2[$day]['submission_status']=false;
-                    $vbl2[$day]['working_hours']=null;
+                    $grt['j_date']=$days_dates[$i];
+                    $grt['done_job_id']=null;
+                    $grt['start']=null;
+                    $grt['finish']=null;
+                    $grt['break']=null;
+                    $grt['submission_status']=false;
+                    $grt['working_day']=$day;
+                    $grt['working_hours']=null;
 
+                    array_push($vbl10,$grt);
                 }
                 else
                 {
@@ -425,8 +439,9 @@ class MobileController extends Controller
                     if($var3 == "02:00")
                     $difference = $difference - 2.00;
 
+                    $vbl->working_day=$day;
                     $vbl->working_hours=$difference;
-                    $vbl2[$day]=$vbl;
+                    array_push($vbl10,$vbl);
                 }
 
                 // array_push($final_array,$vbl2);
@@ -436,7 +451,7 @@ class MobileController extends Controller
 
             $str['status']=true;
             $str['message']="WORK SUBMISSION SHOWN FOR THE PREVIOUS WEEK";
-            $str['data']=$vbl2;
+            $str['data']=$vbl10;
 
             return $str;
         }
