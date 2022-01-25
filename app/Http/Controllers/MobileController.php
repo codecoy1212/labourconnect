@@ -31,8 +31,8 @@ class MobileController extends Controller
                 $dbpwd = $verification->u_pass;
                 $str['status']=true;
                 $str['message']="STUDENT LOGGED IN";
+                $verification->token = $token;
                 $str['data']=$verification;
-                $str['token']=$token;
                 return $str;
             }
             else
