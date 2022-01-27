@@ -127,8 +127,8 @@ class MobileController extends Controller
         $validator = Validator::make($request->all(),[
         'job_id'=>'required|exists:jobs,id',
         'user_id' => 'required|exists:users,id',
-        'start' => 'required|date_format:h:i A',
-        'finish' => 'required|date_format:h:i A',
+        // 'start' => 'required|date_format:h:i A',
+        // 'finish' => 'required|date_format:h:i A',
         'break' => 'required|date_format:H:i',
         'supervisor' => 'required|min:3',
         'signature' => 'string',
@@ -182,8 +182,13 @@ class MobileController extends Controller
                 $vbl->user_id = $request->user_id;
                 $vbl->job_date = date('Y-m-d');
                 $vbl->role_id = $vbl4->role_id;
-                $vbl->start = $request->start;
-                $vbl->finish = $request->finish;
+
+
+                $eg1 = date('h:i A',strtotime($request->start));
+                $eg2 = date('h:i A',strtotime($request->finish));
+
+                $vbl->start = $eg1;
+                $vbl->finish = $eg2;
                 $vbl->break = $request->break;
                 $vbl->supervisor = $request->supervisor;
 

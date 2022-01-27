@@ -25,9 +25,13 @@
 
                         <div class="mb-3">Report 1</div>
                         <form class="my-auto mx-auto bg-white xl:bg-transparent sm:px-8 xl:p-0 rounded-md xl:shadow-none w-full sm:w-3/4 lg:w-2/4 xl:w-auto" action="" method="post">
-                            <input type="text" name="username" class="p-2 border-theme-123 border-2 block mb-2" style="width: 85%; height:30px; font-size:85%;" placeholder="Dates:">
-                            <input type="text" name="username" class="p-2 border-theme-123 border-2 block mb-2" style="width: 85%; height:30px; font-size:85%;" placeholder="Config 1:">
-                            <input type="text" name="username" class="p-2 border-theme-123 border-2 block mb-2" style="width: 85%; height:30px; font-size:85%;" placeholder="Config 2:">
+                            <input type="text" name="username" class="p-2 border-theme-123 border-2 block mb-2" style="width: 85%; height:30px; font-size:85%;" placeholder="Start Date">
+                            <input type="text" name="username" class="p-2 border-theme-123 border-2 block mb-2" style="width: 85%; height:30px; font-size:85%;" placeholder="End Date">
+                            <select id="add_user_role_id" name="role_id" form="new_job_form" class="select_role intro-x input--lg border-theme-123 border-2 block mb-2" style="width: 85%; font-size:85%; height:33px; background-color:white;">
+                                <option value="1">Select Job</option>
+                                <option value="1">Select Job</option>
+                                <option value="1">Select Job</option>
+                            </select>
                             <div class="intro-x mt-5 xl:mt-2 xl:text-left mb-2">
                                 <button class="text-white bg-theme-123 p-1 pl-2 pr-2 btn_zoo_h" style="font-size: 85%; width: 85%; ">Generate Report</button>
                             </div>
@@ -36,11 +40,11 @@
                             </div>
                             <input type="text" name="username" class="p-2 border-theme-123 border-2 block mb-2" style="width: 85%; height:30px; font-size:85%;" placeholder="Email:">
                             <div class="intro-x mt-5 xl:mt-2 xl:text-left mb-2">
-                                <button class="text-white bg-theme-123 p-1 pl-2 pr-2 btn_zoo_h" style="font-size: 85%; ">Export Report</button>
+                                <button class="text-white bg-theme-123 p-1 pl-2 pr-2 btn_zoo_h" style="font-size: 85%; ">Send Report</button>
                             </div>
                         </form>
                     </div>
-                    <div class="col-span-12 sm:col-span-6 xl:col-span-4 intro-y mt-8 mb-2">
+                    {{-- <div class="col-span-12 sm:col-span-6 xl:col-span-4 intro-y mt-8 mb-2">
                         <div class="mb-3">Report 2</div>
                         <form class="my-auto mx-auto bg-white xl:bg-transparent sm:px-8 xl:p-0 rounded-md xl:shadow-none w-full sm:w-3/4 lg:w-2/4 xl:w-auto" action="" method="post">
                             <input type="text" name="username" class="p-2 border-theme-123 border-2 block mb-2" style="width: 85%; height:30px; font-size:85%;" placeholder="Dates:">
@@ -57,7 +61,7 @@
                                 <button class="text-white bg-theme-123 p-1 pl-2 pr-2 btn_zoo_h" style="font-size: 85%; ">Export Report</button>
                             </div>
                         </form>
-                    </div>
+                    </div> --}}
                 </div>
                 <div class="grid grid-cols-12 gap-6 xl:col-span-2 intro-y xl:ml-12 xl:mr-12">
 
