@@ -131,7 +131,7 @@ class MobileController extends Controller
         'finish' => 'required|date_format:h:i A',
         'break' => 'required|date_format:H:i',
         'supervisor' => 'required|min:3',
-        'signature' => 'required',
+        'signature' => 'string',
         ], [
         ]);
 
@@ -172,8 +172,7 @@ class MobileController extends Controller
                 $vbl4 = DB::table('job__users')
                 ->where('job__users.job_id','=',$request->job_id)
                 ->where('job__users.user_id','=',$request->user_id)
-                ->join('roles','roles.id','=','job__users.role_id')
-                ->select('roles.r_name')
+                ->select('job__users.role_id')
                 ->first();
 
                 // return $vbl4;
@@ -182,12 +181,21 @@ class MobileController extends Controller
                 $vbl->job_id = $request->job_id;
                 $vbl->user_id = $request->user_id;
                 $vbl->job_date = date('Y-m-d');
-                $vbl->job_role = $vbl4->r_name;
+                $vbl->role_id = $vbl4->role_id;
                 $vbl->start = $request->start;
                 $vbl->finish = $request->finish;
                 $vbl->break = $request->break;
                 $vbl->supervisor = $request->supervisor;
-                $vbl->signature = $request->signature;
+
+                if($request->signature == null || $request->signature == "")
+                {
+                    $vbl->signature = "NO_SIGNATURE";
+                }
+                else
+                {
+                    $vbl->signature = $request->signature;
+                }
+
                 $vbl->save();
 
                 $str['status']=true;
