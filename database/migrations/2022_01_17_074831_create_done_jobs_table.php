@@ -17,6 +17,8 @@ class CreateDoneJobsTable extends Migration
             $table->id();
             $table->foreignId('job_id')->constrained();
             $table->foreignId('user_id')->constrained();
+            $table->string('job_date');
+            $table->string('job_role');
             $table->string('start');
             $table->string('finish');
             $table->string('break');

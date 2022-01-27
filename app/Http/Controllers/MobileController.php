@@ -153,9 +153,36 @@ class MobileController extends Controller
             if($var == "00:45" || $var == "01:00" || $var == "01:15" ||
                $var == "01:30" || $var == "01:45" || $var == "02:00" || $var == "00:30" )
             {
+                $vbl3 = Job::find($request->job_id);
+
+                $curr_date = date('Y-m-d');
+                $curr_date = strtotime($curr_date);
+
+                $db_date = strtotime($vbl3->j_date);
+
+                if($db_date <= $curr_date){}
+                else
+                {
+                    $str['status']=false;
+                    $str['message']="JOB NOT STARTED YET";
+                    return $str;
+                }
+
+
+                $vbl4 = DB::table('job__users')
+                ->where('job__users.job_id','=',$request->job_id)
+                ->where('job__users.user_id','=',$request->user_id)
+                ->join('roles','roles.id','=','job__users.role_id')
+                ->select('roles.r_name')
+                ->first();
+
+                // return $vbl4;
+
                 $vbl = new DoneJob;
                 $vbl->job_id = $request->job_id;
                 $vbl->user_id = $request->user_id;
+                $vbl->job_date = date('Y-m-d');
+                $vbl->job_role = $vbl4->r_name;
                 $vbl->start = $request->start;
                 $vbl->finish = $request->finish;
                 $vbl->break = $request->break;
@@ -251,14 +278,16 @@ class MobileController extends Controller
 
             $vbl10 = array();
             for ($i=0; $i < count($days_dates); $i++) {
-                // echo $days_dates[$i];
+                // return $days_dates[$i];
 
                 $vbl = DB::table('done_jobs')
                 ->join('jobs','jobs.id','=','done_jobs.job_id')
                 ->where('done_jobs.user_id','=',$request->user_id)
-                ->where('jobs.j_date','=',$days_dates[$i])
+                ->where('done_jobs.job_date','=',$days_dates[$i])
                 ->select('done_jobs.id as done_job_id','jobs.j_date','done_jobs.start','done_jobs.finish','done_jobs.break')
                 ->first();
+
+                // return $vbl;
 
                 $day = date('D',strtotime($days_dates[$i]));
 
@@ -304,6 +333,7 @@ class MobileController extends Controller
                     if($var3 == "02:00")
                     $difference = $difference - 2.00;
 
+                    $vbl->j_date=$days_dates[$i];
                     $vbl->working_day=$day;
                     $vbl->working_hours=$difference;
                     array_push($vbl10,$vbl);
@@ -396,7 +426,7 @@ class MobileController extends Controller
                 $vbl = DB::table('done_jobs')
                 ->join('jobs','jobs.id','=','done_jobs.job_id')
                 ->where('done_jobs.user_id','=',$request->user_id)
-                ->where('jobs.j_date','=',$days_dates[$i])
+                ->where('done_jobs.job_date','=',$days_dates[$i])
                 ->select('done_jobs.id as done_job_id','jobs.j_date','done_jobs.start','done_jobs.finish','done_jobs.break')
                 ->first();
 
@@ -439,6 +469,7 @@ class MobileController extends Controller
                     if($var3 == "02:00")
                     $difference = $difference - 2.00;
 
+                    $vbl->j_date=$days_dates[$i];
                     $vbl->working_day=$day;
                     $vbl->working_hours=$difference;
                     array_push($vbl10,$vbl);
@@ -472,12 +503,28 @@ class MobileController extends Controller
             $vbl1 = DB::table('job__users')
             ->where('user_id','=',$request->user_id)
             ->join('jobs','jobs.id','=','job__users.job_id')
-            ->where('j_date','=',date('Y-m-d'))
+            // ->where('j_date','=',date('Y-m-d'))
+            // ->where('j_status','=',"ACTIVE")
             ->join('companies','companies.id','=','jobs.company_id')
-            ->select('job__users.job_id','job__users.user_id','companies.c_contact','jobs.j_location')
+            ->select('jobs.j_date','job__users.job_id','job__users.user_id','companies.c_contact','jobs.j_location')
             ->get();
 
             // return $vbl1;
+
+            $final_array = array();
+            foreach ($vbl1 as $value) {
+                // echo "HELLO";
+                // echo $value->j_date;
+                $curr_date = date('Y-m-d');
+                $curr_date = strtotime($curr_date);
+
+                $db_date = strtotime($value->j_date);
+                if($db_date <= $curr_date)
+                {
+                    // echo $value->j_date;
+                    array_push($final_array,$value);
+                }
+            }
 
             if(count($vbl1) == 0)
             {
@@ -489,7 +536,7 @@ class MobileController extends Controller
             {
                 $str['status']=true;
                 $str['message']="JOBS SHOWN FOR TODAY";
-                $str['data']=$vbl1;
+                $str['data']=$final_array;
                 return $str;
             }
         }
