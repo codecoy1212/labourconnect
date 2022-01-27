@@ -127,8 +127,8 @@ class MobileController extends Controller
         $validator = Validator::make($request->all(),[
         'job_id'=>'required|exists:jobs,id',
         'user_id' => 'required|exists:users,id',
-        // 'start' => 'required|date_format:h:i A',
-        // 'finish' => 'required|date_format:h:i A',
+        'start' => 'required',
+        'finish' => 'required',
         'break' => 'required|date_format:H:i',
         'supervisor' => 'required|min:3',
         'signature' => 'string',
