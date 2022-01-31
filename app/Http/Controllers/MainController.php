@@ -185,7 +185,7 @@ class MainController extends Controller
                     // $vbl6 = DoneJob::where('user_id',$value->id)
                     // ->where('job_date',$vbl5)->first();
                     $vbl6 = DB::table('done_jobs')
-                    ->where('user_id',$job_id)
+                    ->where('job_id',$job_id)
                     ->where('user_id',$value->id)
                     ->where('job_date',$vbl5)
                     ->join('roles','roles.id','=','done_jobs.role_id')
