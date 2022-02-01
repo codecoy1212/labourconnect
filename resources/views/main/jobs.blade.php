@@ -159,7 +159,7 @@
                 if(confirm("Mark this job as complete?")){
                 $.ajax({
                     type: 'PUT',
-                    url : 'jobs/collection/show/complete',
+                    url : 'jobs/collection/show',
                     data: { id: id2,},
                 }).done(function(data){
                     console.log(data);
