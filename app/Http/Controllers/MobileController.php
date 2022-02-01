@@ -19,7 +19,7 @@ class MobileController extends Controller
         $eml = $request->email;
         $pwd = $request->password;
         $dbpwd = "";
-        $verification = User::where('u_email',$eml) -> first();
+        $verification = User::where('u_uname',$eml) -> first();
         // echo $verification;
 
         if($verification)
@@ -60,13 +60,12 @@ class MobileController extends Controller
         else
         {
             $validator = Validator::make($request->all(),[
-            'email'=>'required|exists:users,u_email|email:rfc,dns',
+            'email'=>'required|exists:users,u_uname',
             'password' => 'required',
             ], [
             'password.required' => 'Please enter your 4 digit PIN.',
-            'email.required' => 'Please enter your Email.',
-            'email.exists' => 'Email is not Registered.',
-            'email.email' => 'Email is Invalid.',
+            'email.required' => 'Please enter your Username.',
+            'email.exists' => 'Username is not Registered.',
             ]);
 
             if ($validator->fails())
