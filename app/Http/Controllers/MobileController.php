@@ -147,6 +147,23 @@ class MobileController extends Controller
         }
         else
         {
+            $vbl45 = strtotime($request->start);
+            $vbl46 = strtotime($request->finish);
+            // return array($vbl45,$vbl46);
+            if($vbl45 >= $vbl46)
+            {
+                $str['status']=false;
+                $str['message']="GIVING TIME IN MINUS OR SAME";
+                return $str;
+            }
+            $vbl46 = $vbl46 - $vbl45;
+            if($vbl46 > 86340)
+            {
+                $str['status']=false;
+                $str['message']="USER CANNOT WORK MORE THAN 24 HOURS";
+                return $str;
+            }
+
             $var = $request->break;
             // return $var;
             if($var == "00:45" || $var == "01:00" || $var == "01:15" ||
