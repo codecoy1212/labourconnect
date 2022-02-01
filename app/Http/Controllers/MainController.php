@@ -278,4 +278,14 @@ class MainController extends Controller
         else
             return redirect('login');
     }
+
+    public function show_csv(Request $request)
+    {
+        if(session()->get('s_uname'))
+        {
+            return $request;
+        }
+        else
+            return redirect('login');
+    }
 }

@@ -70,3 +70,4 @@ Route::get('/login',[LoginOutController::class,'index']);
 Route::post('/login',[LoginOutController::class,'loggingIn'])->name('log');
 Route::get('/logout',[LoginOutController::class,'logged_out'])->name('logo');
 Route::get('/show_pdf',[MainController::class,'show_pdf']);
+Route::get('/show_csv',[MainController::class,'show_csv']);
