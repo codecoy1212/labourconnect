@@ -27,6 +27,8 @@ class JobController extends Controller
                 'j_location'=> 'required|min:5',
                 'company_id'=> 'required|numeric',
                 'j_date'=> 'required|date',
+                'p_end'=> 'required|date_format:H:i',
+                'p_start'=> 'required|date_format:H:i',
             ],[
                 'j_location.required' => 'Location is required.',
                 'j_location.min' => 'Location must be of 5 characters.',
@@ -34,6 +36,10 @@ class JobController extends Controller
                 'company_id.numeric' => 'Company ID should be numeric.',
                 'j_date.required' => 'Date is required for Job to be submitted.',
                 'j_date.date' => 'Job date format Incorrect.',
+                'p_end.required'=> 'Penality End time is required.',
+                'p_start.required'=> 'Penality Start time is required.',
+                'p_end.date_format'=> 'Penality End time format is Incorrect.',
+                'p_start.date_format'=> 'Penality Start time format is Incorrect.',
             ]);
             if ($validator->fails())
             {
@@ -51,6 +57,8 @@ class JobController extends Controller
                 $vbl->company_id = $request->company_id;
                 $vbl->j_date = $request->j_date;
                 $vbl->j_status = "ACTIVE";
+                $vbl->p_start = $request->p_start;
+                $vbl->p_end = $request->p_end;
                 $vbl->save();
 
                 if($request->job_users == null || empty($request->job_users)){}
@@ -103,7 +111,7 @@ class JobController extends Controller
             $vbl = DB::table('jobs')
             ->where('jobs.id',$request->id)
             ->join('companies','companies.id','=','jobs.company_id')
-            ->select('jobs.id','jobs.j_location','companies.c_name','jobs.company_id','jobs.j_date')
+            ->select('jobs.id','jobs.j_location','companies.c_name','jobs.company_id','jobs.j_date','jobs.p_start','jobs.p_end')
             ->first();
             array_push($job,$vbl);
             // return $vbl;
@@ -150,6 +158,8 @@ class JobController extends Controller
                 'j_location'=> 'required|min:5',
                 'company_id'=> 'required|numeric',
                 'j_date'=> 'required|date',
+                'p_end'=> 'required|date_format:H:i',
+                'p_start'=> 'required|date_format:H:i',
             ],[
                 'j_location.required' => 'Location is required.',
                 'j_location.min' => 'Location must be of 5 characters.',
@@ -157,6 +167,10 @@ class JobController extends Controller
                 'company_id.numeric' => 'Company ID should be numeric.',
                 'j_date.required' => 'Date is required for Job to be submitted.',
                 'j_date.date' => 'Job date format Incorrect.',
+                'p_end.required'=> 'Penality End time is required.',
+                'p_start.required'=> 'Penality Start time is required.',
+                'p_end.date_format'=> 'Penality End time format is Incorrect.',
+                'p_start.date_format'=> 'Penality Start time format is Incorrect.',
             ]);
             if ($validator->fails())
             {
@@ -169,6 +183,8 @@ class JobController extends Controller
                 $vbl->company_id = $request->company_id;
                 $vbl->j_date = $request->j_date;
                 $vbl->j_status = "ACTIVE";
+                $vbl->p_start = $request->p_start;
+                $vbl->p_end = $request->p_end;
                 $vbl->save();
 
                 $vbl2 = Job_User::where('job_id',$request->job_id)->get();

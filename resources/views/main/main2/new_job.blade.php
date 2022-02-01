@@ -58,15 +58,14 @@
                             <input type="text" id="add_job_location_id" name="j_location" form="new_job_form" class="p-2 border-theme-123 border-2 block" style="width: 90%; height:30px; font-size:85%;" placeholder="Job Location">
                             <div class="mb-1 mt-2">Select Date</div>
                             <input type="date" id="add_job_date_id" name="j_date" form="new_job_form" class="border-theme-123 border-2 block" style="width: 90%; height:30px; font-size:85%;" placeholder="Job Date">
-                            <div class="intro-x mt-5 xl:mt-2 xl:text-left">
-                                <button class="text-white bg-theme-123 p-1 pl-2 pr-2 btn_zoo_h" form="prices_form" style="font-size: 85%;">Save Job</button>
+                            <div class="mt-3">
+                                Allocate Penality Time & Rates
                             </div>
-                            <div class="mt-5" style="font-size:16px">
-                                Allocate Penality Rates
-                            </div>
-                            <div id="" value=""class="flex border-2 border-theme-123 mt-3" style="padding-top:4px; padding-left:5px; height: 35px; width:70%; font-size:0.9rem;">
+                            {{-- <div id="" value=""class="flex border-2 border-theme-123 mt-3" style="padding-top:4px; padding-left:5px; height: 35px; width:70%; font-size:0.9rem;">
                                 5 PM - 7 AM
-                            </div>
+                            </div> --}}
+                            <input type="time" id="penality_start_time_id" name="p_start" form="new_job_form" class="border-theme-123 border-2 block mt-1" style="width: 70%; height:30px; font-size:85%;">
+                            <input type="time" id="penality_end_time_id" name="p_end" form="new_job_form" class="border-theme-123 border-2 block mt-3" style="width: 70%; height:30px; font-size:85%;">
                             <div id="" value=""class="flex border-2 border-theme-123 mt-3" style="padding-top:4px; padding-left:5px; height: 35px; width:70%; font-size:0.9rem;">
                                 Saturday
                             </div>
@@ -75,6 +74,9 @@
                             </div>
                             <div class="mt-2" style="font-size:16px">
                                 Penality RATE/HOUR is $10.
+                            </div>
+                            <div class="intro-x mt-5 xl:mt-2 xl:text-left">
+                                <button class="text-white bg-theme-123 p-1 pl-2 pr-2 btn_zoo_h" form="prices_form" style="font-size: 85%;">Save Job</button>
                             </div>
 
                     </div>
@@ -125,6 +127,8 @@
 
     $(document).ready(function(){
 
+        $("#penality_start_time_id").val("17:00");
+        $("#penality_end_time_id").val("07:00");
         var glb_vbl = "";
         var glb_arr = [];
         var glb_arr_2 = [];
@@ -514,6 +518,10 @@
             var id1 = $("#add_job_company_id").val();
             var id2 = $("#add_job_location_id").val();
             var id3 = $("#add_job_date_id").val();
+            var id4 = $("#penality_start_time_id").val();
+            var id5 = $("#penality_end_time_id").val();
+
+
 
             var str = $("#prices_form").serialize();
             // console.log(str);
@@ -535,7 +543,7 @@
                 type:"POST",
                 url:"add",
                 // data: $("#prices_form").serialize() + '&j_location=' + id2 + '&company_id=' + id1 + '&j_date=' + id3 + '&job_users=' + glb_arr + '&users_role=' + glb_arr_2,
-                data: { j_location: id2, company_id: id1, j_date: id3, job_users: glb_arr, users_role: glb_arr_2, roles_prices: glb_arr_3},
+                data: { j_location: id2, company_id: id1, j_date: id3, job_users: glb_arr, users_role: glb_arr_2, roles_prices: glb_arr_3, p_start: id4, p_end: id5},
                 success: function(response){
                     // console.log(response);
                     toastr.success("Job Added");

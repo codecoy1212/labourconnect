@@ -18,6 +18,8 @@ class CreateJobsTable extends Migration
             $table->string('j_date');
             $table->string('j_location');
             $table->string('j_status');
+            $table->string('p_start');
+            $table->string('p_end');
             $table->foreignId('company_id')->constrained();
             $table->timestamps();
         });
