@@ -56,12 +56,32 @@ class JobController extends Controller
                 if($request->job_users == null || empty($request->job_users)){}
                 else
                 {
+                    $j=0;
+                    $p_role_name = array();
+                    $p_role_price = array();
+                    foreach ($request->roles_prices as $value) {
+                        if($j % 2 == 0)
+                        array_push($p_role_name,$value);
+                        else
+                        array_push($p_role_price,$value);
+                        $j++;
+                    }
+                    // return array($p_role_name,$p_role_price);
+
                     $i = 0;
                     foreach ($request->job_users as $key ) {
                         $vbl1 = new Job_User;
                         $vbl1->job_id = $vbl->id;
                         $vbl1->user_id = $key;
                         $vbl1->role_id = $request->users_role[$i];
+
+                        for ($k=0; $k < count($p_role_name); $k++) {
+                            if($request->users_role[$i] == $p_role_name[$k])
+                            {
+                                $vbl1->job_rate = $p_role_price[$k];
+                                break;
+                            }
+                        }
                         $i++;
                         $vbl1->save();
                     }
@@ -93,7 +113,7 @@ class JobController extends Controller
             ->where('job_id','=',$vbl->id)
             ->join('users','users.id','=','job__users.user_id')
             ->join('roles','roles.id','=','job__users.role_id')
-            ->select('users.id','users.u_name','roles.id as role_id','roles.r_name')
+            ->select('users.id','users.u_name','roles.id as role_id','roles.r_name','job__users.job_rate')
             ->get();
             array_push($job,$vbl2);
             return $job;
@@ -125,6 +145,7 @@ class JobController extends Controller
         if(session()->get('s_uname'))
         {
             // return $request;
+
             $validator = Validator::make($request->all(),[
                 'j_location'=> 'required|min:5',
                 'company_id'=> 'required|numeric',
@@ -158,12 +179,32 @@ class JobController extends Controller
                 if($request->job_users == null || empty($request->job_users)){}
                 else
                 {
+                    $j=0;
+                    $p_role_name = array();
+                    $p_role_price = array();
+                    foreach ($request->roles_prices as $value) {
+                        if($j % 2 == 0)
+                        array_push($p_role_name,$value);
+                        else
+                        array_push($p_role_price,$value);
+                        $j++;
+                    }
+                    // return array($p_role_name,$p_role_price);
+
                     $i = 0;
                     foreach ($request->job_users as $key ) {
                         $vbl1 = new Job_User;
                         $vbl1->job_id = $vbl->id;
                         $vbl1->user_id = $key;
                         $vbl1->role_id = $request->users_role[$i];
+
+                        for ($k=0; $k < count($p_role_name); $k++) {
+                            if($request->users_role[$i] == $p_role_name[$k])
+                            {
+                                $vbl1->job_rate = $p_role_price[$k];
+                                break;
+                            }
+                        }
                         $i++;
                         $vbl1->save();
                     }

@@ -48,7 +48,7 @@
                                     <option value="{{$item->id}}" class="">{{$item->r_name}}</option>
                                     @endforeach
                                 </select>
-                        <form id="new_job_form" class="my-auto mx-auto bg-white xl:bg-transparent sm:px-8 xl:p-0 rounded-md xl:shadow-none w-full sm:w-3/4 lg:w-2/4 xl:w-auto" action="" method="post">
+                        <form class="my-auto mx-auto bg-white xl:bg-transparent sm:px-8 xl:p-0 rounded-md xl:shadow-none w-full sm:w-3/4 lg:w-2/4 xl:w-auto" action="#">
                             <div class="mb-1">Select Company</div>
                             <select id="add_job_company_id" name="company_id" form="new_job_form" class="intro-x input--lg border-theme-123 border-2 block mb-2" style="width: 90%; font-size:85%; height:30px; background-color:white;">
                                 @foreach ($vbl as $item)
@@ -59,7 +59,22 @@
                             <div class="mb-1 mt-2">Select Date</div>
                             <input type="date" id="add_job_date_id" name="j_date" form="new_job_form" class="border-theme-123 border-2 block" style="width: 90%; height:30px; font-size:85%;" placeholder="Job Date">
                             <div class="intro-x mt-5 xl:mt-2 xl:text-left">
-                                <button class="text-white bg-theme-123 p-1 pl-2 pr-2 btn_zoo_h" style="font-size: 85%;">Save Job</button>
+                                <button class="text-white bg-theme-123 p-1 pl-2 pr-2 btn_zoo_h" form="prices_form" style="font-size: 85%;">Save Job</button>
+                            </div>
+                            <div class="mt-5" style="font-size:16px">
+                                Allocate Penality Rates
+                            </div>
+                            <div id="" value=""class="flex border-2 border-theme-123 mt-3" style="padding-top:4px; padding-left:5px; height: 35px; width:70%; font-size:0.9rem;">
+                                5 PM - 7 AM
+                            </div>
+                            <div id="" value=""class="flex border-2 border-theme-123 mt-3" style="padding-top:4px; padding-left:5px; height: 35px; width:70%; font-size:0.9rem;">
+                                Saturday
+                            </div>
+                            <div id="" value=""class="flex border-2 border-theme-123 mt-3" style="padding-top:4px; padding-left:5px; height: 35px; width:70%; font-size:0.9rem;">
+                                Sunday
+                            </div>
+                            <div class="mt-2" style="font-size:16px">
+                                Penality RATE/HOUR is $10.
                             </div>
 
                     </div>
@@ -71,6 +86,29 @@
                             </div>
                         </div>
                         </form>
+                    </div>
+                    <div class="col-span-12 sm:col-span-6 xl:col-span-6 intro-y mb-2">
+                    </div>
+                    <div class="col-span-12 sm:col-span-6 xl:col-span-6 intro-y mb-2">
+                        <div class="text-center">Allocates Workers Rates</div>
+                        <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
+                            <div class="box border-3" style="text-align: left; font-size: 0.9rem; line-height: 2.0; height: 350px;">
+                                <div class="ml-2 mr-2" style="font-size:15px">
+                                    <div style="display:inline">
+                                        Role
+                                    </div>
+                                    <div style="margin-left:40%; display:inline">
+                                        Enter Rate
+                                    </div>
+                                    <div style="height: 2px; background-color:black" class="mb-2" ></div>
+                                    <div style="width: 100%; height: 295px; overflow: auto" >
+                                        <form id="prices_form" action="" method="post">
+                                        <div id="check4" ></div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="grid grid-cols-12 gap-6 xl:col-span-2 intro-y xl:ml-12 xl:mr-12">
@@ -353,6 +391,20 @@
                 </button>
                 `);
 
+                if ($('#add_job_role_name'+data[1].id+'').length) {              //to check if a div exists
+                    // console.log(('#add_job_user_id'+data.id+''));
+                    toastr.info("Worker Role Already Added");
+                }
+                else
+                {
+                    $("#check4").append(`
+                    <div id="add_job_role_name`+data[1].id+`">
+                    <div class="flex border-2 border-theme-123 p-1" style="height: 30px; width:80%; font-size:0.9rem; display:inline"> `+data[1].r_name+`</div>
+                    <input type="number" name="`+data[1].id+`" form="prices_form" class="p-2 border-theme-123 border-2 block ml-4 mb-2" style="width: 30%; height:30px; font-size:85%; display:inline" placeholder="Price" required><br>
+                    </div>
+                    `);
+                }
+
                 $('#add_user_role_id').prop('disabled', true);
                 $('#search_id').val("");
                 toastr.success("User Added to Que.");
@@ -403,6 +455,14 @@
             var id2 = $(this).val();
             const myArray = id2.split("&");
 
+            // $.ajax({
+            //     type:"GET",
+            //     url:'../users/show/specific/',
+            //     data: { id: id2,},
+            // }).done(function(data){
+            //     console.log(data);
+            // });
+
             // $.each(myArray,function(key,value) {
             //     console.log(value);
             // });
@@ -429,6 +489,19 @@
                         break;
                     }
                 }
+
+                var checking = 0;
+                for (let i = 0; i < glb_arr_2.length; i++) {
+                    if(glb_arr_2[i] == myArray[1])
+                    {
+                        checking = 1;
+                        break;
+                    }
+                }
+                if(checking == 1){}
+                else
+                    $('#add_job_role_name'+myArray[1]+'').remove();
+
                 // console.log(glb_arr);
                 toastr.success("User Removed from Que.");
             }
@@ -436,17 +509,33 @@
         });
 
 
-        $(document).on("submit","#new_job_form", function(event){
+        $(document).on("submit","#prices_form", function(event){
             event.preventDefault();
             var id1 = $("#add_job_company_id").val();
             var id2 = $("#add_job_location_id").val();
             var id3 = $("#add_job_date_id").val();
 
+            var str = $("#prices_form").serialize();
+            // console.log(str);
+
+            glb_arr_3 = [];
+            const myArray = str.split("&");
+            $.each(myArray,function(key,value) {
+                // console.log(value);
+                const myArray2 = value.split("=");
+                $.each(myArray2,function(key2,value2) {
+                    // console.log(value2);
+                    glb_arr_3.push(value2);
+                });
+            });
+            // console.log(glb_arr_3);
+
             // console.log(id1,id2);
             $.ajax({
                 type:"POST",
                 url:"add",
-                data: { j_location: id2, company_id: id1, j_date: id3, job_users: glb_arr, users_role: glb_arr_2},
+                // data: $("#prices_form").serialize() + '&j_location=' + id2 + '&company_id=' + id1 + '&j_date=' + id3 + '&job_users=' + glb_arr + '&users_role=' + glb_arr_2,
+                data: { j_location: id2, company_id: id1, j_date: id3, job_users: glb_arr, users_role: glb_arr_2, roles_prices: glb_arr_3},
                 success: function(response){
                     // console.log(response);
                     toastr.success("Job Added");
