@@ -147,22 +147,22 @@ class MobileController extends Controller
         }
         else
         {
-            $vbl45 = strtotime($request->start);
-            $vbl46 = strtotime($request->finish);
-            // return array($vbl45,$vbl46);
-            if($vbl45 >= $vbl46)
-            {
-                $str['status']=false;
-                $str['message']="GIVING TIME IN MINUS OR SAME";
-                return $str;
-            }
-            $vbl46 = $vbl46 - $vbl45;
-            if($vbl46 > 86340)
-            {
-                $str['status']=false;
-                $str['message']="USER CANNOT WORK MORE THAN 24 HOURS";
-                return $str;
-            }
+            // $vbl45 = strtotime($request->start);
+            // $vbl46 = strtotime($request->finish);
+            // // return array($vbl45,$vbl46);
+            // if($vbl45 >= $vbl46)
+            // {
+            //     $str['status']=false;
+            //     $str['message']="GIVING TIME IN MINUS OR SAME";
+            //     return $str;
+            // }
+            // $vbl46 = $vbl46 - $vbl45;
+            // if($vbl46 > 86340)
+            // {
+            //     $str['status']=false;
+            //     $str['message']="USER CANNOT WORK MORE THAN 24 HOURS";
+            //     return $str;
+            // }
 
             $var = $request->break;
             // return $var;
@@ -188,7 +188,7 @@ class MobileController extends Controller
                 $vbl4 = DB::table('job__users')
                 ->where('job__users.job_id','=',$request->job_id)
                 ->where('job__users.user_id','=',$request->user_id)
-                ->select('job__users.role_id')
+                ->select('job__users.role_id','job__users.job_rate')
                 ->first();
 
                 // return $vbl4;
@@ -198,7 +198,7 @@ class MobileController extends Controller
                 $vbl->user_id = $request->user_id;
                 $vbl->job_date = date('Y-m-d');
                 $vbl->role_id = $vbl4->role_id;
-
+                $vbl->job_rate = $vbl4->job_rate;
 
                 $eg1 = date('h:i A',strtotime($request->start));
                 $eg2 = date('h:i A',strtotime($request->finish));
