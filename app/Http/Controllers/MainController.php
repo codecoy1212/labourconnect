@@ -556,6 +556,7 @@ class MainController extends Controller
     {
         if(session()->get('s_uname'))
         {
+            //pls try
             return Excel::download(new UserExport,'UserList.xlsx');
         }
         else
