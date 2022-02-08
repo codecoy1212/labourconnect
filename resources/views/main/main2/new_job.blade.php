@@ -31,7 +31,7 @@
                         <div>Add Worker</div>
                         <form id="search_form" class="my-auto mx-auto bg-white xl:bg-transparent sm:px-8 xl:p-0 rounded-md xl:shadow-none w-full sm:w-3/4 lg:w-2/4 xl:w-auto" action="" method="get">
                             <div  class="flex" style="">
-                                <input type="text" name="search" id="search_id" class="p-2 border-theme-123 border-2 block mr-2" style="height:34px; width: 51.2%; font-size:85%; display:inline" placeholder="Search...">
+                                <input type="text" name="search" id="search_id" class="p-2 border-theme-123 border-2 block mr-2" style="height:34px; width: 57.2%; font-size:85%; display:inline" placeholder="Search...">
                                 <div class="mb-2" style="">
                                     <button class="text-white bg-theme-123 p-2 pt-1 pb-1 btn_zoo_h" style="font-size: 85%;">Search</button>
                                 </div>
@@ -69,7 +69,7 @@
                             <div style="font-size:15px">
                                 <div>
                                     <div style="display: inline">5 PM to 7 AM</div>
-                                    <input type="number" id="penality_rate_id" name="p_rate" form="new_job_form" class="border-theme-123 border-2 block p-2 mb-2" style="width: 46%; height:30px; font-size:85%; display:inline; margin-left:18px; color: red" placeholder="Penality Rate">
+                                    <input type="number" id="penality_rate_id" name="p_rate" form="new_job_form" class="border-theme-123 border-2 block p-2 mb-2" style="width: 46%; height:30px; font-size:85%; display:inline; margin-left:21px; color: red" placeholder="Penality Rate">
                                 </div>
                                 <div>
                                      <div style="display: inline">Saturday</div>
@@ -409,8 +409,8 @@
                 else
                 {
                     $("#check4").append(`
-                    <div id="add_job_role_name`+data[1].id+`">
-                    <div class="flex border-2 border-theme-123 p-1" style="height: 30px; width:80%; font-size:0.9rem; display:inline"> `+data[1].r_name+`</div>
+                    <div id="add_job_role_name`+data[1].id+`" class="flex">
+                    <div class="flex" style="height: 30px; width:80%; font-size:0.9rem; display:inline"> `+data[1].r_name+`</div>
                     <input type="number" name="`+data[1].id+`" form="prices_form" class="p-2 border-theme-123 border-2 block ml-4 mb-2" style="width: 30%; height:30px; font-size:85%; display:inline; color:red;" placeholder="Price" required><br>
                     </div>
                     `);
