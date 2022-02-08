@@ -21,7 +21,7 @@ class CompanyController extends Controller
             $validator = Validator::make($request->all(),[
                 'c_name'=> 'required|min:3|unique:companies,c_name',
                 'c_contact'=> 'required|min:3',
-                'c_phone'=> 'required|digits:11',
+                'c_phone'=> 'required|numeric',
             ],[
                 'c_name.required' => 'Company Name is required.',
                 'c_name.min' => 'Company Name must be of 3 characters.',
@@ -29,8 +29,8 @@ class CompanyController extends Controller
                 'c_contact.required' => 'Contact Name is required.',
                 'c_contact.min' => 'Contact Name must be of 3 characters.',
                 'c_phone.required' => 'Phone is required.',
-                'c_phone.digits' => 'Phone must be of 11 characters.',
-                'c_phone.number' => 'Phone must be of integer type.',
+                // 'c_phone.digits' => 'Phone must be of 11 characters.',
+                'c_phone.numeric' => 'Phone must be of integer type.',
             ]);
             if ($validator->fails())
             {
@@ -53,7 +53,7 @@ class CompanyController extends Controller
     {
         if(session()->get('s_uname'))
         {
-            $vbl = DB::table('companies')->orderBy('id','desc')->paginate(6);
+            $vbl = DB::table('companies')->orderBy('id','desc')->paginate(10);
             return $vbl;
         }
         else
@@ -81,7 +81,7 @@ class CompanyController extends Controller
             $validator = Validator::make($request->all(),[
                 'c_name'=> 'required|min:3|unique:companies,c_name,'.$request->id,
                 'c_contact'=> 'required|min:3',
-                'c_phone'=> 'required|digits:11',
+                'c_phone'=> 'required|numeric',
             ],[
                 'c_name.required' => 'Company Name is required.',
                 'c_name.min' => 'Company Name must be of 3 characters.',
@@ -89,8 +89,8 @@ class CompanyController extends Controller
                 'c_contact.required' => 'Contact Name is required.',
                 'c_contact.min' => 'Contact Name must be of 3 characters.',
                 'c_phone.required' => 'Phone is required.',
-                'c_phone.digits' => 'Phone must be of 11 characters.',
-                'c_phone.number' => 'Phone must be of integer type.',
+                // 'c_phone.digits' => 'Phone must be of 11 characters.',
+                'c_phone.numeric' => 'Phone must be of integer type.',
             ]);
             if ($validator->fails())
             {
@@ -139,7 +139,7 @@ class CompanyController extends Controller
             ->orWhere('c_contact', 'like',"%".$request->search."%")
             ->orWhere('c_phone', 'like',"%".$request->search."%")
             ->orWhere('id', 'like', "%".$request->search."%")
-            ->orderBy('created_at', 'desc')->paginate(6);
+            ->orderBy('created_at', 'desc')->paginate(10);
             return $vbl;
         }
         else

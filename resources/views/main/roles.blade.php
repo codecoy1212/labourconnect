@@ -18,7 +18,7 @@
                 <h5 style="font-size: 0.975rem; font-weight: bold;" class="ml-3">Roles</h5>
             </div>
             <div class="grid grid-cols-12 gap-6 mt-0 xl:ml-12 xl:mr-12" style="font-weight: bold">
-                <div class="col-span-12 sm:col-span-6 xl:col-span-4 intro-y mb-2">
+                <div class="col-span-12 sm:col-span-6 xl:col-span-5 intro-y mb-2">
                     <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
                             <div class="box border-3" style="text-align: center; line-height: 2.0; height: 180px;">
                                 <div class="" style="height: 40px;">
@@ -38,11 +38,11 @@
                             </div>
                         </div>
                 </div>
-                <div class="col-span-12 sm:col-span-6 xl:col-span-2 intro-y mb-2">
-                </div>
+                {{-- <div class="col-span-12 sm:col-span-6 xl:col-span-2 intro-y mb-2">
+                </div> --}}
                 <div class="col-span-12 sm:col-span-6 xl:col-span-6 intro-y mb-2">
                     <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-                            <div class="box border-3" style=" line-height: 2.0; height: 336px;">
+                            <div class="box border-3" style=" line-height: 2.0; height: 488px;">
                                 <div class="" style="height: 40px; text-align: center;">
                                     <div class="ml-2">Current Roles</div>
                                 </div>
@@ -139,7 +139,7 @@
                     for (let i = 0; i < data.data.length; i++) {
                         $("#check2").append(`
                             <div  class="flex border-2 border-theme-123 m-2 btn_zoo_g " style="height: 30px;font-size:0.9rem; ">
-                                <button value="`+data.data[i].id+`" class="ml-2 mr-auto update_role" id="special_id" style="display:inline">`+data.data[i].r_name+`</button>
+                                <button value="`+data.data[i].id+`" class="ml-2 mr-auto update_role" id="special_id" style="display:inline; text-decoration:underline;">`+data.data[i].r_name+`</button>
                                 <button value="`+data.data[i].id+`" class="mr-2 delete_role"> x </button>
                             </div>
                         `);
@@ -263,7 +263,7 @@
             for (let i = 0; i < data.data.length; i++) {
                 $("#check2").append(`
                     <div  class="flex border-2 border-theme-123 m-2 btn_zoo_g " style="height: 30px;font-size:0.9rem; ">
-                        <button value="`+data.data[i].id+`" class="ml-2 mr-auto update_role" id="special_id" style="display:inline">`+data.data[i].r_name+`</button>
+                        <button value="`+data.data[i].id+`" class="ml-2 mr-auto update_role" id="special_id" style="display:inline; text-decoration:underline;">`+data.data[i].r_name+`</button>
                         <button value="`+data.data[i].id+`" class="mr-2 delete_role"> x </button>
                     </div>
                 `);
@@ -355,7 +355,7 @@
             {
                 $("#check2").append(`
                     <div  class="flex border-2 border-theme-123 m-2 btn_zoo_g " style="height: 30px;font-size:0.9rem; ">
-                        <button value="`+data.data[i].id+`"  class="ml-2 mr-auto update_role" id="special_id" style="display:inline">`+data.data[i].r_name+`</button>
+                        <button value="`+data.data[i].id+`"  class="ml-2 mr-auto update_role" id="special_id" style="display:inline; text-decoration:underline;">`+data.data[i].r_name+`</button>
                         <button value="`+data.data[i].id+`" class="mr-2 delete_role"> x </button>
                     </div>
                 `);
@@ -467,7 +467,7 @@
             {
                 $("#check2").append(`
                     <div  class="flex border-2 border-theme-123 m-2 btn_zoo_g " style="height: 30px;font-size:0.9rem; ">
-                        <button value="`+data.data[i].id+`"  class="ml-2 mr-auto update_role" id="special_id" style="display:inline">`+data.data[i].r_name+`</button>
+                        <button value="`+data.data[i].id+`"  class="ml-2 mr-auto update_role" id="special_id" style="display:inline; text-decoration:underline;">`+data.data[i].r_name+`</button>
                         <button value="`+data.data[i].id+`" class="mr-2 delete_role"> x </button>
                     </div>
                 `);

@@ -15,6 +15,17 @@
             <!-- BEGIN: General Report -->
             <div class="text-center col-span-12 mt-4">
                 <div class="grid grid-cols-12 gap-6 mt-0 xl:ml-12 xl:mg-20">
+                    <a class="col-span-12 sm:col-span-6 xl:col-span-2 intro-y" href="{{route('njob')}}">
+                        <div class="zoom-in">
+                            <div class="box border-3">
+                                <div class="flex">
+                                    {{-- <i style="width:43px; height:43px;" data-feather="layers" class="report-box__icon text-theme-1 m-auto"></i> --}}
+
+                                </div>
+                                <div class="text-3xl eading-8 mt-10 mb-10">Create Job</div>
+                            </div>
+                        </div>
+                    </a>
                     <a class="col-span-12 sm:col-span-6 xl:col-span-2 intro-y" href="{{route('jobs')}}">
                         <div class="zoom-in">
                             <div class="box border-3">
@@ -25,17 +36,6 @@
                                     <div id="check2" ></div>
                                 </div>
                                 <div class="text-3xl leading-8 mb-5">Active Jobs</div>
-                            </div>
-                        </div>
-                    </a>
-                    <a class="col-span-12 sm:col-span-6 xl:col-span-2 intro-y" href="{{route('njob')}}">
-                        <div class="zoom-in">
-                            <div class="box border-3">
-                                <div class="flex">
-                                    {{-- <i style="width:43px; height:43px;" data-feather="layers" class="report-box__icon text-theme-1 m-auto"></i> --}}
-
-                                </div>
-                                <div class="text-3xl eading-8 mt-10 mb-10">Create Job</div>
                             </div>
                         </div>
                     </a>
@@ -109,7 +109,7 @@
                                     <div class="flex mt-2 mb-0" style="min-height: 2px; background-color:black;">
                                     </div>
                                     <div class="flex ml-2">
-                                        <b>#`+data[i].id+`</b>
+                                        <b>Job Number: `+data[i].id+`</b>
                                     </div>
                                 </div>
                             </div>

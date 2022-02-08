@@ -22,16 +22,16 @@
                     <h5 style="font-size: 0.975rem; font-weight: bold;" class="ml-3">Update Job</h5>
                 </div>
                 <div class="grid grid-cols-12 gap-6 mt-0 xl:ml-12 xl:mr-12" style="font-weight: bold">
-                    <div class="col-span-12 sm:col-span-6 xl:col-span-6 intro-y mt-2">
-                        Job Number: #{{$vbl9->id}}
+                    <div class="col-span-12 sm:col-span-6 xl:col-span-6 intro-y mt-2 mb-2">
+                        Job Number: {{$vbl9->id}}
                     </div>
                 </div>
                 <div class="grid grid-cols-12 gap-6 mt-0 xl:ml-12 xl:mr-12" style="font-weight: bold">
-                    <div class="col-span-12 sm:col-span-6 xl:col-span-6 intro-y mt-8 mb-2">
+                    <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y mb-2">
                         <div>Add Worker</div>
                         <form id="search_form" class="my-auto mx-auto bg-white xl:bg-transparent sm:px-8 xl:p-0 rounded-md xl:shadow-none w-full sm:w-3/4 lg:w-2/4 xl:w-auto" action="" method="get">
                             <div  class="flex" style="">
-                                <input type="text" name="search" id="search_id" class="p-2 border-theme-123 border-2 block mr-2" style="height:34px; width: 64.8%; font-size:85%; display:inline" placeholder="Search User...">
+                                <input type="text" name="search" id="search_id" class="p-2 border-theme-123 border-2 block mr-2" style="height:34px; width: 51.2%; font-size:85%; display:inline" placeholder="Search...">
                                 <div class="mb-2" style="">
                                     <button class="text-white bg-theme-123 p-2 pt-1 pb-1 btn_zoo_h" style="font-size: 85%;">Search</button>
                                 </div>
@@ -42,45 +42,50 @@
                         </form>
                             <div id="check2"></div>
                             <div id="check"></div>
-                                <select id="edit_user_role_id" name="role_id" form="update_job_form" class="select_role intro-x input--lg border-theme-123 border-2 block mb-2" style="width: 90%; font-size:85%; height:33px; background-color:white;" disabled>
+                                <select id="edit_user_role_id" name="role_id" form="update_job_form" class="select_role intro-x input--lg border-theme-123 border-2 block mb-2" style="width: 100%; font-size:85%; height:33px; background-color:white;" disabled>
                                     <option value="jfiuh4893hfubjehgw3d3" class="">Select User Role</option>
                                     @foreach ($vbl3 as $item)
                                     <option value="{{$item->id}}" class="">{{$item->r_name}}</option>
                                     @endforeach
                                 </select>
                         <form class="my-auto mx-auto bg-white xl:bg-transparent sm:px-8 xl:p-0 rounded-md xl:shadow-none w-full sm:w-3/4 lg:w-2/4 xl:w-auto" action="#">
-                            <div class="mb-1">Select Company</div>
-                            <select id="edit_job_company_id" name="company_id" form="update_job_form" class="intro-x input--lg border-theme-123 border-2 block mb-2" style="width: 90%; font-size:85%; height:30px; background-color:white;">
+                            <div class="mb-1">Select Company / Allocate Job Location</div>
+                            <select id="edit_job_company_id" name="company_id" form="update_job_form" class="intro-x input--lg border-theme-123 border-2 block mb-2" style="width: 100%; font-size:85%; height:30px; background-color:white;">
                                 @foreach ($vbl as $item)
                                 <option value="{{$item->id}}">{{$item->c_name}}</option>
                                 @endforeach
                             </select>
-                            <input type="text" id="edit_job_location_id" name="j_location" form="update_job_form" class="p-2 border-theme-123 border-2 block" style="width: 90%; height:30px; font-size:85%;" placeholder="Job Location">
-                            <div class="mb-1 mt-2">Select Date</div>
-                            <input type="date" id="edit_job_date_id" name="j_date" form="update_job_form" class="border-theme-123 border-2 block" style="width: 90%; height:30px; font-size:85%;" placeholder="Job Date">
+                            <input type="text" id="edit_job_location_id" name="j_location" form="update_job_form" class="p-2 border-theme-123 border-2 block" style="width: 100%; height:30px; font-size:85%;" placeholder="Job Location">
+                            <div class="mb-1 mt-2">Select Job Start Date</div>
+                            <input type="text" id="edit_job_date_id" name="j_date" form="update_job_form" class="border-theme-123 border-2 block p-2" style="width: 100%; height:30px; font-size:85%;" placeholder="Job Date">
                             <div class="mt-3">
-                                Allocate Penality Time & Rates
+                                Allocate Penality Rates
                             </div>
                             {{-- <div id="" value=""class="flex border-2 border-theme-123 mt-3" style="padding-top:4px; padding-left:5px; height: 35px; width:70%; font-size:0.9rem;">
                                 5 PM - 7 AM
                             </div> --}}
-                            <input type="time" id="penality_start_time_id" name="p_start" form="new_job_form" class="border-theme-123 border-2 block mt-1" style="width: 70%; height:30px; font-size:85%;">
-                            <input type="time" id="penality_end_time_id" name="p_end" form="new_job_form" class="border-theme-123 border-2 block mt-3" style="width: 70%; height:30px; font-size:85%;">
-                            <div id="" value=""class="flex border-2 border-theme-123 mt-3" style="padding-top:4px; padding-left:5px; height: 35px; width:70%; font-size:0.9rem;">
-                                Saturday
+
+                            <div style="font-size:15px">
+                                <div>
+                                    <div style="display: inline">5 PM to 7 AM</div>
+                                    <input type="number" id="penality_rate_id" name="p_rate" form="new_job_form" class="border-theme-123 border-2 block p-2 mb-2" style="width: 46%; height:30px; font-size:85%; display:inline; margin-left:18px; color: red" placeholder="Penality Rate">
+                                </div>
+                                <div>
+                                     <div style="display: inline">Saturday</div>
+                                    <input type="number" id="penality_sat_rate_id" name="sat_rate" form="new_job_form" class="border-theme-123 border-2 block p-2 mb-2" style="width: 46%; height:30px; font-size:85%; display:inline; margin-left:48px; color: red" placeholder="Sat Penality">
+                                </div>
+                                <div>
+                                    <div style="display: inline">Sunday </div>
+                                    <input type="number" id="penality_sun_rate_id" name="sun_rate" form="new_job_form" class="border-theme-123 border-2 block p-2 mb-2" style="width: 46%; height:30px; font-size:85%; display:inline; margin-left:58px; color: red" placeholder="Sun Penality">
+                                </div>
                             </div>
-                            <div id="" value=""class="flex border-2 border-theme-123 mt-3" style="padding-top:4px; padding-left:5px; height: 35px; width:70%; font-size:0.9rem;">
-                                Sunday
-                            </div>
-                            <div class="mt-2" style="font-size:16px">
-                                Penality RATE/HOUR is $10.
-                            </div>
+
                             <div class="intro-x mt-5 xl:mt-2 xl:text-left">
                                 <button class="text-white bg-theme-123 p-1 pl-2 pr-2 btn_zoo_h" form="prices_form" style="font-size: 85%;">Update Job</button>
                             </div>
 
                     </div>
-                    <div class="col-span-12 sm:col-span-6 xl:col-span-6 intro-y mb-2">
+                    <div class="col-span-12 sm:col-span-6 xl:col-span-5 intro-y mb-2">
                         <div class="text-center">All Allocated Workers</div>
                         <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
                             <div class="box border-3" style="text-align: left; font-size: 0.9rem; line-height: 2.0; height: 350px;">
@@ -88,10 +93,9 @@
                             </div>
                         </div>
                         </form>
+                        <button class="reset_all_data text-white bg-theme-123 p-2 pt-1 pb-1 btn_zoo_h mt-2" style="font-size: 85%;">Remove All Workers</button>
                     </div>
-                    <div class="col-span-12 sm:col-span-6 xl:col-span-6 intro-y mb-2">
-                    </div>
-                    <div class="col-span-12 sm:col-span-6 xl:col-span-6 intro-y mb-2">
+                    <div class="col-span-12 sm:col-span-6 xl:col-span-4 intro-y mb-2">
                         <div class="text-center">Allocates Workers Rates</div>
                         <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
                             <div class="box border-3" style="text-align: left; font-size: 0.9rem; line-height: 2.0; height: 350px;">
@@ -111,6 +115,8 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="col-span-12 sm:col-span-6 xl:col-span-6 intro-y mb-2">
                     </div>
                 </div>
                 <div class="grid grid-cols-12 gap-6 xl:col-span-2 intro-y xl:ml-12 xl:mr-12">
@@ -151,8 +157,9 @@
                 $("#edit_job_location_id").val(data[0].j_location);
                 $("#edit_job_company_id").val(data[0].company_id);
                 $("#edit_job_date_id").val(data[0].j_date);
-                $("#penality_start_time_id").val(data[0].p_start);
-                $("#penality_end_time_id").val(data[0].p_end);
+                $("#penality_rate_id").val(data[0].p_rate);
+                $("#penality_sat_rate_id").val(data[0].sat_rate);
+                $("#penality_sun_rate_id").val(data[0].sun_rate);
 
                 for (let i = 0; i < data[1].length; i++) {
 
@@ -179,7 +186,7 @@
                         $("#check4").append(`
                         <div id="add_job_role_name`+data[1][i].role_id+`">
                         <div class="flex border-2 border-theme-123 p-1" style="height: 30px; width:80%; font-size:0.9rem; display:inline"> `+data[1][i].r_name+`</div>
-                        <input type="number" name="`+data[1][i].role_id+`" id="edit_job_role_rate`+data[1][i].role_id+`" form="prices_form" class="p-2 border-theme-123 border-2 block ml-4 mb-2" style="width: 30%; height:30px; font-size:85%; display:inline" placeholder="Price" required><br>
+                        <input type="number" name="`+data[1][i].role_id+`" id="edit_job_role_rate`+data[1][i].role_id+`" form="prices_form" class="p-2 border-theme-123 border-2 block ml-4 mb-2" style="color:red; width: 30%; height:30px; font-size:85%; display:inline" placeholder="Price" required><br>
                         </div>
                         `);
                         $('#edit_job_role_rate'+data[1][i].role_id+'').val(data[1][i].job_rate);
@@ -220,7 +227,7 @@
 
                     for (let i = 0; i < data.data.length; i++) {
                         $("#check2").append(`
-                            <button value="`+data.data[i].id+`" class="allocated_add flex border-2 border-theme-123 btn_zoo_g mb-2 p-1" style="height: 30px; width:90%; font-size:0.9rem;">
+                            <button value="`+data.data[i].id+`" class="allocated_add flex border-2 border-theme-123 btn_zoo_g mb-2 p-1" style="height: 30px; width:100%; font-size:0.9rem;">
                             <div class="mr-auto">
                                 `+data.data[i].u_name+`
                             </div>
@@ -229,7 +236,7 @@
                         `);
                     }
 
-                    var trs = `<div class="mt-2 mb-4" style="height: 30px; width:90%; font-size:0.9rem; ">
+                    var trs = `<div class="mt-2 mb-4" style="height: 30px; width:100%; font-size:0.9rem; ">
                                 <nav role="navigation" aria-label="Pagination Navigation" class="flex items-center justify-between">
                                     <div>
                                         <p class="text-sm text-gray-700 leading-5">
@@ -247,12 +254,12 @@
                         trs += `<span class="relative z-0 inline-flex shadow-sm rounded-md">
                                     <span aria-current="page">
                                         <span class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-default leading-5">
-                                            « Previous
+                                            «
                                         </span>
                                     </span>
                                     <span aria-current="page">
                                         <span class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-default leading-5">
-                                            Next »
+                                            »
                                         </span>
                                     </span>
                                 </span>
@@ -266,11 +273,11 @@
                         trs += `<span class="relative z-0 inline-flex shadow-sm rounded-md">
                                     <span aria-current="page">
                                         <span class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-default leading-5">
-                                            « Previous
+                                            «
                                         </span>
                                     </span>
                                     <button value="`+vbl2+`" class="next_pg_search relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-5 hover:text-gray-500 focus:z-10 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150" aria-label="Go to page 2">
-                                        Next »
+                                        »
                                     </button>
                                 </span>
                             </div>
@@ -326,7 +333,7 @@
             for (let i = 0; i < data.data.length; i++)
             {
                 $("#check2").append(`
-                    <button value="`+data.data[i].id+`"class="allocated_add flex border-2 border-theme-123 btn_zoo_g mb-2 p-1" style="height: 30px; width:90%; font-size:0.9rem;">
+                    <button value="`+data.data[i].id+`"class="allocated_add flex border-2 border-theme-123 btn_zoo_g mb-2 p-1" style="height: 30px; width:100%; font-size:0.9rem;">
                     <div class="mr-auto">
                         `+data.data[i].u_name+`
                     </div>
@@ -335,7 +342,7 @@
                 `);
             }
 
-            var trs = `<div class="mt-2 mb-4" style="height:30px; width:90%; font-size:0.9rem; ">
+            var trs = `<div class="mt-2 mb-4" style="height:30px; width:100%; font-size:0.9rem; ">
                         <nav role="navigation" aria-label="Pagination Navigation" class="flex items-center justify-between">
                             <div>
                                 <p class="text-sm text-gray-700 leading-5">
@@ -353,12 +360,12 @@
                 trs += `<span class="relative z-0 inline-flex shadow-sm rounded-md">
                             <span aria-current="page">
                                 <span class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-default leading-5">
-                                    « Previous
+                                    «
                                 </span>
                             </span>
                             <span aria-current="page">
                                 <span class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-default leading-5">
-                                    Next »
+                                    »
                                 </span>
                             </span>
                         </span>
@@ -372,11 +379,11 @@
                 trs += `<span class="relative z-0 inline-flex shadow-sm rounded-md">
                             <span aria-current="page">
                                 <span class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-default leading-5">
-                                    « Previous
+                                    «
                                 </span>
                             </span>
                             <button value="`+vbl2+`" class="next_pg_search relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-5 hover:text-gray-500 focus:z-10 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150" aria-label="Go to page 2">
-                                Next »
+                                »
                             </button>
                         </span>
                     </div>
@@ -388,10 +395,10 @@
             {
                 trs += `<span class="relative z-0 inline-flex shadow-sm rounded-md">
                             <button value="`+vbl3+`" class="next_pg_search relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-5 hover:text-gray-500 focus:z-10 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150" aria-label="Go to page 2">
-                                « Previous
+                                «
                             </button>
                             <button value="`+vbl2+`" class="next_pg_search relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-5 hover:text-gray-500 focus:z-10 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150" aria-label="Go to page 2">
-                                Next »
+                                »
                             </button>
                         </span>
                     </div>
@@ -403,11 +410,11 @@
             {
                 trs += `<span class="relative z-0 inline-flex shadow-sm rounded-md">
                             <button value="`+vbl3+`" class="next_pg_search relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-5 hover:text-gray-500 focus:z-10 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150" aria-label="Go to page 2">
-                                « Previous
+                                «
                             </button>
                             <span aria-current="page">
                                 <span class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-default leading-5">
-                                    Next »
+                                »
                                 </span>
                             </span>
                         </span>
@@ -462,7 +469,7 @@
                     $("#check4").append(`
                     <div id="add_job_role_name`+data[1].id+`">
                     <div class="flex border-2 border-theme-123 p-1" style="height: 30px; width:80%; font-size:0.9rem; display:inline"> `+data[1].r_name+`</div>
-                    <input type="number" name="`+data[1].id+`" form="prices_form" class="p-2 border-theme-123 border-2 block ml-4 mb-2" style="width: 30%; height:30px; font-size:85%; display:inline" placeholder="Price" required><br>
+                    <input type="number" name="`+data[1].id+`" form="prices_form" class="p-2 border-theme-123 border-2 block ml-4 mb-2" style="color:red; width: 30%; height:30px; font-size:85%; display:inline" placeholder="Price" required><br>
                     </div>
                     `);
                 }
@@ -571,8 +578,9 @@
             var id1 = $("#edit_job_company_id").val();
             var id2 = $("#edit_job_location_id").val();
             var id3 = $("#edit_job_date_id").val();
-            var id4 = $("#penality_start_time_id").val();
-            var id5 = $("#penality_end_time_id").val();
+            var id4 = $("#penality_rate_id").val();
+            var id5 = $("#penality_sat_rate_id").val();
+            var id6 = $("#penality_sun_rate_id").val();
 
             var str = $("#prices_form").serialize();
             // console.log(str);
@@ -595,9 +603,9 @@
                 type:"PUT",
                 url:"../edit",
                 // data: {job_id: get_data, j_location: id2, company_id: id1,  j_date: id3, job_users: glb_arr, users_role: glb_arr_2},
-                data: {job_id: get_data, j_location: id2, company_id: id1, j_date: id3, job_users: glb_arr, users_role: glb_arr_2, roles_prices: glb_arr_3, p_start: id4, p_end: id5},
+                data: {job_id: get_data, j_location: id2, company_id: id1, j_date: id3, job_users: glb_arr, users_role: glb_arr_2, roles_prices: glb_arr_3, p_rate: id4, sat_rate: id5, sun_rate: id6},
                 success: function(response){
-                    // console.log(response);
+                    console.log(response);
                     toastr.success("Job Updated");
                     window.location.replace("../../jobs");
                 },
@@ -610,6 +618,18 @@
                     // console.log(error);
                 }
             });
+        });
+
+        $(document).on("click",".reset_all_data",function(e){
+            // console.log("HELLO");
+            if(confirm("Do you want to remove all allocated workers ?")){
+                $("#check4").empty();
+                $("#check3").empty();
+                glb_arr = [];
+                glb_arr_2 = [];
+                toastr.success("All allocated workers removed.");
+            }
+
         });
 
     });

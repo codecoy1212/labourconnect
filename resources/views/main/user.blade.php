@@ -32,7 +32,7 @@
                                             <input type="email" id="add_u_email_id" name="u_email" class="p-2 border-theme-123 border-2 block mb-2" style="width: 87%; height:30px; font-size:85%;" placeholder="User Email">
                                             <input type="text" id="add_u_pass_id" name="u_pass" class="p-2 border-theme-123 border-2 block mb-2" style="width: 87%; height:30px; font-size:85%;" placeholder="Allocate a Password">
                                             <input type="text" id="add_u_name_id" name="u_name" class="p-2 border-theme-123 border-2 block mb-2" style="width: 87%; height:30px; font-size:85%;" placeholder="Enter Full Name">
-                                            <input type="date" id="add_u_dob_id" name="u_dob" class="border-theme-123 border-2 block mb-2" style="width: 87%; height:30px; font-size:85%;" placeholder="Date of Birth">
+                                            <input type="text" id="add_u_dob_id" name="u_dob" class="p-2 border-theme-123 border-2 block mb-2" style="width: 87%; height:30px; font-size:85%;" placeholder="Date of Birth">
                                             <input type="number" id="add_u_phone_id" name="u_phone" class="p-2 border-theme-123 border-2 block mb-2" style="width: 87%; height:30px; font-size:85%;" placeholder="Mobile Number">
                                             <div class="intro-x mt-1 mr-12">
                                                 <button class="text-white bg-theme-123 p-0 pl-2 pr-2 btn_zoo_h" style="font-size: 85%;">Add User</button>
@@ -42,12 +42,12 @@
                                 </div>
                             </div>
                     </div>
-                    <div class="col-span-12 sm:col-span-6 xl:col-span-1 intro-y mb-2">
+                    {{-- <div class="col-span-12 sm:col-span-6 xl:col-span-1 intro-y mb-2">
 
-                    </div>
+                    </div> --}}
                     <div class="col-span-12 sm:col-span-6 xl:col-span-6 intro-y mb-2">
                         <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-                                <div class="box border-3" style=" line-height: 2.0; height: 374px;">
+                                <div class="box border-3" style=" line-height: 2.0; height: 488px;">
                                     <div class="" style="height: 40px; text-align: center;">
                                         <div class="ml-2">Current Users</div>
                                     </div>
@@ -108,7 +108,7 @@
                         </div>
                         <div class="intro-y col-span-12 px-2">
                             <div class="mb-2">Date of Birth</div>
-                            <input type="date" name="u_dob" id="edit_u_dob_id" class="input w-full border flex-1">
+                            <input type="text" name="u_dob" id="edit_u_dob_id" class="input w-full border flex-1">
                         </div>
                         <div class="intro-y col-span-12 px-2">
                             <div class="mb-2">Phone Number</div>
@@ -165,7 +165,7 @@
                     for (let i = 0; i < data.data.length; i++) {
                         $("#check2").append(`
                             <div  class="flex border-2 border-theme-123 m-2 btn_zoo_g " style="height: 30px;font-size:0.9rem; ">
-                                <button value="`+data.data[i].id+`" class="ml-2 mr-auto update_user" id="special_id" style="display:inline">`+data.data[i].u_name+`</button>
+                                <button value="`+data.data[i].id+`" class="ml-2 mr-auto update_user" id="special_id" style="display:inline;  text-decoration:underline;">`+data.data[i].u_name+`</button>
                                 <button value="`+data.data[i].id+`" class="mr-2 delete_user"> x </button>
                             </div>
                         `);
@@ -295,7 +295,7 @@
             for (let i = 0; i < data.data.length; i++) {
                 $("#check2").append(`
                     <div  class="flex border-2 border-theme-123 m-2 btn_zoo_g " style="height: 30px;font-size:0.9rem; ">
-                        <button value="`+data.data[i].id+`" class="ml-2 mr-auto update_user" id="special_id" style="display:inline">`+data.data[i].u_name+`</button>
+                        <button value="`+data.data[i].id+`" class="ml-2 mr-auto update_user" id="special_id" style="display:inline; text-decoration:underline;">`+data.data[i].u_name+`</button>
                         <button value="`+data.data[i].id+`" class="mr-2 delete_user"> x </button>
                     </div>
                 `);
@@ -387,7 +387,7 @@
             {
                 $("#check2").append(`
                     <div  class="flex border-2 border-theme-123 m-2 btn_zoo_g " style="height: 30px;font-size:0.9rem; ">
-                        <button value="`+data.data[i].id+`"  class="ml-2 mr-auto update_user" id="special_id" style="display:inline">`+data.data[i].u_name+`</button>
+                        <button value="`+data.data[i].id+`"  class="ml-2 mr-auto update_user" id="special_id" style="display:inline; text-decoration:underline;">`+data.data[i].u_name+`</button>
                         <button value="`+data.data[i].id+`" class="mr-2 delete_user"> x </button>
                     </div>
                 `);
@@ -499,7 +499,7 @@
             {
                 $("#check2").append(`
                     <div  class="flex border-2 border-theme-123 m-2 btn_zoo_g " style="height: 30px;font-size:0.9rem; ">
-                        <button value="`+data.data[i].id+`"  class="ml-2 mr-auto update_user" id="special_id" style="display:inline">`+data.data[i].u_name+`</button>
+                        <button value="`+data.data[i].id+`"  class="ml-2 mr-auto update_user" id="special_id" style="display:inline; text-decoration:underline;">`+data.data[i].u_name+`</button>
                         <button value="`+data.data[i].id+`" class="mr-2 delete_user"> x </button>
                     </div>
                 `);

@@ -112,7 +112,7 @@
                                     <div class="flex mt-2 mb-0" style="min-height: 2px; background-color:black;">
                                     </div>
                                     <div class="flex ml-2">
-                                        <b>#`+data[i].id+`</b>
+                                        <b>Job Number: `+data[i].id+`</b>
                                     </div>
                                 </div>
                             </div>

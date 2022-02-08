@@ -22,8 +22,8 @@ class UserController extends Controller
                 'u_uname'=> 'required|min:3|unique:users,u_uname',
                 'u_email'=> 'required|email:rfc,dns|unique:users,u_email',
                 'u_pass'=> 'required|digits:4|numeric',
-                'u_dob'=> 'required|date',
-                'u_phone'=> 'required|digits:11',
+                'u_dob'=> 'required|date_format:Y-m-d',
+                'u_phone'=> 'required',
             ],[
                 'u_name.required' => 'Worker name is required.',
                 'u_name.min' => 'Worker name must be of 3 characters.',
@@ -37,9 +37,9 @@ class UserController extends Controller
                 'u_pass.digits' => 'Password must be of 4 digits.',
                 'u_pass.numeric' => 'Only digits allowed in password.',
                 'u_dob.required' => 'Date of birth is required.',
-                'u_dob.date' => 'Incorrect date format.',
+                'u_dob.date_format' => 'Incorrect date format. Format: YYYY-MM-DD.',
                 'u_phone.required' => 'Phone is required.',
-                'u_phone.digits' => 'Phone must be of 11 characters.',
+                // 'u_phone.digits' => 'Phone must be of 11 characters.',
                 'role_id.required' => 'Role ID is required.',
                 'role_id.numeric' => 'Role ID must be numeric.',
             ]);
@@ -70,7 +70,7 @@ class UserController extends Controller
         {
             $vbl = DB::table('users')
             ->select('users.*')
-            ->orderBy('users.id','desc')->paginate(7);
+            ->orderBy('users.id','desc')->paginate(10);
             return $vbl;
         }
         else
@@ -103,8 +103,8 @@ class UserController extends Controller
                 'u_uname'=> 'required|min:3|unique:users,u_uname,'.$request->id,
                 'u_email'=> 'required|email:rfc,dns|unique:users,u_email,'.$request->id,
                 'u_pass'=> 'required|digits:4|numeric',
-                'u_dob'=> 'required|date',
-                'u_phone'=> 'required|digits:11',
+                'u_dob'=> 'required|date_format:Y-m-d',
+                'u_phone'=> 'required',
             ],[
                 'u_name.required' => 'Worker name is required.',
                 'u_name.min' => 'Worker name must be of 3 characters.',
@@ -118,9 +118,8 @@ class UserController extends Controller
                 'u_pass.digits' => 'Password must be of 4 digits.',
                 'u_pass.numeric' => 'Only digits allowed in password.',
                 'u_dob.required' => 'Date of birth is required.',
-                'u_dob.date' => 'Incorrect date format.',
+                'u_dob.date_format' => 'Incorrect date format. Format: YYYY-MM-DD',
                 'u_phone.required' => 'Phone is required.',
-                'u_phone.digits' => 'Phone must be of 11 characters.',
                 'role_id.required' => 'Role ID is required.',
                 'role_id.numeric' => 'Role ID must be numeric.',
             ]);
@@ -172,7 +171,7 @@ class UserController extends Controller
             ->orWhere('u_dob', 'like',"%".$request->search."%")
             ->orWhere('u_phone', 'like',"%".$request->search."%")
             ->orWhere('users.id', 'like', "%".$request->search."%")
-            ->orderBy('created_at', 'desc')->paginate(7);
+            ->orderBy('created_at', 'desc')->paginate(10);
             return $vbl;
         }
         else

@@ -26,20 +26,29 @@ class JobController extends Controller
             $validator = Validator::make($request->all(),[
                 'j_location'=> 'required|min:5',
                 'company_id'=> 'required|numeric',
-                'j_date'=> 'required|date',
-                'p_end'=> 'required|date_format:H:i',
-                'p_start'=> 'required|date_format:H:i',
+                'j_date'=> 'required|date_format:Y-m-d',
+                // 'p_end'=> 'required|date_format:H:i',
+                // 'p_start'=> 'required|date_format:H:i',
+                'p_rate'=> 'required|numeric',
+                'sat_rate'=> 'required|numeric',
+                'sun_rate'=> 'required|numeric',
             ],[
                 'j_location.required' => 'Location is required.',
                 'j_location.min' => 'Location must be of 5 characters.',
                 'company_id.required' => 'Company ID is required.',
                 'company_id.numeric' => 'Company ID should be numeric.',
                 'j_date.required' => 'Date is required for Job to be submitted.',
-                'j_date.date' => 'Job date format Incorrect.',
-                'p_end.required'=> 'Penality End time is required.',
-                'p_start.required'=> 'Penality Start time is required.',
-                'p_end.date_format'=> 'Penality End time format is Incorrect.',
-                'p_start.date_format'=> 'Penality Start time format is Incorrect.',
+                'j_date.date_format' => 'Incorrect date format. Format: YYYY-MM-DD.',
+                // 'p_end.required'=> 'Penality End time is required.',
+                // 'p_start.required'=> 'Penality Start time is required.',
+                // 'p_end.date_format'=> 'Penality End time format is Incorrect.',
+                // 'p_start.date_format'=> 'Penality Start time format is Incorrect.',
+                'p_rate.required'=> 'Penality Rate is required.',
+                'p_rate.numeric'=> 'Penality Rate must be numeric.',
+                'sat_rate.required'=> 'Saturday Penality Rate is required.',
+                'sat_rate.numeric'=> 'Saturday Penality Rate must be numeric.',
+                'sun_rate.required'=> 'Sunday Penality Rate is required.',
+                'sun_rate.numeric'=> 'Sunday Penality Rate must be numeric.',
             ]);
             if ($validator->fails())
             {
@@ -57,8 +66,11 @@ class JobController extends Controller
                 $vbl->company_id = $request->company_id;
                 $vbl->j_date = $request->j_date;
                 $vbl->j_status = "ACTIVE";
-                $vbl->p_start = $request->p_start;
-                $vbl->p_end = $request->p_end;
+                // $vbl->p_start = $request->p_start;
+                // $vbl->p_end = $request->p_end;
+                $vbl->p_rate = $request->p_rate;
+                $vbl->sat_rate = $request->sat_rate;
+                $vbl->sun_rate = $request->sun_rate;
                 $vbl->save();
 
                 if($request->job_users == null || empty($request->job_users)){}
@@ -111,7 +123,7 @@ class JobController extends Controller
             $vbl = DB::table('jobs')
             ->where('jobs.id',$request->id)
             ->join('companies','companies.id','=','jobs.company_id')
-            ->select('jobs.id','jobs.j_location','companies.c_name','jobs.company_id','jobs.j_date','jobs.p_start','jobs.p_end')
+            ->select('jobs.id','jobs.j_location','companies.c_name','jobs.company_id','jobs.j_date','jobs.sat_rate','jobs.sun_rate','jobs.p_rate')
             ->first();
             array_push($job,$vbl);
             // return $vbl;
@@ -157,20 +169,29 @@ class JobController extends Controller
             $validator = Validator::make($request->all(),[
                 'j_location'=> 'required|min:5',
                 'company_id'=> 'required|numeric',
-                'j_date'=> 'required|date',
-                'p_end'=> 'required|date_format:H:i',
-                'p_start'=> 'required|date_format:H:i',
+                'j_date'=> 'required|date_format:Y-m-d',
+                // 'p_end'=> 'required|date_format:H:i',
+                // 'p_start'=> 'required|date_format:H:i',
+                'p_rate'=> 'required|numeric',
+                'sat_rate'=> 'required|numeric',
+                'sun_rate'=> 'required|numeric',
             ],[
                 'j_location.required' => 'Location is required.',
                 'j_location.min' => 'Location must be of 5 characters.',
                 'company_id.required' => 'Company ID is required.',
                 'company_id.numeric' => 'Company ID should be numeric.',
                 'j_date.required' => 'Date is required for Job to be submitted.',
-                'j_date.date' => 'Job date format Incorrect.',
-                'p_end.required'=> 'Penality End time is required.',
-                'p_start.required'=> 'Penality Start time is required.',
-                'p_end.date_format'=> 'Penality End time format is Incorrect.',
-                'p_start.date_format'=> 'Penality Start time format is Incorrect.',
+                'j_date.date_format' => 'Incorrect date format. Format: YYYY-MM-DD.',
+                // 'p_end.required'=> 'Penality End time is required.',
+                // 'p_start.required'=> 'Penality Start time is required.',
+                // 'p_end.date_format'=> 'Penality End time format is Incorrect.',
+                // 'p_start.date_format'=> 'Penality Start time format is Incorrect.',
+                'p_rate.required'=> 'Penality Rate is required.',
+                'p_rate.numeric'=> 'Penality Rate must be numeric.',
+                'sat_rate.required'=> 'Saturday Penality Rate is required.',
+                'sat_rate.numeric'=> 'Saturday Penality Rate must be numeric.',
+                'sun_rate.required'=> 'Sunday Penality Rate is required.',
+                'sun_rate.numeric'=> 'Sunday Penality Rate must be numeric.',
             ]);
             if ($validator->fails())
             {
@@ -183,8 +204,11 @@ class JobController extends Controller
                 $vbl->company_id = $request->company_id;
                 $vbl->j_date = $request->j_date;
                 $vbl->j_status = "ACTIVE";
-                $vbl->p_start = $request->p_start;
-                $vbl->p_end = $request->p_end;
+                // $vbl->p_start = $request->p_start;
+                // $vbl->p_end = $request->p_end;
+                $vbl->p_rate = $request->p_rate;
+                $vbl->sat_rate = $request->sat_rate;
+                $vbl->sun_rate = $request->sun_rate;
                 $vbl->save();
 
                 $vbl2 = Job_User::where('job_id',$request->job_id)->get();

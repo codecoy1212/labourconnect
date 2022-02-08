@@ -42,7 +42,7 @@ class RoleController extends Controller
     {
         if(session()->get('s_uname'))
         {
-            $vbl = DB::table('roles')->orderBy('id','desc')->paginate(6);
+            $vbl = DB::table('roles')->orderBy('id','desc')->paginate(10);
             return $vbl;
         }
         else
@@ -114,7 +114,7 @@ class RoleController extends Controller
             $vbl = DB::table('roles')
             ->where('r_name', 'like',"%".$request->search."%")
             ->orwhere('id', 'like', "%".$request->search."%")
-            ->orderBy('created_at', 'desc')->paginate(6);
+            ->orderBy('created_at', 'desc')->paginate(10);
             return $vbl;
         }
         else

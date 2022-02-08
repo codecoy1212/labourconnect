@@ -53,9 +53,6 @@
                             </div>
                         </div>
                     </a>
-
-                </div>
-                <div class="grid grid-cols-12 gap-6 mt-10 xl:ml-40">
                     <a class="col-span-12 sm:col-span-6 xl:col-span-4 intro-y" href="{{route('orts')}}">
                         <div class="zoom-in">
                             <div class="box p-6 border-theme-1 border-2">
@@ -77,7 +74,8 @@
                             </div>
                         </div>
                     </a>
-
+                </div>
+                <div class="grid grid-cols-12 gap-6 mt-10 xl:ml-40">
                 </div>
             </div>
         </div>
