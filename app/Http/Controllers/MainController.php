@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use PhpParser\Node\Stmt\Else_;
+use stdClass;
 
 class MainController extends Controller
 {
@@ -282,40 +283,10 @@ class MainController extends Controller
             return redirect('login');
     }
 
-
-
-    // public static function show_csv(Request $request)
-    // {
-    //     // return $request;
-
-    //     // $time1 = strtotime($vbl7->start);
-    //     // echo $time1."<br>";
-    //     // $time2 = strtotime($vbl7->finish);
-    //     // echo $time2."<br>";
-
-    //     $php1 = '2022-02-05 09:00:00 PM';
-    //     $php2 = '2022-02-06 08:59:00 PM';
-
-    //     $php1 = strtotime($php1);
-    //     echo $php1."<br>";
-    //     $php2 = strtotime($php2);
-    //     echo $php2."<br>";
-    //     $php2 = $php2 - $php1;
-    //     echo $php2."<br><br>";
-
-    //     $time5 = strtotime("12:00 AM");
-    //     echo $time5."<br>";
-    //     $time4 = strtotime("07:00 AM");
-    //     echo $time4."<br>";
-    //     $time3 = strtotime("05:00 PM");
-    //     echo $time3."<br>";
-    //     $time6 = strtotime("01:00 AM");
-    //     echo $time6."<br>";
-    // }
-
-    // public static function show_csv()
     public static function show_csv(Request $request)
     {
+        // return Job::all();
+
         if(session()->get('s_uname'))
         {
             // return $request->start_date;
@@ -323,16 +294,16 @@ class MainController extends Controller
             $client = DB::table('jobs')
             ->where('jobs.id','=',$request->job_id)
             ->join('companies','companies.id','=','jobs.company_id')
-            ->select('companies.c_contact','jobs.j_location')
+            ->select('companies.c_contact','jobs.*')
             ->first();
             // return $client;
 
             $day2 = date('w',strtotime($request->start_date));
             $day3 = date('w',strtotime($request->end_date));
             //week start of month first date
-            $week_start = date('Y-m-d', strtotime($request->start_date.'-'.($day2).' days'));
+            $week_start = date('Y-m-d', strtotime($request->start_date.'-'.(-1+$day2).' days'));
             //week end of month last date
-            $week_end = date('Y-m-d', strtotime($request->end_date.'+'.(6-$day3).' days'));
+            $week_end = date('Y-m-d', strtotime($request->end_date.'+'.(7-$day3).' days'));
 
             $start = $week_start;
             $ending = $week_end;
@@ -348,18 +319,36 @@ class MainController extends Controller
             $candidate = DB::table('job__users')
             ->where('job_id','=',$request->job_id)
             ->join('users','users.id','=','job__users.user_id')
-            ->select('users.*')
+            ->join("roles","roles.id","=","job__users.role_id")
+            ->select('users.*',"roles.r_name",'job__users.job_rate')
             ->get();
 
+            // return $candidate;
+
+            $final_array_final = array();
             foreach ($candidate as $item) {
-                    echo "<br>";
-                    echo $item->u_name;
+
+                $total_normal_hours_final = 0;
+                $total_over_hours_final = 0;
+                $sat_ot_total = "-";
+                $sun_ot_total = "-";
                 foreach ($period as $dt) {
-                    echo "<br>";
+                    // echo "<br>";
                     // echo date("W Y-m-d",strtotime($request->start_date));
-                    echo $client->c_contact."<br>";
-                    echo $dt->format("W Y-m-d")."<br>";
-                    echo $client->j_location."<br><br>";
+                    // echo "Client: ".$client->c_contact."<br>";
+                    // echo "Site: ".$client->j_location."<br>";
+                    // echo "Week Start Date: ".$dt->format("W Y-m-d")."<br>";
+                    // echo "Week End Date: ".date('W Y-m-d',strtotime($dt->format("Y-m-d").' +6 day'))."<br>";
+                    // echo "Candidate: ".$item->u_name."<br>";
+                    // echo "Job Role: ".$item->r_name."<br>";
+                    // echo "<br>";
+                    $final_result = new stdClass;
+                    $final_result->client = $client->c_contact;
+                    $final_result->site = $client->j_location;
+                    $final_result->Week_start_date = $dt->format("Y-m-d");
+                    $final_result->week_end_date = date('Y-m-d',strtotime($dt->format("Y-m-d").' +6 day'));
+                    $final_result->candidate = $item->u_name;
+                    $final_result->job_role = $item->r_name;
 
                     $start_day = $dt->format("Y-m-d");
                     $end_day = new DateTime($dt->format("Y-m-d"));
@@ -370,16 +359,25 @@ class MainController extends Controller
                     $interval2 = DateInterval::createFromDateString('1 day');
                     $period2 = new DatePeriod($start_day_final,$interval2,$end_day_final);
 
-                    // $total_hours = 0;
-                    // $w_hours = 0;
-                    // $o_hours = 0;
+
+                    $nh_list = array();
+                    $oh_list = array();
                     foreach ($period2 as $dt2) {
                         // echo "HELLO"."<br>";
-                        // echo $dt2->format("Y-m-d")."<br>";
+                        // echo $dt2->format("l Y-m-d")."<br>";
+                        $today_day = $dt2->format("l");
                         $dattte = $dt2->format("Y-m-d");
 
-                        $vbl7 = DoneJob::where('job_date',$dattte)
-                        ->where('user_id',$item->id)->first();
+                        // $vbl7 = DoneJob::where('job_date',$dattte)
+                        // ->where('user_id',$item->id)->first();
+
+                        $vbl7 = DB::table('done_jobs')
+                        ->where('job_date',$dattte)
+                        ->where('user_id',"=",$item->id)
+                        ->select("done_jobs.*")
+                        ->first();
+
+                        // return $vbl7;
 
                         if(!empty($vbl7))
                         {
@@ -390,163 +388,473 @@ class MainController extends Controller
                             $time2 = strtotime($vbl7->finish);
                             // echo $time2."<br>";
 
-                            $vbl34 = date('Y-m-d h:i:s A',strtotime($vbl7->job_date.$vbl7->start));
-                            // echo $vbl34."<br>";
+                            $time_1 = date('Y-m-d h:i:s A',strtotime($vbl7->job_date.$vbl7->start));
+                            // echo $time_1."<br>";
+                            $ls = date('Y-m-d h:i:s A',strtotime($vbl7->job_date."07:00:00 AM"));
+                            $le = date('Y-m-d h:i:s A',strtotime($vbl7->job_date."05:00:00 PM"));
+                            $ls = strtotime($ls);
+                            $le = strtotime($le);
+                            $next_day_start = 0;
+                            $next_day_end = 0;
+                            // return $ls;
                             if($time1 < $time2 )
                             {
-                                $time2 = date('Y-m-d h:i:s A',strtotime($vbl7->job_date.$vbl7->finish));
-                                // echo $time2."<br>";
+                                $time_2 = date('Y-m-d h:i:s A',strtotime($vbl7->job_date.$vbl7->finish));
+                                // echo $time_2."<br>";
                             }
                             else
                             {
-                                $time2 = date('Y-m-d h:i:s A',strtotime($vbl7->job_date.$vbl7->finish.' +1 day'));
-                                // echo $time2."<br>";
+                                $time_2 = date('Y-m-d h:i:s A',strtotime($vbl7->job_date.$vbl7->finish.' +1 day'));
+                                // echo $time_2."<br>";
+                                $next_day_start = date('Y-m-d h:i:s A',strtotime($vbl7->job_date."07:00:00 AM".' +1 day'));
+                                $next_day_start = strtotime($next_day_start);
+                                $next_day_end = date('Y-m-d h:i:s A',strtotime($vbl7->job_date."05:00:00 PM".' +1 day'));
+                                $next_day_end = strtotime($next_day_end);
+                                // return $time_2;
+                                // $next_day_start
+                                // $next_day_end
                             }
 
-                            $time_1 = strtotime($vbl34);
-                            $time_2 = strtotime($time2);
-                            echo $time_1."<br>";
-                            echo $time_2."<br>";
+                            $start = strtotime($time_1);
+                            $end = strtotime($time_2);
 
-                            $time4 = date('Y-m-d h:i:s A',strtotime($vbl7->job_date."07:00:00 AM"));
-                            $time4 = strtotime($time4);
-                            echo $time4."<br>";
-                            $time3 = date('Y-m-d h:i:s A',strtotime($vbl7->job_date."05:00:00 PM"));
-                            $time3 = strtotime($time3);
-                            echo $time3."<br>";
+                            // echo $today_day = "Sunday";
+                            if($today_day == "Sunday" )
+                            {
+                                // echo "Sunday Overtime <br>";
+                                $end = $end-$start;
+                                $end = $end/3600;
+                                $difference = $end;
+                                $var3 = $vbl7->break;
+                                if($var3 == "00:30")
+                                $difference = $difference - 0.50;
+                                if($var3 == "00:45")
+                                $difference = $difference - 0.75;
+                                if($var3 == "01:00")
+                                $difference = $difference - 1.00;
+                                if($var3 == "01:15")
+                                $difference = $difference - 1.25;
+                                if($var3 == "01:30")
+                                $difference = $difference - 1.50;
+                                if($var3 == "01:45")
+                                $difference = $difference - 1.75;
+                                if($var3 == "02:00")
+                                $difference = $difference - 2.00;
+
+                                $sun_ot_total = $difference;
+                            }
+
+                            else if($today_day == "Saturday" )
+                            {
+                                // echo "Saturday Overtime <br>";
+                                $end = $end-$start;
+                                $end = $end/3600;
+                                $difference = $end;
+                                $var3 = $vbl7->break;
+                                if($var3 == "00:30")
+                                $difference = $difference - 0.50;
+                                if($var3 == "00:45")
+                                $difference = $difference - 0.75;
+                                if($var3 == "01:00")
+                                $difference = $difference - 1.00;
+                                if($var3 == "01:15")
+                                $difference = $difference - 1.25;
+                                if($var3 == "01:30")
+                                $difference = $difference - 1.50;
+                                if($var3 == "01:45")
+                                $difference = $difference - 1.75;
+                                if($var3 == "02:00")
+                                $difference = $difference - 2.00;
+
+                                $sat_ot_total = $difference;
+                            }
+
+                            else
+                            {
+                                $final_normal_hours = "-";
+                                $final_over_hours = "-";
 
 
+                                if($time1 == $time2)
+                                {
+                                    // echo "SAME TIMING GIVEN";
+                                    return "SAME TIME GIVEN IN SUBMISSION OF WORK";
+                                }
+                                else if($time1 > $time2)
+                                {
+                                    if($start >= $le && $end >= $le && $end <= $next_day_start )
+                                    {
+                                        // echo "CON 7<br>";
+                                      $vbl = $end-$start;
+                                    //   echo "Over Hours: ". $vbl;
+                                    //   echo "<br>";
+                                    //   echo "Normal Hours: ". 0;
+                                    //   echo "<br>";
+                                      $final_normal_hours = 0;
+                                      $final_over_hours = $vbl;
+                                      $eg1 = $final_normal_hours/3600;
+                                      $eg2 = $final_over_hours/3600;
+                                      array_push($nh_list,$eg1);
+                                      array_push($oh_list,$eg2);
+                                    }
 
-                            // if($time_1 <= $time3 && $time_1 >= $time4 && $time_2 <= $time3 && $time_2 >= $time4 )
-                            // {
-                            //     echo "START TIME SUBAH 7 K BAD OR END TIME SHAM 5 SE PEHLE<br>";
-                            // }
-                            // else if($time_1 >= $time3 && $time_1 >= $time4 && $time_2 <= $time3 && $time_2 >= $time4 )
-                            // {
-                            //     echo "START TIME SUBAH 7 K BAD OR END TIME SHAM 5 SE PEHLE<br>";
-                            // }
-                            // else if($time_1 >= $time3 && $time_2 <= $time4 && $time_1 <= $time6 && $time_2 >= $time5 && $time_2 <=$time4)
-                            // {
-                            //     echo "START TIME SHAM 5 K BAD OR RAT 12 SE PEHLE END TIME SUBAH 7 SE PEHLE OR RAT 12 K BAD<br>";
-                            // }
-                            // else if($time_1 >= $time5 && $time_1 <= $time4 && $time_2 >= $time4 && $time_2 >= $time3 )
-                            // {
-                            //     echo "START TIME SUBAH 7 SE PEHLE END TIME SHAM 5 BJE K BAD OR RAT 12 SE PEHLE <br>";
-                            // }
-                            // else if($time_1 >= $time5 && $time_1 <= $time4 && $time_2 >= $time4 && $time_2 <= $time3 )
-                            // {
-                            //     echo "START TIME RAT 12 BJE K BAD OR END TIME SHAM 5 SE PEHLE<br>";
-                            // }
-                            // else if($time_1 >= $time4 && $time_1 <= $time3 && $time_2 >= $time3 && $time_2 <= $time6)
-                            // {
-                            //     echo "START TIME SUBAH 7 K BAD OR SHAM 5 SE PEHLE OR END TIME RAT 12 BJE SE PEHLE OR SHAM 5 BJE K BAD <br>";
-                            // }
-                            // else if($time_1 >= $time4 && $time_1 <= $time3 && $time_2 <= $time4)
-                            // {
-                            //     echo "START TIME SUBAH 7 K BAD OR SHAM 5 SE PEHLE OR END TIME RAT 12 K BAD OR SUBAH 7 SE PEHLE<br>";
-                            // }
-                            // else if($time_1 >= $time3 && $time_1 <= $time6 && $time_2 >= $time4)
-                            // {
-                            //     echo "START TIME SHAM 5 BJE K BAD OR END TIME SUBAH 7 BJE K BAD<br>";
-                            // }
-                            // else if($time_1 >= $time5 && $time_1 <= $time4 && $time_2 >= $time5 && $time_2 <= $time4)
-                            // {
-                            //     echo "START TIME RAT 12 K BAD OR SUBAH 7 SE PEHLE END TIME RAT 12 K BAD OR SUBAH 7 SE PEHLE<br>";
-                            // }
+                                    else if($start >= $le && $end >= $le && $end >= $next_day_start && $end <= $next_day_end)
+                                    {
+                                        // echo "CON 8<br>";
+                                      $vbl = $next_day_start-$start;
+                                    //   echo "Over Hours: ". $vbl;
+                                      $vbl2 = $end-$next_day_start;
+                                    //   echo "<br>";
+                                    //   echo "Normal Hours: ". $vbl2;
+                                    //   echo "<br>";
+                                      $final_normal_hours = $vbl2;
+                                      $final_over_hours = $vbl;
+                                      $eg1 = $final_normal_hours/3600;
+                                      $eg2 = $final_over_hours/3600;
+                                      array_push($nh_list,$eg1);
+                                      array_push($oh_list,$eg2);
+                                    }
 
-                            $time1 = strtotime($vbl34);
-                            $time2 = strtotime($time2);
+                                    else if($start >= $le && $end >= $le && $end >=$next_day_start && $end >= $next_day_end)
+                                    {
+                                        // echo "CON 9<br>";
+                                      $vbl = $next_day_start-$start;
+                                      $vbl3 = $next_day_end-$next_day_start;
+                                    //   echo "Normal Hours: ". $vbl3;
+                                      $vbl2 = $end-$next_day_end;
+                                      $vbl2 = $vbl2+$vbl;
+                                    //   echo "<br>";
+                                    //   echo "Over Hours: ". $vbl2;
+                                    //   echo "<br>";
+                                      $final_normal_hours = $vbl3;
+                                      $final_over_hours = $vbl2;
+                                      $eg1 = $final_normal_hours/3600;
+                                      $eg2 = $final_over_hours/3600;
+                                      array_push($nh_list,$eg1);
+                                      array_push($oh_list,$eg2);
+                                    }
 
+                                    else if($start <= $le && $start >= $ls && $end <= $next_day_start)
+                                    {
+                                        // echo "CON 10<br>";
+                                      $vbl = $le-$start;
+                                      $vbl3 = $end-$le;
+                                    //   echo "Normal Hours: ". $vbl;
+                                    //   echo "<br>";
+                                    //   echo "Over Hours: ". $vbl3;
+                                    //   echo "<br>";
+                                      $final_normal_hours = $vbl;
+                                      $final_over_hours = $vbl3;
+                                      $eg1 = $final_normal_hours/3600;
+                                      $eg2 = $final_over_hours/3600;
+                                      array_push($nh_list,$eg1);
+                                      array_push($oh_list,$eg2);
+                                    }
 
-                            $difference = round(abs($time2 - $time1) / 3600,2);
-                            // echo $difference."<br>";
+                                    else if($start <= $ls && $end <= $next_day_start)
+                                    {
+                                        // echo "CON 11<br>";
+                                      $vbl = $ls-$start;
+                                      $vbl3 = $le-$ls;
+                                    //   echo "Normal Hours: ". $vbl3;
+                                      $vbl2 = $end-$le;
+                                      $vbl2 = $vbl2+$vbl;
+                                    //   echo "<br>";
+                                    //   echo "Over Hours: ". $vbl2;
+                                    //   echo "<br>";
+                                      $final_normal_hours = $vbl3;
+                                      $final_over_hours = $vbl2;
+                                      $eg1 = $final_normal_hours/3600;
+                                      $eg2 = $final_over_hours/3600;
+                                      array_push($nh_list,$eg1);
+                                      array_push($oh_list,$eg2);
+                                    }
 
-                            $var3 = $vbl7->break;
-                            if($var3 == "00:30")
-                            $difference = $difference - 0.50;
-                            if($var3 == "00:45")
-                            $difference = $difference - 0.75;
-                            if($var3 == "01:00")
-                            $difference = $difference - 1.00;
-                            if($var3 == "01:15")
-                            $difference = $difference - 1.25;
-                            if($var3 == "01:30")
-                            $difference = $difference - 1.50;
-                            if($var3 == "01:45")
-                            $difference = $difference - 1.75;
-                            if($var3 == "02:00")
-                            $difference = $difference - 2.00;
+                                    else if($start >= $ls && $start <= $le && $end >= $next_day_start  && $end <= $next_day_end)
+                                    {
+                                        // echo "CON 12<br>";
+                                      $vbl = $le-$start;
+                                      $vbl3 = $next_day_start-$le;
 
-                            $working_hours = $difference;
-                            echo $working_hours."<br>";
+                                      $vbl2 = $end-$next_day_start;
+                                      $vbl2 = $vbl2+$vbl;
+                                    //   echo "Normal Hours: ". $vbl2;
+                                    //   echo "<br>";
+                                    //   echo "Over Hours: ". $vbl3;
+                                    //   echo "<br>";
+                                      $final_normal_hours = $vbl2;
+                                      $final_over_hours = $vbl3;
+                                      $eg1 = $final_normal_hours/3600;
+                                      $eg2 = $final_over_hours/3600;
+                                      array_push($nh_list,$eg1);
+                                      array_push($oh_list,$eg2);
+                                    }
+                                }
+                                else if($time1 < $time2)
+                                {
+                                    if($start >= $ls && $start <= $le && $end >= $ls && $end <= $le)
+                                    {
+                                    //     echo "CON 1<br>";
+                                    //   echo "Over Hours: ". 0;
+                                    //   echo "<br>";
+                                      $vbl = $end-$start;
+                                    //   echo "Normal Hours: ".$vbl;
+                                    //   echo "<br>";
+                                      $final_normal_hours = $vbl;
+                                      $final_over_hours = 0;
+                                      $eg1 = $final_normal_hours/3600;
+                                      $eg2 = $final_over_hours/3600;
+                                      array_push($nh_list,$eg1);
+                                      array_push($oh_list,$eg2);
+                                    }
+
+                                    else if($start <= $ls && $start <= $le && $end <= $ls && $end <= $le)
+                                    {
+                                    //   echo "CON 2<br>";
+                                      $vbl = $end-$start;
+                                    //   echo "Over Hours: ". $vbl;
+                                    //   echo "<br>";
+                                    //   echo "Normal Hours: ". 0;
+                                    //   echo "<br>";
+                                      $final_normal_hours = 0;
+                                      $final_over_hours = $vbl;
+                                      $eg1 = $final_normal_hours/3600;
+                                      $eg2 = $final_over_hours/3600;
+                                      array_push($nh_list,$eg1);
+                                      array_push($oh_list,$eg2);
+                                    }
+
+                                    else if($start >= $ls && $start >= $le && $end >= $ls && $end >= $le)
+                                    {
+                                        // echo "CON 3<br>";
+                                      $vbl = $end-$start;
+                                    //   echo "Over Hours: ". $vbl;
+                                    //   echo "<br>";
+                                    //   echo "Normal Hours: ". 0;
+                                    //   echo "<br>";
+                                      $final_normal_hours = 0;
+                                      $final_over_hours = $vbl;
+                                      $eg1 = $final_normal_hours/3600;
+                                      $eg2 = $final_over_hours/3600;
+                                      array_push($nh_list,$eg1);
+                                      array_push($oh_list,$eg2);
+                                    }
+
+                                    else if($start >= $ls && $start <= $le && $end >= $ls && $end >= $le)
+                                    {
+                                        // echo "CON 4<br>";
+                                      $vbl = $le-$start;
+                                      $vbl2 = $end-$le;
+                                    //   echo "Over Hours: ". $vbl2;
+                                    //   echo "<br>";
+                                    //   echo "Normal Hours: ". $vbl;
+                                    //   echo "<br>";
+                                      $final_normal_hours = $vbl;
+                                      $final_over_hours = $vbl2;
+                                      $eg1 = $final_normal_hours/3600;
+                                      $eg2 = $final_over_hours/3600;
+                                      array_push($nh_list,$eg1);
+                                      array_push($oh_list,$eg2);
+                                    }
+
+                                    else if($start <= $ls && $start <= $le && $end >= $ls && $end <= $le)
+                                    {
+                                        // echo "CON 5<br>";
+                                      $vbl = $ls-$start;
+                                    //   echo "Over Hours: ". $vbl;
+                                    //   echo "<br>";
+                                      $vbl2 = $end-$ls;
+                                    //   echo "Normal Hours: ". $vbl2;
+                                    //   echo "<br>";
+                                      $final_normal_hours = $vbl2;
+                                      $final_over_hours = $vbl;
+                                      $eg1 = $final_normal_hours/3600;
+                                      $eg2 = $final_over_hours/3600;
+                                      array_push($nh_list,$eg1);
+                                      array_push($oh_list,$eg2);
+                                    }
+
+                                    else if($start <= $ls && $start <= $le && $end >= $ls && $end >= $le)
+                                    {
+                                        // echo "CON 6<br>";
+                                      $vbl = $ls-$start;
+                                      $vbl3 = $end-$le;
+                                      $vbl = $vbl+$vbl3;
+                                    //   echo "Over Hours: ". $vbl;
+                                    //   echo "<br>";
+                                      $vbl2 = $le-$ls;
+                                    //   echo "Normal Hours: ". $vbl2;
+                                    //   echo "<br>";
+                                      $final_normal_hours = $vbl2;
+                                      $final_over_hours = $vbl;
+                                      $eg1 = $final_normal_hours/3600;
+                                      $eg2 = $final_over_hours/3600;
+                                      array_push($nh_list,$eg1);
+                                      array_push($oh_list,$eg2);
+                                    }
+                                }
+
+                                $final_normal_hours = $final_normal_hours/3600;
+                                $final_over_hours = $final_over_hours/3600;
+
+                                // echo "Normal Hours: ".$final_normal_hours."<br>";
+                                // echo "Over Hours: ".$final_over_hours."<br>";
+
+                                // $difference = round(abs($time2 - $time1) / 3600,2);
+                                // echo $difference."<br>";
+
+                                if($final_normal_hours >= $final_over_hours)
+                                {
+                                  $difference = $final_normal_hours;
+                                  $var3 = $vbl7->break;
+                                  if($var3 == "00:30")
+                                  $difference = $difference - 0.50;
+                                  if($var3 == "00:45")
+                                  $difference = $difference - 0.75;
+                                  if($var3 == "01:00")
+                                  $difference = $difference - 1.00;
+                                  if($var3 == "01:15")
+                                  $difference = $difference - 1.25;
+                                  if($var3 == "01:30")
+                                  $difference = $difference - 1.50;
+                                  if($var3 == "01:45")
+                                  $difference = $difference - 1.75;
+                                  if($var3 == "02:00")
+                                  $difference = $difference - 2.00;
+
+                                  $working_hours = $difference;
+                                //   echo "Normal Hours: ".$working_hours."<br>";
+                                //   echo "Over Hours: ".$final_over_hours."<br>";
+                                  $total_normal_hours_final = $working_hours + $total_normal_hours_final;
+                                  $total_over_hours_final = $final_over_hours + $total_over_hours_final;
+                                }
+                                else
+                                {
+                                  $difference = $final_over_hours;
+                                  $var3 = $vbl7->break;
+                                  if($var3 == "00:30")
+                                  $difference = $difference - 0.50;
+                                  if($var3 == "00:45")
+                                  $difference = $difference - 0.75;
+                                  if($var3 == "01:00")
+                                  $difference = $difference - 1.00;
+                                  if($var3 == "01:15")
+                                  $difference = $difference - 1.25;
+                                  if($var3 == "01:30")
+                                  $difference = $difference - 1.50;
+                                  if($var3 == "01:45")
+                                  $difference = $difference - 1.75;
+                                  if($var3 == "02:00")
+                                  $difference = $difference - 2.00;
+
+                                //   echo "Normal Hours: ".$final_normal_hours."<br>";
+                                  $working_hours = $difference;
+                                //   echo "Over Hours: ".$working_hours."<br>";
+                                  $total_normal_hours_final = $final_normal_hours + $total_normal_hours_final;
+                                  $total_over_hours_final = $working_hours + $total_over_hours_final;
+                                }
+                            }
                         }
                         else
                         {
-                            $job_rate= 0;
-                            echo $job_rate."<br>";
+                            // $null= 0;
+                            // echo $null."<br>";
                         }
-
-                        // if(!empty($vbl7))
-                        // {
-                        //     echo $vbl7->job_rate."<br>";
-
-                        //     $time1 = strtotime($vbl7->start);
-                        //     $time2 = strtotime($vbl7->finish);
-                        //     $difference = round(abs($time2 - $time1) / 3600,2);
-
-                        //     $var3 = $vbl7->break;
-                        //     if($var3 == "00:30")
-                        //     $difference = $difference - 0.50;
-                        //     if($var3 == "00:45")
-                        //     $difference = $difference - 0.75;
-                        //     if($var3 == "01:00")
-                        //     $difference = $difference - 1.00;
-                        //     if($var3 == "01:15")
-                        //     $difference = $difference - 1.25;
-                        //     if($var3 == "01:30")
-                        //     $difference = $difference - 1.50;
-                        //     if($var3 == "01:45")
-                        //     $difference = $difference - 1.75;
-                        //     if($var3 == "02:00")
-                        //     $difference = $difference - 2.00;
-
-                        //     $working_hours = $difference;
-                        //     $total_hours = $total_hours + $difference;
-
-                        //     // echo $working_hours."<br>";
-                        //     if($working_hours > 8)
-                        //     {
-                        //         $number = 8;
-                        //         echo $number."<br>";
-                        //         $w_hours = $w_hours + $number;
-                        //         $working_hours = $working_hours-8;
-                        //         echo $working_hours."<br>";
-                        //         $o_hours = $o_hours + $working_hours;
-                        //     }
-                        //     else
-                        //     {
-                        //         echo $working_hours."<br>";
-                        //         $o_hours = $o_hours + $working_hours;
-                        //         $number = 0;
-                        //         echo $number."<br>";
-                        //         $w_hours = $w_hours + $number;
-                        //     }
-                        // }
-                        // else
-                        // {
-                        //     $number = 0;
-                        //     echo $number."<br>";
-                        //     $number2 = 0;
-                        //     echo $number2."<br>";
-                        // }
                     }
-                    // echo $total_hours."<br>";
-                    // echo $w_hours."<br>";
-                    // echo $o_hours."<br>";
+                    // echo "Standards Hours Total: ".$total_normal_hours_final."<br>";
+                    // echo "Overtime Hours Total: ".$total_over_hours_final."<br>";
+                    // echo "Saturday Overtime Hours: ".$sat_ot_total."<br>";
+                    // echo "Sunday Overtime Hours: ".$sun_ot_total."<br>";
+                    // echo "Standard Rate: ".$item->job_rate."<br>";
+                    // echo "Penality Rate: ".$client->p_rate."<br>";
+                    // echo "Saturday Penality Rate: ".$client->sat_rate."<br>";
+                    // echo "Sunday Penality Rate: ".$client->sun_rate."<br>";
+                    // echo "<br><br>";
+
+                    // return $oh_list;
+                    // return $nh_list;
+
+                    if(!empty($nh_list[0]))
+                    $final_result->Mon = $nh_list[0];
+                    else
+                    $final_result->Mon = "-";
+
+                    if(!empty($nh_list[1]))
+                    $final_result->Tue = $nh_list[1];
+                    else
+                    $final_result->Tue = "-";
+
+                    if(!empty($nh_list[2]))
+                    $final_result->Wed = $nh_list[2];
+                    else
+                    $final_result->Wed = "-";
+
+                    if(!empty($nh_list[3]))
+                    $final_result->Thu = $nh_list[3];
+                    else
+                    $final_result->Thu = "-";
+
+                    if(!empty($nh_list[4]))
+                    $final_result->Fri = $nh_list[4];
+                    else
+                    $final_result->Fri = "-";
+
+
+                    if($total_over_hours_final != 0)
+                    $final_result->standard_hours_total = $total_normal_hours_final;
+                    else
+                    $final_result->standard_hours_total = "-";
+
+
+                    if(!empty($oh_list[0]))
+                    $final_result->Mon_OT = $oh_list[0];
+                    else
+                    $final_result->Mon_OT = "-";
+
+                    if(!empty($oh_list[1]))
+                    $final_result->Tue_OT = $oh_list[1];
+                    else
+                    $final_result->Tue_OT = "-";
+
+                    if(!empty($oh_list[2]))
+                    $final_result->Wed_OT = $oh_list[2];
+                    else
+                    $final_result->Wed_OT = "-";
+
+                    if(!empty($oh_list[3]))
+                    $final_result->Thu_OT = $oh_list[3];
+                    else
+                    $final_result->Thu_OT = "-";
+
+                    if(!empty($oh_list[4]))
+                    $final_result->Fri_OT = $oh_list[4];
+                    else
+                    $final_result->Fri_OT = "-";
+
+
+                    if($total_over_hours_final != 0)
+                    $final_result->overtime_hours_total = $total_over_hours_final;
+                    else
+                    $final_result->overtime_hours_total = "-";
+
+
+                    $final_result->saturday_overtime_hours = $sat_ot_total;
+                    $final_result->sunday_overtime_hours = $sun_ot_total;
+                    $int = (int)$item->job_rate;
+                    $final_result->standard_rate = $int;
+                    $final_result->penality_rate = $client->p_rate;
+                    $final_result->saturday_penality = $client->sat_rate;
+                    $final_result->sunday_penality = $client->sun_rate;
+
+                    array_push($final_array_final,$final_result);
+                    $final_result = "";
+                    $total_normal_hours_final = 0;
+                    $total_over_hours_final = 0;
+                    $sat_ot_total = "-";
+                    $sun_ot_total = "-";
                 }
             }
-
-
+            return $final_array_final;
         }
         else
             return redirect('login');
@@ -557,7 +865,7 @@ class MainController extends Controller
         if(session()->get('s_uname'))
         {
             //pls try
-            return Excel::download(new UserExport,'UserList.xlsx');
+            return Excel::download(new UserExport,'LabourConnect.xlsx');
         }
         else
             return redirect('login');

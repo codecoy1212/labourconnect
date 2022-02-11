@@ -47,7 +47,7 @@
                     </div>
                     <div class="col-span-12 sm:col-span-6 xl:col-span-4 intro-y mt-8 mb-2">
                         <div class="mb-3">Report 2</div>
-                        <form class="my-auto mx-auto bg-white xl:bg-transparent sm:px-8 xl:p-0 rounded-md xl:shadow-none w-full sm:w-3/4 lg:w-2/4 xl:w-auto" action="show_csv" method="get">
+                        <form class="my-auto mx-auto bg-white xl:bg-transparent sm:px-8 xl:p-0 rounded-md xl:shadow-none w-full sm:w-3/4 lg:w-2/4 xl:w-auto" action="export_csv" method="get">
                             @csrf
                             <input type="date" name="start_date" class="border-theme-123 border-2 block mb-2" style="width: 85%; height:30px; font-size:85%;" placeholder="Start Date">
                             <input type="date" name="end_date" class="border-theme-123 border-2 block mb-2" style="width: 85%; height:30px; font-size:85%;" placeholder="End Date">

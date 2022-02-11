@@ -23,16 +23,39 @@ class UserExport implements FromCollection,WithHeadings,WithStyles,WithColumnWid
     public function columnWidths(): array
     {
         return [
-            'A' => 10,
-            'B' => 20,
-            'C' => 30,
-            'D' => 40,
+            'A' => 20,
+            'B' => 40,
+            'C' => 20,
+            'D' => 20,
+            'E' => 20,
+            'F' => 20,
+            'G' => 10,
+            'H' => 10,
+            'I' => 10,
+            'J' => 10,
+            'K' => 10,
+            'L' => 23,
+            'M' => 15,
+            'N' => 15,
+            'O' => 15,
+            'P' => 15,
+            'Q' => 15,
+            'R' => 20,
+            'S' => 15,
+            'T' => 15,
+            'U' => 20,
+            'V' => 28,
+            'W' => 25,
+            'X' => 25,
         ];
     }
 
     public function headings():array
     {
-        return ['id','u_name','u_uname','u_email','u_pass','u_dob','u_phone','created_at','updated_at'];
+        return ['Client','Site','Week Start Date','Week End Date','Candidate','Role',
+        'Mon','Tue','Wed','Thu','Fri','Total Standard Hours','Mon (OT)','Tue (OT)',
+        'Wed (OT)','Thu (OT)','Fri (OT)','Total OT Hours','Sat OT','Sun OT',
+        'Standard Rate','5pm TO 7am Penality Rate','Saturday Penality Rate','Sunday Penality Rate'];
     }
 
     /**
