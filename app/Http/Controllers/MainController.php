@@ -200,7 +200,28 @@ class MainController extends Controller
                     {
                         $time1 = strtotime($vbl6->start);
                         $time2 = strtotime($vbl6->finish);
-                        $difference = round(abs($time2 - $time1) / 3600,2);
+
+                        $time_1 = date('Y-m-d h:i:s A',strtotime($vbl6->job_date.$vbl6->start));
+                        // echo $time_1."<br>";
+                        // return $ls;
+                        if($time1 < $time2 )
+                        {
+                            $time_2 = date('Y-m-d h:i:s A',strtotime($vbl6->job_date.$vbl6->finish));
+                            // echo $time_2."<br>";
+                        }
+                        else
+                        {
+                            $time_2 = date('Y-m-d h:i:s A',strtotime($vbl6->job_date.$vbl6->finish.' +1 day'));
+                            // echo $time_2."<br>";
+                            // return $time_2;
+                            // $next_day_start
+                            // $next_day_end
+                        }
+
+                        $start = strtotime($time_1);
+                        $end = strtotime($time_2);
+
+                        $difference = round(abs($end - $start) / 3600,2);
 
                         $var3 = $vbl6->break;
                         if($var3 == "00:30")
@@ -241,9 +262,9 @@ class MainController extends Controller
                     }
                     else
                     {
-                        array_push($day,"NULL");
-                        array_push($day,"NULL");
-                        array_push($day,"NULL");
+                        array_push($day,"-");
+                        array_push($day,"-");
+                        array_push($day,"-");
                     }
                     array_push($week,$day);
                 }
@@ -759,6 +780,8 @@ class MainController extends Controller
                         {
                             // $null= 0;
                             // echo $null."<br>";
+                            array_push($nh_list,"");
+                            array_push($oh_list,"");
                         }
                     }
                     // echo "Standards Hours Total: ".$total_normal_hours_final."<br>";
@@ -850,8 +873,8 @@ class MainController extends Controller
                     $final_result = "";
                     $total_normal_hours_final = 0;
                     $total_over_hours_final = 0;
-                    $sat_ot_total = "-";
-                    $sun_ot_total = "-";
+                    $sat_ot_total = "";
+                    $sun_ot_total = "";
                 }
             }
             return $final_array_final;

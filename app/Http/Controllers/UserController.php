@@ -23,7 +23,7 @@ class UserController extends Controller
                 'u_email'=> 'required|email:rfc,dns|unique:users,u_email',
                 'u_pass'=> 'required|digits:4|numeric',
                 'u_dob'=> 'required|date_format:Y-m-d',
-                'u_phone'=> 'required',
+                'u_phone'=> 'required|numeric',
             ],[
                 'u_name.required' => 'Worker name is required.',
                 'u_name.min' => 'Worker name must be of 3 characters.',
@@ -104,7 +104,7 @@ class UserController extends Controller
                 'u_email'=> 'required|email:rfc,dns|unique:users,u_email,'.$request->id,
                 'u_pass'=> 'required|digits:4|numeric',
                 'u_dob'=> 'required|date_format:Y-m-d',
-                'u_phone'=> 'required',
+                'u_phone'=> 'required|numeric',
             ],[
                 'u_name.required' => 'Worker name is required.',
                 'u_name.min' => 'Worker name must be of 3 characters.',
