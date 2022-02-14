@@ -823,10 +823,11 @@ class MainController extends Controller
                     $final_result->Fri = "-";
 
 
-                    if($total_over_hours_final != 0)
-                    $final_result->standard_hours_total = $total_normal_hours_final;
-                    else
+                    if($total_normal_hours_final == 0)
                     $final_result->standard_hours_total = "-";
+                    else
+                    $final_result->standard_hours_total = $total_normal_hours_final;
+
 
 
                     if(!empty($oh_list[0]))
@@ -855,10 +856,11 @@ class MainController extends Controller
                     $final_result->Fri_OT = "-";
 
 
-                    if($total_over_hours_final != 0)
-                    $final_result->overtime_hours_total = $total_over_hours_final;
-                    else
+                    if($total_over_hours_final == 0)
                     $final_result->overtime_hours_total = "-";
+                    else
+                    $final_result->overtime_hours_total = $total_over_hours_final;
+
 
 
                     $final_result->saturday_overtime_hours = $sat_ot_total;
