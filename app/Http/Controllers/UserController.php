@@ -22,7 +22,7 @@ class UserController extends Controller
                 'u_uname'=> 'required|min:3|unique:users,u_uname',
                 'u_email'=> 'required|email:rfc,dns|unique:users,u_email',
                 'u_pass'=> 'required|digits:4|numeric',
-                'u_dob'=> 'required|date_format:Y-m-d',
+                'u_dob'=> 'required|date_format:d/m/Y',
                 'u_phone'=> 'required|numeric',
             ],[
                 'u_name.required' => 'Worker name is required.',
@@ -37,7 +37,7 @@ class UserController extends Controller
                 'u_pass.digits' => 'Password must be of 4 digits.',
                 'u_pass.numeric' => 'Only digits allowed in password.',
                 'u_dob.required' => 'Date of birth is required.',
-                'u_dob.date_format' => 'Incorrect date format. Format: YYYY-MM-DD.',
+                'u_dob.date_format' => 'Incorrect date format. Format: DD/MM/YYYY.',
                 'u_phone.required' => 'Phone is required.',
                 // 'u_phone.digits' => 'Phone must be of 11 characters.',
                 'role_id.required' => 'Role ID is required.',
@@ -54,7 +54,11 @@ class UserController extends Controller
                 $vbl->u_uname = $request->u_uname;
                 $vbl->u_email = $request->u_email;
                 $vbl->u_pass = $request->u_pass;
-                $vbl->u_dob = $request->u_dob;
+
+                $date = str_replace('/', '-', $request->u_dob);
+                $new_date = date('Y-m-d', strtotime($date));
+                $vbl->u_dob = $new_date;
+
                 $vbl->u_phone = $request->u_phone;
                 $vbl->save();
             }
@@ -86,6 +90,10 @@ class UserController extends Controller
             ->where('users.id',$request->id)
             ->select('users.*')
             ->first();
+
+            $new_date = date('d/m/Y',strtotime($vbl->u_dob));
+            $vbl->u_dob = $new_date;
+
             return $vbl;
         }
         else
@@ -103,7 +111,7 @@ class UserController extends Controller
                 'u_uname'=> 'required|min:3|unique:users,u_uname,'.$request->id,
                 'u_email'=> 'required|email:rfc,dns|unique:users,u_email,'.$request->id,
                 'u_pass'=> 'required|digits:4|numeric',
-                'u_dob'=> 'required|date_format:Y-m-d',
+                'u_dob'=> 'required|date_format:d/m/Y',
                 'u_phone'=> 'required|numeric',
             ],[
                 'u_name.required' => 'Worker name is required.',
@@ -118,7 +126,7 @@ class UserController extends Controller
                 'u_pass.digits' => 'Password must be of 4 digits.',
                 'u_pass.numeric' => 'Only digits allowed in password.',
                 'u_dob.required' => 'Date of birth is required.',
-                'u_dob.date_format' => 'Incorrect date format. Format: YYYY-MM-DD',
+                'u_dob.date_format' => 'Incorrect date format. Format: DD/MM/YYYY',
                 'u_phone.required' => 'Phone is required.',
                 'role_id.required' => 'Role ID is required.',
                 'role_id.numeric' => 'Role ID must be numeric.',
@@ -134,7 +142,11 @@ class UserController extends Controller
                 $vbl->u_uname = $request->u_uname;
                 $vbl->u_email = $request->u_email;
                 $vbl->u_pass = $request->u_pass;
-                $vbl->u_dob = $request->u_dob;
+
+                $date = str_replace('/', '-', $request->u_dob);
+                $new_date = date('Y-m-d', strtotime($date));
+                $vbl->u_dob = $new_date;
+
                 $vbl->u_phone = $request->u_phone;
                 $vbl->update();
             }

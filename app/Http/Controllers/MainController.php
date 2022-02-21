@@ -105,7 +105,7 @@ class MainController extends Controller
         {
             $vbl = DB::table('jobs')
             ->join('companies','companies.id','=','jobs.company_id')
-            ->select('companies.c_contact','jobs.*')
+            ->select('companies.c_name','jobs.*')
             ->get();
             // return $vbl;
 

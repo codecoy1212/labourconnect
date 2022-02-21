@@ -26,7 +26,7 @@ class JobController extends Controller
             $validator = Validator::make($request->all(),[
                 'j_location'=> 'required|min:5',
                 'company_id'=> 'required|numeric',
-                'j_date'=> 'required|date_format:Y-m-d',
+                'j_date'=> 'required|date_format:d/m/Y',
                 // 'p_end'=> 'required|date_format:H:i',
                 // 'p_start'=> 'required|date_format:H:i',
                 'p_rate'=> 'required|numeric',
@@ -38,7 +38,7 @@ class JobController extends Controller
                 'company_id.required' => 'Company ID is required.',
                 'company_id.numeric' => 'Company ID should be numeric.',
                 'j_date.required' => 'Date is required for Job to be submitted.',
-                'j_date.date_format' => 'Incorrect date format. Format: YYYY-MM-DD.',
+                'j_date.date_format' => 'Incorrect date format. Format:DD/MM/YYYY.',
                 // 'p_end.required'=> 'Penality End time is required.',
                 // 'p_start.required'=> 'Penality Start time is required.',
                 // 'p_end.date_format'=> 'Penality End time format is Incorrect.',
@@ -64,7 +64,11 @@ class JobController extends Controller
                 $vbl = new Job;
                 $vbl->j_location = $request->j_location;
                 $vbl->company_id = $request->company_id;
-                $vbl->j_date = $request->j_date;
+
+                $date = str_replace('/', '-', $request->j_date);
+                $new_date = date('Y-m-d', strtotime($date));
+                $vbl->j_date = $new_date;
+
                 $vbl->j_status = "ACTIVE";
                 // $vbl->p_start = $request->p_start;
                 // $vbl->p_end = $request->p_end;
@@ -125,6 +129,11 @@ class JobController extends Controller
             ->join('companies','companies.id','=','jobs.company_id')
             ->select('jobs.id','jobs.j_location','companies.c_name','jobs.company_id','jobs.j_date','jobs.sat_rate','jobs.sun_rate','jobs.p_rate')
             ->first();
+
+            $date = str_replace('/', '-', $vbl->j_date);
+            $new_date = date('d/m/Y', strtotime($date));
+            $vbl->j_date = $new_date;
+
             array_push($job,$vbl);
             // return $vbl;
 
@@ -153,6 +162,12 @@ class JobController extends Controller
 
             $vbl9 = Job::where('id',$request->id)->first();
 
+            $date = str_replace('/', '-', $vbl9->j_date);
+            $new_date = date('d/m/Y', strtotime($date));
+            $vbl9->j_date = $new_date;
+
+            // return $vbl9;
+
             return view('main.main2.update_job',compact('vbl','vbl9','vbl3'));
         }
         else
@@ -169,7 +184,7 @@ class JobController extends Controller
             $validator = Validator::make($request->all(),[
                 'j_location'=> 'required|min:5',
                 'company_id'=> 'required|numeric',
-                'j_date'=> 'required|date_format:Y-m-d',
+                'j_date'=> 'required|date_format:d/m/Y',
                 // 'p_end'=> 'required|date_format:H:i',
                 // 'p_start'=> 'required|date_format:H:i',
                 'p_rate'=> 'required|numeric',
@@ -181,7 +196,7 @@ class JobController extends Controller
                 'company_id.required' => 'Company ID is required.',
                 'company_id.numeric' => 'Company ID should be numeric.',
                 'j_date.required' => 'Date is required for Job to be submitted.',
-                'j_date.date_format' => 'Incorrect date format. Format: YYYY-MM-DD.',
+                'j_date.date_format' => 'Incorrect date format. Format: DD/MM/YYYY.',
                 // 'p_end.required'=> 'Penality End time is required.',
                 // 'p_start.required'=> 'Penality Start time is required.',
                 // 'p_end.date_format'=> 'Penality End time format is Incorrect.',
@@ -202,7 +217,12 @@ class JobController extends Controller
                 $vbl = Job::find($request->job_id);
                 $vbl->j_location = $request->j_location;
                 $vbl->company_id = $request->company_id;
-                $vbl->j_date = $request->j_date;
+
+                // return $request->j_date;
+                $date = str_replace('/', '-', $request->j_date);
+                $new_date = date('Y-m-d', strtotime($date));
+                $vbl->j_date = $new_date;
+
                 $vbl->j_status = "ACTIVE";
                 // $vbl->p_start = $request->p_start;
                 // $vbl->p_end = $request->p_end;

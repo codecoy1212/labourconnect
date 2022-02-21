@@ -535,7 +535,7 @@ class MobileController extends Controller
             // ->where('j_date','=',date('Y-m-d'))
             // ->where('j_status','=',"ACTIVE")
             ->join('companies','companies.id','=','jobs.company_id')
-            ->select('jobs.j_date','job__users.job_id','job__users.user_id','companies.c_contact','jobs.j_location')
+            ->select('jobs.j_date','job__users.job_id','job__users.user_id','companies.c_name','jobs.j_location')
             ->get();
 
             // return $vbl1;

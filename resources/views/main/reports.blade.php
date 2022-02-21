@@ -30,7 +30,7 @@
                             <input type="date" name="end_date" class="border-theme-123 border-2 block mb-2" style="width: 85%; height:30px; font-size:85%;" placeholder="End Date">
                             <select id="add_user_role_id" name="job_id" class="select_role intro-x input--lg border-theme-123 border-2 block mb-2" style="width: 85%; font-size:85%; height:33px; background-color:white;">
                                 @foreach ($vbl as $item)
-                                    <option value="{{$item->id}}">{{$item->id}} {{$item->c_contact}}</option>
+                                    <option value="{{$item->id}}">{{$item->id}} {{$item->c_name}}</option>
                                 @endforeach
                             </select>
                             <div class="intro-x mt-5 xl:mt-2 xl:text-left mb-2">
@@ -53,7 +53,7 @@
                             <input type="date" name="end_date" class="border-theme-123 border-2 block mb-2" style="width: 85%; height:30px; font-size:85%;" placeholder="End Date">
                             <select id="add_user_role_id" name="job_id" class="select_role intro-x input--lg border-theme-123 border-2 block mb-2" style="width: 85%; font-size:85%; height:33px; background-color:white;">
                                 @foreach ($vbl as $item)
-                                    <option value="{{$item->id}}">{{$item->id}} {{$item->c_contact}}</option>
+                                    <option value="{{$item->id}}">{{$item->id}} {{$item->c_name}}</option>
                                 @endforeach
                             </select>
                             <div class="intro-x mt-5 xl:mt-2 xl:text-left mb-2">
