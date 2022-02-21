@@ -313,7 +313,7 @@ class MobileController extends Controller
                 ->join('jobs','jobs.id','=','done_jobs.job_id')
                 ->where('done_jobs.user_id','=',$request->user_id)
                 ->where('done_jobs.job_date','=',$days_dates[$i])
-                ->select('done_jobs.id as done_job_id','jobs.j_date','done_jobs.start','done_jobs.finish','done_jobs.break')
+                ->select('done_jobs.id as done_job_id','jobs.j_date','done_jobs.start','done_jobs.finish','done_jobs.break','done_jobs.job_date')
                 ->first();
 
                 // return $vbl;
@@ -344,7 +344,28 @@ class MobileController extends Controller
 
                     $time1 = strtotime($vbl->start);
                     $time2 = strtotime($vbl->finish);
-                    $difference = round(abs($time2 - $time1) / 3600,2);
+
+                    $time_1 = date('Y-m-d h:i:s A',strtotime($vbl->job_date.$vbl->start));
+                    // echo $time_1."<br>";
+                    // return $ls;
+                    if($time1 < $time2 )
+                    {
+                        $time_2 = date('Y-m-d h:i:s A',strtotime($vbl->job_date.$vbl->finish));
+                        // echo $time_2."<br>";
+                    }
+                    else
+                    {
+                        $time_2 = date('Y-m-d h:i:s A',strtotime($vbl->job_date.$vbl->finish.' +1 day'));
+                        // echo $time_2."<br>";
+                        // return $time_2;
+                        // $next_day_start
+                        // $next_day_end
+                    }
+
+                    $start = strtotime($time_1);
+                    $end = strtotime($time_2);
+
+                    $difference = round(abs($end - $start) / 3600,2);
 
                     $var3 = $vbl->break;
                     if($var3 == "00:30")
@@ -456,7 +477,7 @@ class MobileController extends Controller
                 ->join('jobs','jobs.id','=','done_jobs.job_id')
                 ->where('done_jobs.user_id','=',$request->user_id)
                 ->where('done_jobs.job_date','=',$days_dates[$i])
-                ->select('done_jobs.id as done_job_id','jobs.j_date','done_jobs.start','done_jobs.finish','done_jobs.break')
+                ->select('done_jobs.id as done_job_id','jobs.j_date','done_jobs.start','done_jobs.finish','done_jobs.break','done_jobs.job_date')
                 ->first();
 
                 $day = date('D',strtotime($days_dates[$i]));
@@ -480,7 +501,28 @@ class MobileController extends Controller
 
                     $time1 = strtotime($vbl->start);
                     $time2 = strtotime($vbl->finish);
-                    $difference = round(abs($time2 - $time1) / 3600,2);
+
+                    $time_1 = date('Y-m-d h:i:s A',strtotime($vbl->job_date.$vbl->start));
+                    // echo $time_1."<br>";
+                    // return $ls;
+                    if($time1 < $time2 )
+                    {
+                        $time_2 = date('Y-m-d h:i:s A',strtotime($vbl->job_date.$vbl->finish));
+                        // echo $time_2."<br>";
+                    }
+                    else
+                    {
+                        $time_2 = date('Y-m-d h:i:s A',strtotime($vbl->job_date.$vbl->finish.' +1 day'));
+                        // echo $time_2."<br>";
+                        // return $time_2;
+                        // $next_day_start
+                        // $next_day_end
+                    }
+
+                    $start = strtotime($time_1);
+                    $end = strtotime($time_2);
+
+                    $difference = round(abs($end - $start) / 3600,2);
 
                     $var3 = $vbl->break;
                     if($var3 == "00:30")
