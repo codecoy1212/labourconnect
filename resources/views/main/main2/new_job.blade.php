@@ -57,7 +57,7 @@
                             </select>
                             <input type="text" id="add_job_location_id" name="j_location" form="new_job_form" class="p-2 border-theme-123 border-2 block" style="width: 100%; height:30px; font-size:85%;" placeholder="Job Location">
                             <div class="mb-1 mt-2">Select Job Start Date</div>
-                            <input type="text" id="add_job_date_id" name="j_date" form="new_job_form" class="p-2 border-theme-123 border-2 block" style="width: 100%; height:30px; font-size:85%;" placeholder="Job Date">
+                            <input type="date" id="add_job_date_id" name="j_date" form="new_job_form" class="border-theme-123 border-2 block" style="width: 100%; height:30px; font-size:85%;" placeholder="Job Date">
                             <div class="mt-3">
                                 Allocate Penality Rates
                             </div>

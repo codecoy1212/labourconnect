@@ -32,7 +32,7 @@
                                             <input type="email" id="add_u_email_id" name="u_email" class="p-2 border-theme-123 border-2 block mb-2" style="width: 87%; height:30px; font-size:85%;" placeholder="User Email">
                                             <input type="text" id="add_u_pass_id" name="u_pass" class="p-2 border-theme-123 border-2 block mb-2" style="width: 87%; height:30px; font-size:85%;" placeholder="Allocate a Password">
                                             <input type="text" id="add_u_name_id" name="u_name" class="p-2 border-theme-123 border-2 block mb-2" style="width: 87%; height:30px; font-size:85%;" placeholder="Enter Full Name">
-                                            <input type="text" id="add_u_dob_id" name="u_dob" class="p-2 border-theme-123 border-2 block mb-2" style="width: 87%; height:30px; font-size:85%;" placeholder="Date of Birth">
+                                            <input type="date" id="add_u_dob_id" name="u_dob" class="border-theme-123 border-2 block mb-2" style="width: 87%; height:30px; font-size:85%;" placeholder="Date of Birth">
                                             <input type="number" id="add_u_phone_id" name="u_phone" class="p-2 border-theme-123 border-2 block mb-2" style="width: 87%; height:30px; font-size:85%;" placeholder="Mobile Number">
                                             <div class="intro-x mt-1 mr-12">
                                                 <button class="text-white bg-theme-123 p-0 pl-2 pr-2 btn_zoo_h" style="font-size: 85%;">Add User</button>
@@ -108,7 +108,7 @@
                         </div>
                         <div class="intro-y col-span-12 px-2">
                             <div class="mb-2">Date of Birth</div>
-                            <input type="text" name="u_dob" id="edit_u_dob_id" class="input w-full border flex-1">
+                            <input type="date" name="u_dob" id="edit_u_dob_id" class="input w-full border flex-1">
                         </div>
                         <div class="intro-y col-span-12 px-2">
                             <div class="mb-2">Phone Number</div>

@@ -26,7 +26,7 @@ class JobController extends Controller
             $validator = Validator::make($request->all(),[
                 'j_location'=> 'required|min:5',
                 'company_id'=> 'required|numeric',
-                'j_date'=> 'required|date_format:d/m/Y',
+                'j_date'=> 'required|date_format:Y-m-d',
                 // 'p_end'=> 'required|date_format:H:i',
                 // 'p_start'=> 'required|date_format:H:i',
                 'p_rate'=> 'required|numeric',
@@ -65,10 +65,11 @@ class JobController extends Controller
                 $vbl->j_location = $request->j_location;
                 $vbl->company_id = $request->company_id;
 
-                $date = str_replace('/', '-', $request->j_date);
-                $new_date = date('Y-m-d', strtotime($date));
-                $vbl->j_date = $new_date;
+                // $date = str_replace('/', '-', $request->j_date);
+                // $new_date = date('Y-m-d', strtotime($date));
+                // $vbl->j_date = $new_date;
 
+                $vbl->j_date = $request->j_date;
                 $vbl->j_status = "ACTIVE";
                 // $vbl->p_start = $request->p_start;
                 // $vbl->p_end = $request->p_end;
@@ -130,9 +131,9 @@ class JobController extends Controller
             ->select('jobs.id','jobs.j_location','companies.c_name','jobs.company_id','jobs.j_date','jobs.sat_rate','jobs.sun_rate','jobs.p_rate')
             ->first();
 
-            $date = str_replace('/', '-', $vbl->j_date);
-            $new_date = date('d/m/Y', strtotime($date));
-            $vbl->j_date = $new_date;
+            // $date = str_replace('/', '-', $vbl->j_date);
+            // $new_date = date('d/m/Y', strtotime($date));
+            // $vbl->j_date = $new_date;
 
             array_push($job,$vbl);
             // return $vbl;
@@ -162,9 +163,9 @@ class JobController extends Controller
 
             $vbl9 = Job::where('id',$request->id)->first();
 
-            $date = str_replace('/', '-', $vbl9->j_date);
-            $new_date = date('d/m/Y', strtotime($date));
-            $vbl9->j_date = $new_date;
+            // $date = str_replace('/', '-', $vbl9->j_date);
+            // $new_date = date('d/m/Y', strtotime($date));
+            // $vbl9->j_date = $new_date;
 
             // return $vbl9;
 
@@ -184,7 +185,7 @@ class JobController extends Controller
             $validator = Validator::make($request->all(),[
                 'j_location'=> 'required|min:5',
                 'company_id'=> 'required|numeric',
-                'j_date'=> 'required|date_format:d/m/Y',
+                'j_date'=> 'required|date_format:Y-m-d',
                 // 'p_end'=> 'required|date_format:H:i',
                 // 'p_start'=> 'required|date_format:H:i',
                 'p_rate'=> 'required|numeric',
@@ -219,10 +220,11 @@ class JobController extends Controller
                 $vbl->company_id = $request->company_id;
 
                 // return $request->j_date;
-                $date = str_replace('/', '-', $request->j_date);
-                $new_date = date('Y-m-d', strtotime($date));
-                $vbl->j_date = $new_date;
+                // $date = str_replace('/', '-', $request->j_date);
+                // $new_date = date('Y-m-d', strtotime($date));
+                // $vbl->j_date = $new_date;
 
+                $vbl->j_date = $request->j_date;
                 $vbl->j_status = "ACTIVE";
                 // $vbl->p_start = $request->p_start;
                 // $vbl->p_end = $request->p_end;

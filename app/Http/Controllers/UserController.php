@@ -22,7 +22,7 @@ class UserController extends Controller
                 'u_uname'=> 'required|min:3|unique:users,u_uname',
                 'u_email'=> 'required|email:rfc,dns|unique:users,u_email',
                 'u_pass'=> 'required|digits:4|numeric',
-                'u_dob'=> 'required|date_format:d/m/Y',
+                'u_dob'=> 'required|date_format:Y-m-d',
                 'u_phone'=> 'required|numeric',
             ],[
                 'u_name.required' => 'Worker name is required.',
@@ -55,10 +55,11 @@ class UserController extends Controller
                 $vbl->u_email = $request->u_email;
                 $vbl->u_pass = $request->u_pass;
 
-                $date = str_replace('/', '-', $request->u_dob);
-                $new_date = date('Y-m-d', strtotime($date));
-                $vbl->u_dob = $new_date;
+                // $date = str_replace('/', '-', $request->u_dob);
+                // $new_date = date('Y-m-d', strtotime($date));
+                // $vbl->u_dob = $new_date;
 
+                $vbl->u_dob = $request->u_dob;
                 $vbl->u_phone = $request->u_phone;
                 $vbl->save();
             }
@@ -91,8 +92,8 @@ class UserController extends Controller
             ->select('users.*')
             ->first();
 
-            $new_date = date('d/m/Y',strtotime($vbl->u_dob));
-            $vbl->u_dob = $new_date;
+            // $new_date = date('d/m/Y',strtotime($vbl->u_dob));
+            // $vbl->u_dob = $new_date;
 
             return $vbl;
         }
@@ -111,7 +112,7 @@ class UserController extends Controller
                 'u_uname'=> 'required|min:3|unique:users,u_uname,'.$request->id,
                 'u_email'=> 'required|email:rfc,dns|unique:users,u_email,'.$request->id,
                 'u_pass'=> 'required|digits:4|numeric',
-                'u_dob'=> 'required|date_format:d/m/Y',
+                'u_dob'=> 'required|date_format:Y-m-d',
                 'u_phone'=> 'required|numeric',
             ],[
                 'u_name.required' => 'Worker name is required.',
@@ -143,10 +144,11 @@ class UserController extends Controller
                 $vbl->u_email = $request->u_email;
                 $vbl->u_pass = $request->u_pass;
 
-                $date = str_replace('/', '-', $request->u_dob);
-                $new_date = date('Y-m-d', strtotime($date));
-                $vbl->u_dob = $new_date;
+                // $date = str_replace('/', '-', $request->u_dob);
+                // $new_date = date('Y-m-d', strtotime($date));
+                // $vbl->u_dob = $new_date;
 
+                $vbl->u_dob = $request->u_dob;
                 $vbl->u_phone = $request->u_phone;
                 $vbl->update();
             }
