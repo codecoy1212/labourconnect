@@ -332,7 +332,7 @@ class MainController extends Controller
             $client = DB::table('jobs')
             ->where('jobs.id','=',$request->job_id)
             ->join('companies','companies.id','=','jobs.company_id')
-            ->select('companies.c_contact','jobs.*')
+            ->select('companies.c_name','jobs.*')
             ->first();
             // return $client;
 
@@ -358,7 +358,7 @@ class MainController extends Controller
             ->where('job_id','=',$request->job_id)
             ->join('users','users.id','=','job__users.user_id')
             ->join("roles","roles.id","=","job__users.role_id")
-            ->select('users.*',"roles.r_name",'job__users.job_rate')
+            ->select('users.*',"roles.r_name",'job__users.job_rate','job__users.p_rate','job__users.sat_rate','job__users.sun_rate')
             ->get();
 
             // return $candidate;
@@ -381,7 +381,9 @@ class MainController extends Controller
                     // echo "Job Role: ".$item->r_name."<br>";
                     // echo "<br>";
                     $final_result = new stdClass;
-                    $final_result->client = $client->c_contact;
+                    $final_result->client = $client->c_name;
+                    $final_result->charge_rate = $client->charge_rate;
+                    $final_result->charge_rate_ot = $client->charge_rate_ot;
                     $final_result->site = $client->j_location;
                     $final_result->Week_start_date = $dt->format("Y-m-d");
                     $final_result->week_end_date = date('Y-m-d',strtotime($dt->format("Y-m-d").' +6 day'));
@@ -735,12 +737,22 @@ class MainController extends Controller
                                 $final_normal_hours = $final_normal_hours/3600;
                                 $final_over_hours = $final_over_hours/3600;
 
+
+                                //BREAK TIME EXCLUDED ##############################################################################
+                                // $total_normal_hours_final = $final_normal_hours + $total_normal_hours_final;
+                                // $total_over_hours_final = $final_over_hours + $total_over_hours_final;
+                                //BREAK TIME EXCLUDED ##############################################################################
+
+
+
                                 // echo "Normal Hours: ".$final_normal_hours."<br>";
                                 // echo "Over Hours: ".$final_over_hours."<br>";
 
                                 // $difference = round(abs($time2 - $time1) / 3600,2);
                                 // echo $difference."<br>";
 
+
+                                //BREAK TIME INCLUDED ##############################################################################
                                 if($final_normal_hours >= $final_over_hours)
                                 {
                                   $difference = $final_normal_hours;
@@ -785,12 +797,14 @@ class MainController extends Controller
                                   if($var3 == "02:00")
                                   $difference = $difference - 2.00;
 
-                                //   echo "Normal Hours: ".$final_normal_hours."<br>";
+                                    //   echo "Normal Hours: ".$final_normal_hours."<br>";
                                   $working_hours = $difference;
-                                //   echo "Over Hours: ".$working_hours."<br>";
+                                    //   echo "Over Hours: ".$working_hours."<br>";
                                   $total_normal_hours_final = $final_normal_hours + $total_normal_hours_final;
                                   $total_over_hours_final = $working_hours + $total_over_hours_final;
                                 }
+                                //BREAK TIME INCLUDED END#########################################################################
+
                             }
                         }
                         else
@@ -882,11 +896,10 @@ class MainController extends Controller
 
                     $final_result->saturday_overtime_hours = $sat_ot_total;
                     $final_result->sunday_overtime_hours = $sun_ot_total;
-                    $int = (int)$item->job_rate;
-                    $final_result->standard_rate = $int;
-                    $final_result->penality_rate = $client->p_rate;
-                    $final_result->saturday_penality = $client->sat_rate;
-                    $final_result->sunday_penality = $client->sun_rate;
+                    $final_result->standard_rate = (int)$item->job_rate;
+                    $final_result->penality_rate = (int)$item->p_rate;
+                    $final_result->saturday_penality =(int)$item->sat_rate;
+                    $final_result->sunday_penality = (int)$item->sun_rate;
 
                     array_push($final_array_final,$final_result);
                     $final_result = "";
