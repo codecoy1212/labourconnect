@@ -577,12 +577,13 @@ class MobileController extends Controller
             // ->where('j_date','=',date('Y-m-d'))
             // ->where('j_status','=',"ACTIVE")
             ->join('companies','companies.id','=','jobs.company_id')
-            ->select('jobs.j_date','job__users.job_id','job__users.user_id','companies.c_name','jobs.j_location')
+            ->select('jobs.j_date','companies.*')
             ->get();
 
             // return $vbl1;
 
             $final_array = array();
+            $check_array = array();
             foreach ($vbl1 as $value) {
                 // echo "HELLO";
                 // echo $value->j_date;
@@ -593,20 +594,26 @@ class MobileController extends Controller
                 if($db_date <= $curr_date)
                 {
                     // echo $value->j_date;
-                    array_push($final_array,$value);
+                    if(in_array($value->id, $check_array)){}
+                    else
+                    {
+                        array_push($check_array,$value->id);
+                        array_push($final_array,$value);
+                    }
+
                 }
             }
 
             if(count($vbl1) == 0)
             {
                 $str['status']=false;
-                $str['message']="NO JOBS FOUND FOR TODAY";
+                $str['message']="NO COMPANIES TO SHOW";
                 return $str;
             }
             else
             {
                 $str['status']=true;
-                $str['message']="JOBS SHOWN FOR TODAY";
+                $str['message']="COMPANIES SHOWN HAVING JOBS FOR THIS USER";
                 $str['data']=$final_array;
                 return $str;
             }
@@ -702,6 +709,50 @@ class MobileController extends Controller
             $str['status']=true;
             $str['message']="DONE JOB SHOWN FOR THIS ID";
             $str['data']=$vbl;
+            return $str;
+        }
+    }
+
+    public function new_fun_part_2(Request $request)
+    {
+        // return "HELLO";
+        $vbl1 = DB::table('job__users')
+        ->where('user_id','=',$request->user_id)
+        ->join('jobs','jobs.id','=','job__users.job_id')
+        ->where('company_id','=',$request->company_id)
+        // ->where('j_date','=',date('Y-m-d'))
+        // ->where('j_status','=',"ACTIVE")
+        ->join('companies','companies.id','=','jobs.company_id')
+        ->select('jobs.j_date','jobs.company_id','job__users.job_id','job__users.user_id','companies.c_name','jobs.j_location')
+        ->get();
+
+        $final_array = array();
+        foreach ($vbl1 as $value) {
+            // echo "HELLO";
+            // echo $value->j_date;
+            $curr_date = date('Y-m-d');
+            $curr_date = strtotime($curr_date);
+
+            $db_date = strtotime($value->j_date);
+            if($db_date <= $curr_date)
+            {
+                // echo $value->j_date;
+                array_push($final_array,$value);
+
+            }
+        }
+
+        if(count($vbl1) == 0)
+        {
+            $str['status']=false;
+            $str['message']="NO JOBS FOUND FOR TODAY OF CURRENT COMPANY";
+            return $str;
+        }
+        else
+        {
+            $str['status']=true;
+            $str['message']="JOBS SHOWN FOR TODAY OF CURRENT COMPNAY";
+            $str['data']=$final_array;
             return $str;
         }
     }

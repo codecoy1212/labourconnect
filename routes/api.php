@@ -30,6 +30,7 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     Route::get('mobile/work/get_today_jobs',[MobileController::class,'today_jobs']);
     Route::get('mobile/work/job/details',[MobileController::class,'job_details']);
     Route::get('mobile/work/job/done/details',[MobileController::class,'job_done_details']);
+    Route::get('mobile/work/locations',[MobileController::class,'new_fun_part_2']);
 });
 
 #default

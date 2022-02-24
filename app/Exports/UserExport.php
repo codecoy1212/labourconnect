@@ -24,8 +24,8 @@ class UserExport implements FromCollection,WithHeadings,WithStyles,WithColumnWid
     {
         return [
             'A' => 20,
-            'B' => 30,
-            'C' => 30,
+            'B' => 18,
+            'C' => 22,
             'D' => 40,
             'E' => 20,
             'F' => 20,
