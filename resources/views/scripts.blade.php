@@ -69,12 +69,12 @@
                             <div class="menu__title"> Reports </div>
                         </a>
                     </li>
-                    <li>
+                    {{-- <li>
                         <a href="" class="menu">
                             <div class="menu__icon"> <i data-feather="settings"></i> </div>
                             <div class="menu__title"> Settings </div>
                         </a>
-                    </li>
+                    </li> --}}
                     <li>
                         <a href="{{ route('logo')}}" class="menu">
                             <div class="menu__icon"> <i data-feather="log-out"></i> </div>
@@ -130,12 +130,12 @@
                             <div class="side-menu__title"> Reports </div>
                         </a>
                     </li>
-                    <li>
+                    {{-- <li>
                         <a href="" class="side-menu @yield('pg_act_ex')">
                             <div class="side-menu__icon"> <i data-feather="settings"></i> </div>
                             <div class="side-menu__title"> Settings </div>
                         </a>
-                    </li>
+                    </li> --}}
                     <li>
                         <a href="{{ route('logo')}}" class="side-menu @yield('pg_act_ex')">
                             <div class="side-menu__icon"> <i data-feather="log-out"></i> </div>

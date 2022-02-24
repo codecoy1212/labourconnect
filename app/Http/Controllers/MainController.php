@@ -103,13 +103,30 @@ class MainController extends Controller
     {
         if(session()->get('s_uname'))
         {
-            $vbl = DB::table('jobs')
-            ->join('companies','companies.id','=','jobs.company_id')
-            ->select('companies.c_name','jobs.*')
+            $vbl = DB::table('companies')
+            // ->join('companies','companies.id','=','jobs.company_id')
+            ->select('companies.*')
             ->get();
             // return $vbl;
 
             return view('main.reports',compact('vbl'));
+        }
+        else
+            return redirect('login');
+
+    }
+
+    public function new_fun_part_1(Request $request)
+    {
+        if(session()->get('s_uname'))
+        {
+            // return "HELLO";
+            $vbl = DB::table('jobs')
+            ->where('company_id',$request->id)
+            ->join('companies','companies.id','=','jobs.company_id')
+            ->select('jobs.*')
+            ->get();
+            return $vbl;
         }
         else
             return redirect('login');

@@ -84,7 +84,7 @@
                 method: "GET",
                 url: "jobs/collection/show",
                 success: function (data) {
-                    // console.log(data);
+                    console.log(data);
                     $("#check2").append(``+data.length+``);
 
                     for (let i = 0; i < data.length; i++) {
@@ -100,7 +100,7 @@
 
                                     <a href="jobs/show/`+data[i].id+`">
                                     <div class="m-2">
-                                        <div><b>Client: </b>`+data[i].c_contact+`</div>
+                                        <div><b>Client: </b>`+data[i].c_name+`</div>
                                         <div><b>Location: </b>`+data[i].j_location+`</div>
                                         <div><b>Active Workers: </b>`+data[i].workers_count+`</div>
                                     </div>
@@ -163,7 +163,7 @@
                     data: { id: id2,},
                 }).done(function(data){
                     console.log(data);
-                    toastr.success("Job Deleted");
+                    toastr.success("Job marked as completed.");
                     $("#check1").empty();
                     get_fun();
                 });

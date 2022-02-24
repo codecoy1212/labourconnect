@@ -27,11 +27,13 @@ class JobController extends Controller
                 'j_location'=> 'required|min:5',
                 'company_id'=> 'required|numeric',
                 'j_date'=> 'required|date_format:Y-m-d',
+                'charge_rate'=> 'required|numeric',
+                'charge_rate_ot'=> 'required|numeric',
                 // 'p_end'=> 'required|date_format:H:i',
                 // 'p_start'=> 'required|date_format:H:i',
-                'p_rate'=> 'required|numeric',
-                'sat_rate'=> 'required|numeric',
-                'sun_rate'=> 'required|numeric',
+                // 'p_rate'=> 'required|numeric',
+                // 'sat_rate'=> 'required|numeric',
+                // 'sun_rate'=> 'required|numeric',
             ],[
                 'j_location.required' => 'Location is required.',
                 'j_location.min' => 'Location must be of 5 characters.',
@@ -43,12 +45,16 @@ class JobController extends Controller
                 // 'p_start.required'=> 'Penality Start time is required.',
                 // 'p_end.date_format'=> 'Penality End time format is Incorrect.',
                 // 'p_start.date_format'=> 'Penality Start time format is Incorrect.',
-                'p_rate.required'=> 'Penality Rate is required.',
-                'p_rate.numeric'=> 'Penality Rate must be numeric.',
-                'sat_rate.required'=> 'Saturday Penality Rate is required.',
-                'sat_rate.numeric'=> 'Saturday Penality Rate must be numeric.',
-                'sun_rate.required'=> 'Sunday Penality Rate is required.',
-                'sun_rate.numeric'=> 'Sunday Penality Rate must be numeric.',
+                // 'p_rate.required'=> 'Penality Rate is required.',
+                // 'p_rate.numeric'=> 'Penality Rate must be numeric.',
+                // 'sat_rate.required'=> 'Saturday Penality Rate is required.',
+                // 'sat_rate.numeric'=> 'Saturday Penality Rate must be numeric.',
+                // 'sun_rate.required'=> 'Sunday Penality Rate is required.',
+                // 'sun_rate.numeric'=> 'Sunday Penality Rate must be numeric.',
+                'charge_rate.required'=> 'Client Charge Rate is required.',
+                'charge_rate.numeric'=> 'Client Charge Rate must be numeric.',
+                'charge_rate_ot.required'=> 'Client Charge Rate (OT) is required.',
+                'charge_rate_ot.numeric'=> 'Client Charge Rate (OT) must be numeric.',
             ]);
             if ($validator->fails())
             {
@@ -70,43 +76,83 @@ class JobController extends Controller
                 // $vbl->j_date = $new_date;
 
                 $vbl->j_date = $request->j_date;
+                $vbl->charge_rate = $request->charge_rate;
+                $vbl->charge_rate_ot = $request->charge_rate_ot;
                 $vbl->j_status = "ACTIVE";
                 // $vbl->p_start = $request->p_start;
                 // $vbl->p_end = $request->p_end;
-                $vbl->p_rate = $request->p_rate;
-                $vbl->sat_rate = $request->sat_rate;
-                $vbl->sun_rate = $request->sun_rate;
+                // $vbl->p_rate = $request->p_rate;
+                // $vbl->sat_rate = $request->sat_rate;
+                // $vbl->sun_rate = $request->sun_rate;
                 $vbl->save();
 
                 if($request->job_users == null || empty($request->job_users)){}
                 else
                 {
-                    $j=0;
-                    $p_role_name = array();
-                    $p_role_price = array();
-                    foreach ($request->roles_prices as $value) {
-                        if($j % 2 == 0)
-                        array_push($p_role_name,$value);
-                        else
-                        array_push($p_role_price,$value);
-                        $j++;
-                    }
+                    // $j=0;
+                    // $p_role_name = array();
+                    // $p_role_price = array();
+                    // foreach ($request->roles_prices as $value) {
+                    //     if($j % 2 == 0)
+                    //     array_push($p_role_name,$value);
+                    //     else
+                    //     array_push($p_role_price,$value);
+                    //     $j++;
+                    // }
                     // return array($p_role_name,$p_role_price);
 
+                    // return $request->users_rates;
+
+
                     $i = 0;
+                    // return $request->job_users[0];
                     foreach ($request->job_users as $key ) {
                         $vbl1 = new Job_User;
                         $vbl1->job_id = $vbl->id;
                         $vbl1->user_id = $key;
                         $vbl1->role_id = $request->users_role[$i];
 
-                        for ($k=0; $k < count($p_role_name); $k++) {
-                            if($request->users_role[$i] == $p_role_name[$k])
+                        $arr = $request->users_rates;
+                        for ($l=0; $l < count($arr); $l++) {
+                            // echo $arr[$i]['name'];
+
+                            if($arr[$l]['name'] == "user_id")
                             {
-                                $vbl1->job_rate = $p_role_price[$k];
-                                break;
+                                // echo $arr[$i]['name'];
+                                // echo $arr[$l]['value'];
+                                // echo "\n";
+
+                                if($arr[$l]['value'] == $key)
+                                {
+                                    $j = $l;
+                                    $j++;
+                                    for ($k = 0; $k < 4; $k++) {
+                                        // echo $arr[$j]['value'];
+                                        // echo "\n";
+
+                                        if($k == 0)
+                                        $vbl1->job_rate = $arr[$j]['value'];
+                                        if($k == 1)
+                                        $vbl1->p_rate = $arr[$j]['value'];
+                                        if($k == 2)
+                                        $vbl1->sat_rate = $arr[$j]['value'];
+                                        if($k == 3)
+                                        $vbl1->sun_rate = $arr[$j]['value'];
+
+                                        $j++;
+                                    }
+                                }
                             }
                         }
+
+                        // for ($k=0; $k < count($p_role_name); $k++) {
+                        //     if($request->users_role[$i] == $p_role_name[$k])
+                        //     {
+                        //         $vbl1->job_rate = $p_role_price[$k];
+                        //         break;
+                        //     }
+                        // }
+
                         $i++;
                         $vbl1->save();
                     }
@@ -128,7 +174,7 @@ class JobController extends Controller
             $vbl = DB::table('jobs')
             ->where('jobs.id',$request->id)
             ->join('companies','companies.id','=','jobs.company_id')
-            ->select('jobs.id','jobs.j_location','companies.c_name','jobs.company_id','jobs.j_date','jobs.sat_rate','jobs.sun_rate','jobs.p_rate')
+            ->select('companies.c_name','jobs.*')
             ->first();
 
             // $date = str_replace('/', '-', $vbl->j_date);
@@ -143,7 +189,7 @@ class JobController extends Controller
             ->where('job_id','=',$vbl->id)
             ->join('users','users.id','=','job__users.user_id')
             ->join('roles','roles.id','=','job__users.role_id')
-            ->select('users.id','users.u_name','roles.id as role_id','roles.r_name','job__users.job_rate')
+            ->select('users.id','users.u_name','roles.id as role_id','roles.r_name','job__users.job_rate','job__users.p_rate','job__users.sat_rate','job__users.sun_rate')
             ->get();
             array_push($job,$vbl2);
             return $job;
@@ -186,11 +232,13 @@ class JobController extends Controller
                 'j_location'=> 'required|min:5',
                 'company_id'=> 'required|numeric',
                 'j_date'=> 'required|date_format:Y-m-d',
+                'charge_rate'=> 'required|numeric',
+                'charge_rate_ot'=> 'required|numeric',
                 // 'p_end'=> 'required|date_format:H:i',
                 // 'p_start'=> 'required|date_format:H:i',
-                'p_rate'=> 'required|numeric',
-                'sat_rate'=> 'required|numeric',
-                'sun_rate'=> 'required|numeric',
+                // 'p_rate'=> 'required|numeric',
+                // 'sat_rate'=> 'required|numeric',
+                // 'sun_rate'=> 'required|numeric',
             ],[
                 'j_location.required' => 'Location is required.',
                 'j_location.min' => 'Location must be of 5 characters.',
@@ -202,12 +250,16 @@ class JobController extends Controller
                 // 'p_start.required'=> 'Penality Start time is required.',
                 // 'p_end.date_format'=> 'Penality End time format is Incorrect.',
                 // 'p_start.date_format'=> 'Penality Start time format is Incorrect.',
-                'p_rate.required'=> 'Penality Rate is required.',
-                'p_rate.numeric'=> 'Penality Rate must be numeric.',
-                'sat_rate.required'=> 'Saturday Penality Rate is required.',
-                'sat_rate.numeric'=> 'Saturday Penality Rate must be numeric.',
-                'sun_rate.required'=> 'Sunday Penality Rate is required.',
-                'sun_rate.numeric'=> 'Sunday Penality Rate must be numeric.',
+                // 'p_rate.required'=> 'Penality Rate is required.',
+                // 'p_rate.numeric'=> 'Penality Rate must be numeric.',
+                // 'sat_rate.required'=> 'Saturday Penality Rate is required.',
+                // 'sat_rate.numeric'=> 'Saturday Penality Rate must be numeric.',
+                // 'sun_rate.required'=> 'Sunday Penality Rate is required.',
+                // 'sun_rate.numeric'=> 'Sunday Penality Rate must be numeric.',
+                'charge_rate.required'=> 'Client Charge Rate is required.',
+                'charge_rate.numeric'=> 'Client Charge Rate must be numeric.',
+                'charge_rate_ot.required'=> 'Client Charge Rate (OT) is required.',
+                'charge_rate_ot.numeric'=> 'Client Charge Rate (OT) must be numeric.',
             ]);
             if ($validator->fails())
             {
@@ -225,12 +277,14 @@ class JobController extends Controller
                 // $vbl->j_date = $new_date;
 
                 $vbl->j_date = $request->j_date;
+                $vbl->charge_rate = $request->charge_rate;
+                $vbl->charge_rate_ot = $request->charge_rate_ot;
                 $vbl->j_status = "ACTIVE";
                 // $vbl->p_start = $request->p_start;
                 // $vbl->p_end = $request->p_end;
-                $vbl->p_rate = $request->p_rate;
-                $vbl->sat_rate = $request->sat_rate;
-                $vbl->sun_rate = $request->sun_rate;
+                // $vbl->p_rate = $request->p_rate;
+                // $vbl->sat_rate = $request->sat_rate;
+                // $vbl->sun_rate = $request->sun_rate;
                 $vbl->save();
 
                 $vbl2 = Job_User::where('job_id',$request->job_id)->get();
@@ -241,16 +295,16 @@ class JobController extends Controller
                 if($request->job_users == null || empty($request->job_users)){}
                 else
                 {
-                    $j=0;
-                    $p_role_name = array();
-                    $p_role_price = array();
-                    foreach ($request->roles_prices as $value) {
-                        if($j % 2 == 0)
-                        array_push($p_role_name,$value);
-                        else
-                        array_push($p_role_price,$value);
-                        $j++;
-                    }
+                    // $j=0;
+                    // $p_role_name = array();
+                    // $p_role_price = array();
+                    // foreach ($request->roles_prices as $value) {
+                    //     if($j % 2 == 0)
+                    //     array_push($p_role_name,$value);
+                    //     else
+                    //     array_push($p_role_price,$value);
+                    //     $j++;
+                    // }
                     // return array($p_role_name,$p_role_price);
 
                     $i = 0;
@@ -260,13 +314,46 @@ class JobController extends Controller
                         $vbl1->user_id = $key;
                         $vbl1->role_id = $request->users_role[$i];
 
-                        for ($k=0; $k < count($p_role_name); $k++) {
-                            if($request->users_role[$i] == $p_role_name[$k])
+                        $arr = $request->users_rates;
+                        for ($l=0; $l < count($arr); $l++) {
+                            // echo $arr[$i]['name'];
+
+                            if($arr[$l]['name'] == "user_id")
                             {
-                                $vbl1->job_rate = $p_role_price[$k];
-                                break;
+                                // echo $arr[$i]['name'];
+                                // echo $arr[$l]['value'];
+                                // echo "\n";
+
+                                if($arr[$l]['value'] == $key)
+                                {
+                                    $j = $l;
+                                    $j++;
+                                    for ($k = 0; $k < 4; $k++) {
+                                        // echo $arr[$j]['value'];
+                                        // echo "\n";
+
+                                        if($k == 0)
+                                        $vbl1->job_rate = $arr[$j]['value'];
+                                        if($k == 1)
+                                        $vbl1->p_rate = $arr[$j]['value'];
+                                        if($k == 2)
+                                        $vbl1->sat_rate = $arr[$j]['value'];
+                                        if($k == 3)
+                                        $vbl1->sun_rate = $arr[$j]['value'];
+
+                                        $j++;
+                                    }
+                                }
                             }
                         }
+
+                        // for ($k=0; $k < count($p_role_name); $k++) {
+                        //     if($request->users_role[$i] == $p_role_name[$k])
+                        //     {
+                        //         $vbl1->job_rate = $p_role_price[$k];
+                        //         break;
+                        //     }
+                        // }
                         $i++;
                         $vbl1->save();
                     }
@@ -338,7 +425,7 @@ class JobController extends Controller
         $vbl = DB::table('jobs')
         ->where('j_status','=','ACTIVE')
         ->join('companies','companies.id','=','jobs.company_id')
-        ->select('jobs.id','jobs.j_location','companies.c_contact')
+        ->select('jobs.id','jobs.j_location','companies.c_contact','companies.c_name')
         ->get();
         // return $vbl;
 

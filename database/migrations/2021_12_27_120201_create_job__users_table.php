@@ -18,7 +18,10 @@ class CreateJobUsersTable extends Migration
             $table->foreignId('job_id')->constrained();
             $table->foreignId('user_id')->constrained();
             $table->foreignId('role_id')->constrained();
-            $table->string('job_rate');
+            $table->double('job_rate',8,1);
+            $table->double('p_rate',8,1);
+            $table->double('sat_rate',8,1);
+            $table->double('sun_rate',8,1);
             $table->timestamps();
         });
     }
