@@ -44,7 +44,7 @@
                     </div>
                 </div>
                 <div class="grid grid-cols-12 gap-6 mt-0 xl:ml-12 xl:mr-12" style="font-weight: bold">
-                    <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y mb-2">
+                    <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
                         <div>Add Worker</div>
                         <form id="search_form" class="my-auto mx-auto bg-white xl:bg-transparent sm:px-8 xl:p-0 rounded-md xl:shadow-none w-full sm:w-3/4 lg:w-2/4 xl:w-auto" action="" method="get">
                             <div  class="flex" style="">
@@ -84,7 +84,7 @@
                                 5 PM - 7 AM
                             </div> --}}
 
-                            <div class="mt-3">
+                            {{-- <div class="mt-3">
                                 Client Charge Rate
                             </div>
                             <div>
@@ -95,7 +95,7 @@
                             </div>
                             <div>
                                <input type="number" id="charge_rate_ot_id" name="j_charge_rate_ot" form="update_job_form" class="border-theme-123 border-2 block p-2 mb-2" style="width: 100%; height:30px; font-size:85%; color: red" placeholder="Charge Rate Overtime">
-                            </div>
+                            </div> --}}
 
                             {{-- <div style="font-size:15px">
                                 <div>
@@ -117,7 +117,7 @@
                             </div>
 
                     </div>
-                    <div class="col-span-12 sm:col-span-6 xl:col-span-9 intro-y mb-2">
+                    <div class="col-span-12 sm:col-span-6 xl:col-span-9 intro-y">
                         <div class="text-center">All Allocated Workers</div>
                         <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
                             <div class="box border-3" style="text-align: left; font-size: 0.9rem; line-height: 2.0; height: 350px;">
@@ -147,6 +147,35 @@
                         </div>
                         </form>
                         <button class="reset_all_data text-white bg-theme-123 p-2 pt-1 pb-1 btn_zoo_h mt-2" style="font-size: 85%;">Remove All Workers</button>
+                    </div>
+                    <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y mb-2">
+                    </div>
+                    <div class="col-span-12 sm:col-span-6 xl:col-span-9 intro-y mb-2">
+                        <div class="text-center">Allocate Charge Rate</div>
+                        <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
+                            <div class="box border-3" style="text-align: left; font-size: 0.9rem; line-height: 2.0; height: 350px;">
+                                <div style="width: 100%; height: 346px; overflow: auto;" class="p-1">
+                                    <div id="check3"></div>
+                                    <table id="workers_roles">
+                                        <tr>
+                                          <th>Role</th>
+                                          <th>Client Charge Rate</th>
+                                          <th>5PM TO 7AM (OT)</th>
+                                          <th>Saturday (OT)</th>
+                                          <th>Sunday (OT)</th>
+                                        </tr>
+                                    </table>
+                                        {{-- <tr>
+                                          <td>Usama Ashraf</td>
+                                          <td>Computer Operator</td>
+                                          <td> <input type="number" name="" id="add_jo_rate" class="p-1 border-theme-123 border-2 block" style="width: 100%; height:30px; font-size:85%;" placeholder="Job Rate"> </td>
+                                          <td> <input type="number" name="" id="add_pe_rate" class="p-1 border-theme-123 border-2 block" style="width: 100%; height:30px; font-size:85%;" placeholder="Penality"> </td>
+                                          <td> <input type="number" name="" id="add_sa_rate" class="p-1 border-theme-123 border-2 block" style="width: 100%; height:30px; font-size:85%;" placeholder="Saturday"> </td>
+                                          <td> <input type="number" name="" id="add_su_rate" class="p-1 border-theme-123 border-2 block" style="width: 100%; height:30px; font-size:85%;" placeholder="Sunday"> </td>
+                                        </tr> --}}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     {{-- <div class="col-span-12 sm:col-span-6 xl:col-span-4 intro-y mb-2">
                         <div class="text-center">Allocates Workers Rates</div>
@@ -209,13 +238,13 @@
             url:'specific/detail',
             data: {id: get_data},
             success: function(data){
-                // console.log(data);
+                console.log(data);
 
                 $("#edit_job_location_id").val(data[0].j_location);
                 $("#edit_job_company_id").val(data[0].company_id);
                 $("#edit_job_date_id").val(data[0].j_date);
-                $("#charge_rate_id").val(data[0].charge_rate);
-                $("#charge_rate_ot_id").val(data[0].charge_rate_ot);
+                // $("#charge_rate_id").val(data[0].charge_rate);
+                // $("#charge_rate_ot_id").val(data[0].charge_rate_ot);
                 // $("#penality_rate_id").val(data[0].p_rate);
                 // $("#penality_sat_rate_id").val(data[0].sat_rate);
                 // $("#penality_sun_rate_id").val(data[0].sun_rate);
@@ -260,20 +289,36 @@
                     $('#add_su_rate'+data[1][i].id+'').val(data[1][i].sun_rate);
 
 
-                    // if ($('#add_job_role_name'+data[1][i].role_id+'').length) {              //to check if a div exists
-                    //     // console.log(('#add_job_user_id'+data.id+''));
-                    //     // toastr.info("Worker Role Already Added");
-                    // }
-                    // else
-                    // {
-                    //     $("#check4").append(`
-                    //     <div id="add_job_role_name`+data[1][i].role_id+`" class="flex">
-                    //     <div class="flex" style="height: 30px; width:80%; font-size:0.9rem; display:inline"> `+data[1][i].r_name+`</div>
-                    //     <input type="number" name="`+data[1][i].role_id+`" id="edit_job_role_rate`+data[1][i].role_id+`" form="prices_form" class="p-2 border-theme-123 border-2 block ml-4 mb-2" style="color:red; width: 30%; height:30px; font-size:85%; display:inline" placeholder="Price" required><br>
-                    //     </div>
-                    //     `);
-                    //     $('#edit_job_role_rate'+data[1][i].role_id+'').val(data[1][i].job_rate);
-                    // }
+                    if ($('#add_job_role_name'+data[1][i].role_id+'').length) {              //to check if a div exists
+                        // console.log(('#add_job_user_id'+data.id+''));
+                        // toastr.info("Worker Role Already Added");
+                    }
+                    else
+                    {
+                        // $("#check4").append(`
+                        // <div id="add_job_role_name`+data[1][i].role_id+`" class="flex">
+                        // <div class="flex" style="height: 30px; width:80%; font-size:0.9rem; display:inline"> `+data[1][i].r_name+`</div>
+                        // <input type="number" name="`+data[1][i].role_id+`" id="edit_job_role_rate`+data[1][i].role_id+`" form="prices_form" class="p-2 border-theme-123 border-2 block ml-4 mb-2" style="color:red; width: 30%; height:30px; font-size:85%; display:inline" placeholder="Price" required><br>
+                        // </div>
+                        // `);
+                        // $('#edit_job_role_rate'+data[1][i].role_id+'').val(data[1][i].job_rate);
+
+                        $('#workers_roles tr:last').after(`
+                        <tr id="add_job_role_name`+data[1][i].role_id+`">
+                            <td>`+data[1][i].r_name+`</td>
+                            <input type="hidden" form="update_job_form" name="role_id" value="`+data[1][i].role_id+`">
+                            <td> <input type="number" form="update_job_form" name="c_jo_rate`+data[1][i].role_id+`" id="add_c_jo_rate`+data[1][i].role_id+`" class="p-1 border-theme-123 border-2 block" style="width: 100%; height:30px; font-size:85%; color: red" placeholder="Client Charge Rate" required> </td>
+                            <td> <input type="number" form="update_job_form" name="c_pe_rate`+data[1][i].role_id+`" id="add_c_pe_rate`+data[1][i].role_id+`" class="p-1 border-theme-123 border-2 block" style="width: 100%; height:30px; font-size:85%; color: red" placeholder="5pm to 7am OT" required> </td>
+                            <td> <input type="number" form="update_job_form" name="c_sa_rate`+data[1][i].role_id+`" id="add_c_sa_rate`+data[1][i].role_id+`" class="p-1 border-theme-123 border-2 block" style="width: 100%; height:30px; font-size:85%; color: red" placeholder="Saturday OT" required> </td>
+                            <td> <input type="number" form="update_job_form" name="c_su_rate`+data[1][i].role_id+`" id="add_c_su_rate`+data[1][i].role_id+`" class="p-1 border-theme-123 border-2 block" style="width: 100%; height:30px; font-size:85%; color: red" placeholder="Sunday OT" required> </td>
+                        </tr>
+                        `);
+
+                        $('#add_c_jo_rate'+data[1][i].role_id+'').val(data[1][i].c_charge_rate);
+                        $('#add_c_pe_rate'+data[1][i].role_id+'').val(data[1][i].c_p_rate);
+                        $('#add_c_sa_rate'+data[1][i].role_id+'').val(data[1][i].c_sat_rate);
+                        $('#add_c_su_rate'+data[1][i].role_id+'').val(data[1][i].c_sun_rate);
+                    }
                 }
 
                 // console.log(glb_arr);
@@ -571,6 +616,24 @@
                 //     `);
                 // }
 
+                if ($('#add_job_role_name'+data[1].id+'').length) {              //to check if a div exists
+                    // console.log(('#add_job_user_id'+data.id+''));
+                    toastr.info("Worker Role Already Added");
+                }
+                else
+                {
+                    $('#workers_roles tr:last').after(`
+                    <tr id="add_job_role_name`+data[1].id+`">
+                        <td>`+data[1].r_name+`</td>
+                        <input type="hidden" form="update_job_form" name="role_id" value="`+data[1].id+`">
+                        <td> <input type="number" form="update_job_form" name="c_jo_rate`+data[1].id+`" id="add_c_jo_rate" class="p-1 border-theme-123 border-2 block" style="width: 100%; height:30px; font-size:85%; color: red" placeholder="Client Charge Rate" required> </td>
+                        <td> <input type="number" form="update_job_form" name="c_pe_rate`+data[1].id+`" id="add_c_pe_rate" class="p-1 border-theme-123 border-2 block" style="width: 100%; height:30px; font-size:85%; color: red" placeholder="5pm to 7am OT" required> </td>
+                        <td> <input type="number" form="update_job_form" name="c_sa_rate`+data[1].id+`" id="add_c_sa_rate" class="p-1 border-theme-123 border-2 block" style="width: 100%; height:30px; font-size:85%; color: red" placeholder="Saturday OT" required> </td>
+                        <td> <input type="number" form="update_job_form" name="c_su_rate`+data[1].id+`" id="add_c_su_rate" class="p-1 border-theme-123 border-2 block" style="width: 100%; height:30px; font-size:85%; color: red" placeholder="Sunday OT" required> </td>
+                    </tr>
+                    `);
+                }
+
                 $('#edit_user_role_id').prop('disabled', true);
                 $('#search_id').val("");
                 toastr.success("User Added to Que.");
@@ -651,17 +714,17 @@
                 }
 
 
-                // var checking = 0;
-                // for (let i = 0; i < glb_arr_2.length; i++) {
-                //     if(glb_arr_2[i] == myArray[1])
-                //     {
-                //         checking = 1;
-                //         break;
-                //     }
-                // }
-                // if(checking == 1){}
-                // else
-                //     $('#add_job_role_name'+myArray[1]+'').remove();
+                var checking = 0;
+                for (let i = 0; i < glb_arr_2.length; i++) {
+                    if(glb_arr_2[i] == myArray[1])
+                    {
+                        checking = 1;
+                        break;
+                    }
+                }
+                if(checking == 1){}
+                else
+                    $('#add_job_role_name'+myArray[1]+'').remove();
 
                 // console.log(glb_arr);
                 // console.log(glb_arr_2);
@@ -675,8 +738,8 @@
             var id1 = $("#edit_job_company_id").val();
             var id2 = $("#edit_job_location_id").val();
             var id3 = $("#edit_job_date_id").val();
-            var id4 = $("#charge_rate_id").val();
-            var id5 = $("#charge_rate_ot_id").val();
+            // var id4 = $("#charge_rate_id").val();
+            // var id5 = $("#charge_rate_ot_id").val();
             // var id4 = $("#penality_rate_id").val();
             // var id5 = $("#penality_sat_rate_id").val();
             // var id6 = $("#penality_sun_rate_id").val();
@@ -706,9 +769,10 @@
                 url:"../edit",
                 // data: {job_id: get_data, j_location: id2, company_id: id1,  j_date: id3, job_users: glb_arr, users_role: glb_arr_2},
                 // data: {job_id: get_data, j_location: id2, company_id: id1, j_date: id3, job_users: glb_arr, users_role: glb_arr_2, roles_prices: glb_arr_3, p_rate: id4, sat_rate: id5, sun_rate: id6},
-                data: {job_id: get_data, j_location: id2, company_id: id1, j_date: id3, charge_rate: id4, charge_rate_ot: id5, job_users: glb_arr, users_role: glb_arr_2, users_rates: str},
+                // data: {job_id: get_data, j_location: id2, company_id: id1, j_date: id3, charge_rate: id4, charge_rate_ot: id5, job_users: glb_arr, users_role: glb_arr_2, users_rates: str},
+                data: {job_id: get_data, j_location: id2, company_id: id1, j_date: id3, job_users: glb_arr, users_role: glb_arr_2, users_rates: str},
                 success: function(response){
-                    console.log(response);
+                    // console.log(response);
                     toastr.success("Job Updated");
                     window.location.replace("../../jobs");
                 },
@@ -718,7 +782,7 @@
                     toastr.error(value[0]);
                     });
                     // $("#add_subject_errors").append(`<li>`+value[0]+`</li>`);
-                    console.log(error);
+                    // console.log(error);
                 }
             });
         });

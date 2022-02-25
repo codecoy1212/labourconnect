@@ -17,8 +17,8 @@ class CreateJobsTable extends Migration
             $table->id();
             $table->string('j_date');
             $table->string('j_location');
-            $table->string('charge_rate');
-            $table->string('charge_rate_ot');
+            // $table->string('charge_rate');
+            // $table->string('charge_rate_ot');
             $table->string('j_status');
             // $table->string('p_start');
             // $table->string('p_end');

@@ -22,6 +22,10 @@ class CreateJobUsersTable extends Migration
             $table->double('p_rate',8,1);
             $table->double('sat_rate',8,1);
             $table->double('sun_rate',8,1);
+            $table->double('c_charge_rate',8,1);
+            $table->double('c_p_rate',8,1);
+            $table->double('c_sat_rate',8,1);
+            $table->double('c_sun_rate',8,1);
             $table->timestamps();
         });
     }

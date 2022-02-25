@@ -44,7 +44,7 @@
                     </div>
                 </div>
                 <div class="grid grid-cols-12 gap-6 mt-0 xl:ml-12 xl:mr-12" style="font-weight: bold">
-                    <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y mb-2">
+                    <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
                         <div>Add Worker</div>
                         <form id="search_form" class="my-auto mx-auto bg-white xl:bg-transparent sm:px-8 xl:p-0 rounded-md xl:shadow-none w-full sm:w-3/4 lg:w-2/4 xl:w-auto" action="" method="get">
                             <div  class="flex" style="">
@@ -80,7 +80,7 @@
                                 Allocate Penality Rates
                             </div> --}}
 
-                            <div class="mt-3">
+                            {{-- <div class="mt-3">
                                 Client Charge Rate
                             </div>
                             <div>
@@ -91,7 +91,7 @@
                             </div>
                             <div>
                                <input type="number" id="charge_rate_ot_id" name="j_charge_rate_ot" form="new_job_form" class="border-theme-123 border-2 block p-2 mb-2" style="width: 100%; height:30px; font-size:85%; color: red" placeholder="Charge Rate Overtime">
-                            </div>
+                            </div> --}}
 
                             {{-- <div id="" value=""class="flex border-2 border-theme-123 mt-3" style="padding-top:4px; padding-left:5px; height: 35px; width:70%; font-size:0.9rem;">
                                 5 PM - 7 AM
@@ -118,7 +118,7 @@
                             </div>
 
                     </div>
-                    <div class="col-span-12 sm:col-span-6 xl:col-span-9 intro-y mb-2">
+                    <div class="col-span-12 sm:col-span-6 xl:col-span-9 intro-y">
                         <div class="text-center">All Allocated Workers</div>
                         <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
                             <div class="box border-3" style="text-align: left; font-size: 0.9rem; line-height: 2.0; height: 350px;">
@@ -148,6 +148,35 @@
                         </div>
                         </form>
                         <button class="reset_all_data text-white bg-theme-123 p-2 pt-1 pb-1 btn_zoo_h mt-2" style="font-size: 85%;">Remove All Workers</button>
+                    </div>
+                    <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y mb-2">
+                    </div>
+                    <div class="col-span-12 sm:col-span-6 xl:col-span-9 intro-y mb-2">
+                        <div class="text-center">Allocate Charge Rate</div>
+                        <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
+                            <div class="box border-3" style="text-align: left; font-size: 0.9rem; line-height: 2.0; height: 350px;">
+                                <div style="width: 100%; height: 346px; overflow: auto;" class="p-1">
+                                    <div id="check3"></div>
+                                    <table id="workers_roles">
+                                        <tr>
+                                          <th>Role</th>
+                                          <th>Client Charge Rate</th>
+                                          <th>5PM TO 7AM (OT)</th>
+                                          <th>Saturday (OT)</th>
+                                          <th>Sunday (OT)</th>
+                                        </tr>
+                                    </table>
+                                        {{-- <tr>
+                                          <td>Usama Ashraf</td>
+                                          <td>Computer Operator</td>
+                                          <td> <input type="number" name="" id="add_jo_rate" class="p-1 border-theme-123 border-2 block" style="width: 100%; height:30px; font-size:85%;" placeholder="Job Rate"> </td>
+                                          <td> <input type="number" name="" id="add_pe_rate" class="p-1 border-theme-123 border-2 block" style="width: 100%; height:30px; font-size:85%;" placeholder="Penality"> </td>
+                                          <td> <input type="number" name="" id="add_sa_rate" class="p-1 border-theme-123 border-2 block" style="width: 100%; height:30px; font-size:85%;" placeholder="Saturday"> </td>
+                                          <td> <input type="number" name="" id="add_su_rate" class="p-1 border-theme-123 border-2 block" style="width: 100%; height:30px; font-size:85%;" placeholder="Sunday"> </td>
+                                        </tr> --}}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     {{-- <div class="col-span-12 sm:col-span-6 xl:col-span-4 intro-y mb-2">
                         <div class="text-center">Allocates Workers Rates</div>
@@ -441,7 +470,7 @@
                 url:'../jobs/show/user/role/',
                 data: { id: user_id_to_add, role_id: id2},
             }).done(function(data){
-                // console.log(data)
+                console.log(data)
 
                 // console.log(glb_arr);
                 // console.log(glb_arr_2);
@@ -489,6 +518,24 @@
                 //     </div>
                 //     `);
                 // }
+
+                if ($('#add_job_role_name'+data[1].id+'').length) {              //to check if a div exists
+                    // console.log(('#add_job_user_id'+data.id+''));
+                    toastr.info("Worker Role Already Added");
+                }
+                else
+                {
+                    $('#workers_roles tr:last').after(`
+                    <tr id="add_job_role_name`+data[1].id+`">
+                        <td>`+data[1].r_name+`</td>
+                        <input type="hidden" form="new_job_form" name="role_id" value="`+data[1].id+`">
+                        <td> <input type="number" form="new_job_form" name="c_jo_rate`+data[1].id+`" id="add_c_jo_rate" class="p-1 border-theme-123 border-2 block" style="width: 100%; height:30px; font-size:85%; color: red" placeholder="Client Charge Rate" required> </td>
+                        <td> <input type="number" form="new_job_form" name="c_pe_rate`+data[1].id+`" id="add_c_pe_rate" class="p-1 border-theme-123 border-2 block" style="width: 100%; height:30px; font-size:85%; color: red" placeholder="5pm to 7am OT" required> </td>
+                        <td> <input type="number" form="new_job_form" name="c_sa_rate`+data[1].id+`" id="add_c_sa_rate" class="p-1 border-theme-123 border-2 block" style="width: 100%; height:30px; font-size:85%; color: red" placeholder="Saturday OT" required> </td>
+                        <td> <input type="number" form="new_job_form" name="c_su_rate`+data[1].id+`" id="add_c_su_rate" class="p-1 border-theme-123 border-2 block" style="width: 100%; height:30px; font-size:85%; color: red" placeholder="Sunday OT" required> </td>
+                    </tr>
+                    `);
+                }
 
                 $('#add_user_role_id').prop('disabled', true);
                 $('#search_id').val("");
@@ -576,17 +623,17 @@
                     }
                 }
 
-                // var checking = 0;
-                // for (let i = 0; i < glb_arr_2.length; i++) {
-                //     if(glb_arr_2[i] == myArray[1])
-                //     {
-                //         checking = 1;
-                //         break;
-                //     }
-                // }
-                // if(checking == 1){}
-                // else
-                //     $('#add_job_role_name'+myArray[1]+'').remove();
+                var checking = 0;
+                for (let i = 0; i < glb_arr_2.length; i++) {
+                    if(glb_arr_2[i] == myArray[1])
+                    {
+                        checking = 1;
+                        break;
+                    }
+                }
+                if(checking == 1){}
+                else
+                    $('#add_job_role_name'+myArray[1]+'').remove();
 
                 // console.log(glb_arr);
 
@@ -604,8 +651,8 @@
             var id1 = $("#add_job_company_id").val();
             var id2 = $("#add_job_location_id").val();
             var id3 = $("#add_job_date_id").val();
-            var id4 = $("#charge_rate_id").val();
-            var id5 = $("#charge_rate_ot_id").val();
+            // var id4 = $("#charge_rate_id").val();
+            // var id5 = $("#charge_rate_ot_id").val();
             // var id4 = $("#penality_rate_id").val();
             // var id5 = $("#penality_sat_rate_id").val();
             // var id6 = $("#penality_sun_rate_id").val();
@@ -664,7 +711,8 @@
                 url:"add",
                 // data: $("#prices_form").serialize() + '&j_location=' + id2 + '&company_id=' + id1 + '&j_date=' + id3 + '&job_users=' + glb_arr + '&users_role=' + glb_arr_2,
                 // data: { j_location: id2, company_id: id1, j_date: id3, job_users: glb_arr, users_role: glb_arr_2, roles_prices: glb_arr_3, p_rate: id4, sat_rate: id5, sun_rate: id6},
-                data: { j_location: id2, company_id: id1, j_date: id3, charge_rate: id4, charge_rate_ot: id5, job_users: glb_arr, users_role: glb_arr_2, users_rates: str},
+                // data: { j_location: id2, company_id: id1, j_date: id3, charge_rate: id4, charge_rate_ot: id5, job_users: glb_arr, users_role: glb_arr_2, users_rates: str},
+                data: { j_location: id2, company_id: id1, j_date: id3, job_users: glb_arr, users_role: glb_arr_2, users_rates: str},
                 success: function(response){
                     // console.log(response);
                     toastr.success("Job Added");
