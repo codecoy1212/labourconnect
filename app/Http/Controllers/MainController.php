@@ -358,7 +358,7 @@ class MainController extends Controller
             ->where('job_id','=',$request->job_id)
             ->join('users','users.id','=','job__users.user_id')
             ->join("roles","roles.id","=","job__users.role_id")
-            ->select('users.*',"roles.r_name",'job__users.job_rate','job__users.p_rate','job__users.sat_rate','job__users.sun_rate')
+            ->select('users.*',"roles.r_name",'job__users.job_rate','job__users.p_rate','job__users.sat_rate','job__users.sun_rate','job__users.c_charge_rate','job__users.c_p_rate','job__users.c_sat_rate','job__users.c_sun_rate')
             ->get();
 
             // return $candidate;
@@ -382,8 +382,12 @@ class MainController extends Controller
                     // echo "<br>";
                     $final_result = new stdClass;
                     $final_result->client = $client->c_name;
-                    $final_result->charge_rate = $client->charge_rate;
-                    $final_result->charge_rate_ot = $client->charge_rate_ot;
+                    $final_result->c_charge_rate = $item->c_charge_rate;
+                    $final_result->c_p_rate = $item->c_p_rate;
+                    $final_result->c_sat_rate = $item->c_sat_rate;
+                    $final_result->c_sun_rate = $item->c_sun_rate;
+                    // $final_result->charge_rate = $client->charge_rate;
+                    // $final_result->charge_rate_ot = $client->charge_rate_ot;
                     $final_result->site = $client->j_location;
                     $final_result->Week_start_date = $dt->format("Y-m-d");
                     $final_result->week_end_date = date('Y-m-d',strtotime($dt->format("Y-m-d").' +6 day'));
