@@ -9,7 +9,7 @@ use App\Models\Job;
 use App\Models\Job_User;
 use App\Models\Role;
 use App\Models\User;
-use Barryvdh\DomPDF\Facade\Pdf;
+use PDF;
 use DateInterval;
 use DatePeriod;
 use DateTime;
@@ -316,7 +316,7 @@ class MainController extends Controller
 
             // return $final;
 
-            $pdf = Pdf::loadView('main.main2.report_pdf',compact('final'));
+            $pdf = PDF::loadView('main.main2.report_pdf',compact('final'));
 
             return $pdf->download('LabourConnect.pdf');
 
